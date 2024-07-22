@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.LoginRequestDTO;
+import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.repository.ClienteRepository;
 import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
@@ -15,6 +16,7 @@ import sc.senai.topcare.repository.UsuarioRepository;
 import sc.senai.topcare.service.interfaces.UsuarioService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,12 +35,15 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
 
             Cliente usuario = new Cliente();
-            usuario.setEnderecos(new ArrayList<>());
-            usuario.setPets(new ArrayList<>());
+            Endereco endereco = new Endereco();
 
             BeanUtils.copyProperties(usuarioDTO, usuario);
-            usuario.getEnderecos().add(usuarioDTO.endereco());
+            BeanUtils.copyProperties(usuarioDTO, endereco);
+            endereco.setNome(usuarioDTO.nomeEndereco());
+
+            usuario.setPets(new ArrayList<>());
             usuario.getPets().add(usuarioDTO.pet());
+            usuario.setEnderecos(List.of(endereco));
             clientRepository.save(usuario);
 
             return ResponseEntity.ok(usuario);
