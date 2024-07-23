@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.LoginRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.LoginResonseDTO;
 import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.repository.ClienteRepository;
@@ -53,7 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<Boolean> login(LoginRequestDTO login) {
+    public ResponseEntity<LoginResonseDTO> login(LoginRequestDTO login) {
         try{
             Optional<Usuario> usuario = usuarioRepository.findByEmail(login.email());
 
@@ -61,9 +62,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new UsuarioNaoEncontradoException();
             }
 
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(new LoginResonseDTO(usuario.get().getId()));
         }catch (UsuarioNaoEncontradoException e){
-            return ResponseEntity.badRequest().body(false);
+            return ResponseEntity.badRequest().build();
         }
     }
 }
