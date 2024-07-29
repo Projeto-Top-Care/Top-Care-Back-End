@@ -5,10 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.LoginRequestDTO;
-<<<<<<< HEAD
-=======
 import sc.senai.topcare.controller.dto.usuario.LoginResonseDTO;
->>>>>>> 5d089df4c418d9d4c3758d95b735a215c2825090
 import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.repository.ClienteRepository;
@@ -19,7 +16,6 @@ import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.UsuarioRepository;
 import sc.senai.topcare.service.interfaces.UsuarioService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,41 +29,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResponseEntity<Cliente> cadastro(ClienteRequestPostDTO usuarioDTO) {
         try{
-
-            if(clientRepository.existsByCpf(usuarioDTO.cpf()) || clientRepository.existsByEmail(usuarioDTO.email())){
-                throw new UsuarioExistenteExeption("O Cliente já existe no sistema!");
+            if(clientRepository.existsByCpf(usuarioDTO.cpf())){
+                throw new UsuarioExistenteExeption("O CPF já existe no sistema!");
             }
 
             Cliente usuario = new Cliente();
             Endereco endereco = new Endereco();
-<<<<<<< HEAD
-            usuario.setEnderecos(new ArrayList<>());
-            usuario.setPets(new ArrayList<>());
-=======
->>>>>>> 5d089df4c418d9d4c3758d95b735a215c2825090
 
-            BeanUtils.copyProperties(usuarioDTO, endereco);
             BeanUtils.copyProperties(usuarioDTO, usuario);
-<<<<<<< HEAD
-
-
-            endereco.setNome(usuarioDTO.nomeEndereco());
-            usuario.getEnderecos().add(endereco);
-            usuario.getPets().add(usuarioDTO.pet());
-
-=======
             BeanUtils.copyProperties(usuarioDTO, endereco);
             endereco.setNome(usuarioDTO.nomeEndereco());
 
             usuario.setPets(new ArrayList<>());
             usuario.getPets().add(usuarioDTO.pet());
             usuario.setEnderecos(List.of(endereco));
->>>>>>> 5d089df4c418d9d4c3758d95b735a215c2825090
             clientRepository.save(usuario);
 
             return ResponseEntity.ok(usuario);
         }catch (UsuarioExistenteExeption e){
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
