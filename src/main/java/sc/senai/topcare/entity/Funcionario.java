@@ -18,6 +18,9 @@ public class Funcionario extends Usuario{
     @ManyToMany(mappedBy = "funcionarios")
     private List<Servico> servicos;
 
+    @ManyToOne
+    private Filial filial;
+
     @OneToMany
     @JoinColumn(name = "id_funcionario")
     private List<Horario> horariosAgendados;

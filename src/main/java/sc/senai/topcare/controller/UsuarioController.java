@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.LoginRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.LoginResonseDTO;
 import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.service.implement.UsuarioServiceImpl;
 
@@ -22,7 +23,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody LoginRequestDTO login){
+    public ResponseEntity<LoginResonseDTO> login(@RequestBody LoginRequestDTO login){
         return usuarioService.login(login);
     }
 
