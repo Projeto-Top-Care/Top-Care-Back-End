@@ -1,4 +1,4 @@
-package sc.senai.topcare.controller.dto.usuario;
+package sc.senai.topcare.controller.dto.usuario.request;
 
 public record LoginRequestDTO(
         String email,

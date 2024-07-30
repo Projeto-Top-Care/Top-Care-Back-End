@@ -1,4 +1,4 @@
-package sc.senai.topcare.controller.dto.usuario;
+package sc.senai.topcare.controller.dto.usuario.request.pet;
 
 import sc.senai.topcare.entity.Especie;
 import sc.senai.topcare.entity.Porte;
@@ -6,7 +6,7 @@ import sc.senai.topcare.entity.Porte;
 public record PetRequestDTO(
     Long idUsuario,
     String raca,
-    Especie especie,
+    Long idEspecie,
     Porte porte,
     String nome
 ) {

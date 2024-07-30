@@ -5,7 +5,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import sc.senai.topcare.controller.dto.usuario.*;
+import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPostDTO;
+import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoEditarRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.request.LoginRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.request.pet.PetRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.response.LoginResonseDTO;
+import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.entity.Pet;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
@@ -14,6 +20,8 @@ import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Usuario;
 import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.UsuarioRepository;
+import sc.senai.topcare.service.interfaces.EnderecoService;
+import sc.senai.topcare.service.interfaces.EspecieService;
 import sc.senai.topcare.service.interfaces.UsuarioService;
 
 import java.util.ArrayList;
@@ -26,6 +34,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final ClienteRepository clientRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EspecieService especieService;
+    private final EnderecoService enderecoService;
+
     @Override
     public ResponseEntity<Cliente> cadastro(ClienteRequestPostDTO usuarioDTO) {
         try{
@@ -73,16 +84,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<Cliente> buscarUsuario(Long id) {
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuario(Long id) {
         try{
+            ModelMapper modelMapper = new ModelMapper();
 
-            Optional<Cliente> optionalCliente = clientRepository.findById(id);
+            Cliente optionalCliente = clientRepository.findById(id).orElseThrow(UsuarioNaoEncontradoException::new);
+            UsuarioResponseDTO usuarioResponseDTO = modelMapper.map(optionalCliente, UsuarioResponseDTO.class);
 
-            if(optionalCliente.isEmpty()){
-                throw new UsuarioNaoEncontradoException();
-            }
-
-            return ResponseEntity.ok(optionalCliente.get());
+            return ResponseEntity.ok(usuarioResponseDTO);
         }catch (UsuarioNaoEncontradoException e){
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -113,8 +122,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
             Pet pet = new Pet();
             BeanUtils.copyProperties(petDTO, pet);
+            pet.setEspecie(especieService.buscarEspecie(petDTO.idEspecie()));
             cliente.getPets().add(pet);
-
             clientRepository.save(cliente);
 
             return ResponseEntity.ok(true);
@@ -122,5 +131,13 @@ public class UsuarioServiceImpl implements UsuarioService {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @Override
+    public ResponseEntity<Boolean> editarEndereco(EnderecoEditarRequestDTO enderecoDTO) {
+        Endereco endereco = enderecoService.buscar(enderecoDTO.id());
+        BeanUtils.copyProperties(enderecoDTO, endereco);
+        enderecoService.salvar(endereco);
+        return ResponseEntity.ok(true);
     }
 }

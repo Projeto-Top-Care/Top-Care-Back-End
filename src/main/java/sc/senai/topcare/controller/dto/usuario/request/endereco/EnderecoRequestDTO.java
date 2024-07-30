@@ -1,4 +1,4 @@
-package sc.senai.topcare.controller.dto.usuario;
+package sc.senai.topcare.controller.dto.usuario.request.endereco;
 
 import sc.senai.topcare.entity.Estado;
 
