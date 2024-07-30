@@ -1,10 +1,7 @@
 package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -32,4 +29,14 @@ public class Cliente extends Usuario {
 
     @ManyToMany
     private List<Cupom> cupons;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Agendamento> agendamentos;
+
+    public String toString(){
+        return super.toString();
+    }
 }

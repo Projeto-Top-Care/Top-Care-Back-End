@@ -1,5 +1,7 @@
 package sc.senai.topcare.controller.dto.usuario;
 
+import lombok.Getter;
+import lombok.Setter;
 import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.entity.Estado;
 import sc.senai.topcare.entity.Pet;
@@ -22,6 +24,7 @@ public record ClienteRequestPostDTO(
         Integer numero,
         String rua,
         String senha,
+        Sexo sexo,
         Pet pet
 
 ) {

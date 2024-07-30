@@ -3,10 +3,9 @@ package sc.senai.topcare.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
-import sc.senai.topcare.controller.dto.usuario.LoginRequestDTO;
-import sc.senai.topcare.controller.dto.usuario.LoginResonseDTO;
+import sc.senai.topcare.controller.dto.usuario.*;
 import sc.senai.topcare.entity.Cliente;
+import sc.senai.topcare.entity.Usuario;
 import sc.senai.topcare.service.implement.UsuarioServiceImpl;
 
 @RestController
@@ -27,4 +26,18 @@ public class UsuarioController {
         return usuarioService.login(login);
     }
 
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Cliente> buscarUsuario(@PathVariable Long id){
+        return usuarioService.buscarUsuario(id);
+    }
+
+    @PostMapping("/cadastrarEndereco")
+    public ResponseEntity<Boolean> cadastrarEndereco(@RequestBody EnderecoRequestDTO enderecoDTO){
+        return  usuarioService.cadastrarEndereco(enderecoDTO);
+    }
+
+    @PostMapping("/cadastrarPet")
+    public ResponseEntity<Boolean> cadastrarPet(@RequestBody PetRequestDTO petDTO){
+        return usuarioService.cadastrarPet(petDTO);
+    }
 }

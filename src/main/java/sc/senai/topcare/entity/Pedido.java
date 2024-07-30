@@ -30,6 +30,9 @@ public class Pedido {
     private Double subTotal;
     private Double total;
 
+    @ManyToOne
+    private Cliente cliente;
+
     @OneToOne
     private Pagamento pagamento;
 
