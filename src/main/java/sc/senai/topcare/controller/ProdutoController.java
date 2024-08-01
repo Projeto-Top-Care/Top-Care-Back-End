@@ -14,12 +14,14 @@ import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/produto")
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoServiceImpl produtoService;
+    private final ProdutoServiceImpl produtoService;
 
+    public ProdutoController(ProdutoServiceImpl produtoService) {
+        this.produtoService = produtoService;
+    }
     @GetMapping
     public ResponseEntity<List<Produto>> buscarTodosProdutos() {
         List<Produto> produtos = produtoService.buscarTodosProdutos();
@@ -27,7 +29,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id){
+    public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(produtoService.buscarProdutoPorId(id), HttpStatus.OK);
     }
 

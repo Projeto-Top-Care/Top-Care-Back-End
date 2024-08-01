@@ -6,6 +6,8 @@ import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.repository.ProdutoRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class ProdutoServiceImpl {
@@ -16,8 +18,12 @@ public class ProdutoServiceImpl {
         return produtoRepository.findAll();
     }
 
-    public Produto buscarProdutoPorId(Long id) {
-
-        return null;
+    public Produto buscarProdutoPorId(Long id) throws Exception {
+        Optional<Produto> optional = produtoRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        } else {
+            throw new Exception("produto não encontrado");
+        }
     }
 }
