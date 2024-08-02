@@ -3,6 +3,7 @@ package sc.senai.topcare.service.interfaces;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPostDTO;
+import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPutDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoEditarRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.LoginRequestDTO;
@@ -17,7 +18,6 @@ public interface UsuarioService {
 
     ResponseEntity<LoginResonseDTO> login(LoginRequestDTO login);
 
-
     ResponseEntity<UsuarioResponseDTO> buscarUsuario(Long id);
 
     ResponseEntity<Boolean> cadastrarEndereco(EnderecoRequestDTO enderecoDTO);
@@ -25,4 +25,7 @@ public interface UsuarioService {
     ResponseEntity<Boolean> cadastrarPet(PetRequestDTO petDTO);
 
     ResponseEntity<Boolean> editarEndereco(EnderecoEditarRequestDTO enderecoDTO);
+    String deletarEndereco(Long id);
+
+    Cliente editar(ClienteRequestPutDTO dto, Long id);
 }

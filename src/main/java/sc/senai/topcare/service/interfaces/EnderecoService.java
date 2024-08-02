@@ -9,4 +9,6 @@ public interface EnderecoService {
     Endereco cadastrar(EnderecoRequestDTO enderecoDTO);
     Endereco buscar(Long id);
     void salvar(Endereco endereco);
+    String deletar(Long id);
+
 }

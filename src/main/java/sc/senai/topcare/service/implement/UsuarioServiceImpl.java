@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPostDTO;
+import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPutDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoEditarRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.LoginRequestDTO;
@@ -139,5 +140,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         BeanUtils.copyProperties(enderecoDTO, endereco);
         enderecoService.salvar(endereco);
         return ResponseEntity.ok(true);
+    }
+
+    @Override
+    public String deletarEndereco(Long id) {
+        return enderecoService.deletar(id);
+    }
+
+    @Override
+    public Cliente editar(ClienteRequestPutDTO dto, Long id) {
+        Cliente cliente = buscarCliente(id);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(dto, cliente);
+        return clientRepository.save(cliente);
+    }
+
+    public Cliente buscarCliente(Long id){
+        return clientRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 }

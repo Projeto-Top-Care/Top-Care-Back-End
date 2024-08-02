@@ -7,8 +7,6 @@ import sc.senai.topcare.exceptions.EspecieNaoEncontradaException;
 import sc.senai.topcare.repository.EspecieRepository;
 import sc.senai.topcare.service.interfaces.EspecieService;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class EspecieServiceImpl implements EspecieService {

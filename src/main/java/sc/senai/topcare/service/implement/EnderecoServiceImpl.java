@@ -36,4 +36,12 @@ public class EnderecoServiceImpl implements EnderecoService {
         repository.save(endereco);
     }
 
+    @Override
+    public String deletar(Long id) {
+        String nome = buscar(id).getNome();
+        repository.deleteById(id);
+        return nome + " excluido!";
+    }
+
+
 }

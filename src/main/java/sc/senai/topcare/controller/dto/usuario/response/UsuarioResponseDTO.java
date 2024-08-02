@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class UsuarioResponseDTO{
+        Long id;
         String nome;
         String email;
         String celular;

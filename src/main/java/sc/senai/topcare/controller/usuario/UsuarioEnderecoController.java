@@ -21,4 +21,9 @@ public class UsuarioEnderecoController extends UsuarioController{
     public ResponseEntity<Boolean> editarEndereco(@RequestBody EnderecoEditarRequestDTO enderecoDTO){
         return usuarioService.editarEndereco(enderecoDTO);
     }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<String> deletar(@PathVariable Long id){
+        return ResponseEntity.ok(usuarioService.deletarEndereco(id));
+    }
 }
