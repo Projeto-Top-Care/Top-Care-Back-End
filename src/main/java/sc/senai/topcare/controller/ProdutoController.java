@@ -1,13 +1,14 @@
 package sc.senai.topcare.controller;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
+import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
+import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 
@@ -15,13 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produto")
+@AllArgsConstructor
 public class ProdutoController {
 
-    private final ProdutoServiceImpl produtoService;
+    private ProdutoServiceImpl produtoService;
 
-    public ProdutoController(ProdutoServiceImpl produtoService) {
-        this.produtoService = produtoService;
-    }
     @GetMapping
     public ResponseEntity<List<Produto>> buscarTodosProdutos() {
         List<Produto> produtos = produtoService.buscarTodosProdutos();
@@ -32,5 +31,12 @@ public class ProdutoController {
     public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(produtoService.buscarProdutoPorId(id), HttpStatus.OK);
     }
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<Produto> cadastroProduto(@RequestBody ProdutoRequestDTO produtoDTO) {
+        return produtoService.cadastroProduto(produtoDTO);
+    }
+
+
 
 }
