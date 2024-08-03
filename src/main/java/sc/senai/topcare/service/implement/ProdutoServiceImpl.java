@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ProdutoRepository;
+import sc.senai.topcare.service.interfaces.ProdutoService;
+import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +18,14 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class ProdutoServiceImpl {
+public class ProdutoServiceImpl implements ProdutoService {
 
     private ProdutoRepository produtoRepository;
-
+    @Override
     public List<Produto> buscarTodosProdutos() {
         return produtoRepository.findAll();
     }
-
+    @Override
     public Produto buscarProdutoPorId(Long id) throws Exception {
         Optional<Produto> optional = produtoRepository.findById(id);
         if (optional.isPresent()) {
@@ -32,7 +34,7 @@ public class ProdutoServiceImpl {
             throw new Exception("Produto não encontrado");
         }
     }
-
+    @Override
     public ResponseEntity<Produto> cadastroProduto(ProdutoRequestDTO produtoDTO) {
         try {
             Produto produto = new Produto();
@@ -77,5 +79,22 @@ public class ProdutoServiceImpl {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public Produto buscar(Long id) {
+        try{
+            return produtoRepository.findById(id).orElseThrow(ProdutoNaoEncontradoException::new);
+        }catch (ProdutoNaoEncontradoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+   
+    @Override
+    public String deletarProduto(Long id){
+        String nome = buscar(id).getNome();
+        produtoRepository.deleteById(id);
+        return nome + " excluido!";
     }
 }

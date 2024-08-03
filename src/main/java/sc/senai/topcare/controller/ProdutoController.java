@@ -10,6 +10,7 @@ import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
 import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Produto;
+import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 
 import java.util.List;
@@ -37,6 +38,9 @@ public class ProdutoController {
         return produtoService.cadastroProduto(produtoDTO);
     }
 
-
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<String> deletarProdutoPorId(@PathVariable Long id){
+        return ResponseEntity.ok(produtoService.deletarProduto(id));
+    }
 
 }
