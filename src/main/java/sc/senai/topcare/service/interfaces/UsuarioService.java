@@ -11,6 +11,7 @@ import sc.senai.topcare.controller.dto.usuario.request.pet.PetRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.response.LoginResonseDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.entity.Cliente;
+import sc.senai.topcare.entity.Pet;
 
 @Service
 public interface UsuarioService {
@@ -28,4 +29,6 @@ public interface UsuarioService {
     String deletarEndereco(Long id);
 
     Cliente editar(ClienteRequestPutDTO dto, Long id);
+
+    Pet editarPet(PetRequestDTO petRequestDTO, Long id);
 }

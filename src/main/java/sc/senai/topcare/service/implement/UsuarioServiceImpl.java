@@ -23,6 +23,7 @@ import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.UsuarioRepository;
 import sc.senai.topcare.service.interfaces.EnderecoService;
 import sc.senai.topcare.service.interfaces.EspecieService;
+import sc.senai.topcare.service.interfaces.PetService;
 import sc.senai.topcare.service.interfaces.UsuarioService;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final EspecieService especieService;
     private final EnderecoService enderecoService;
+    private final PetService petService;
 
     @Override
     public ResponseEntity<Cliente> cadastro(ClienteRequestPostDTO usuarioDTO) {
@@ -153,6 +155,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(dto, cliente);
         return clientRepository.save(cliente);
+    }
+
+    @Override
+    public Pet editarPet(PetRequestDTO petRequestDTO, Long id) {
+        Pet pet = new Pet(petRequestDTO);
+        return petService.editarPet(pet);
     }
 
     public Cliente buscarCliente(Long id){

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import sc.senai.topcare.controller.dto.usuario.request.pet.PetRequestDTO;
 
 @Entity
 @Table(name = "pet")
@@ -24,4 +26,8 @@ public class Pet {
 
     @Enumerated(EnumType.STRING)
     private Porte porte;
+
+    public Pet(PetRequestDTO petRequestDTO) {
+        BeanUtils.copyProperties(petRequestDTO, this);
+    }
 }
