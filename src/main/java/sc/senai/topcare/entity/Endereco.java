@@ -2,6 +2,8 @@ package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
+import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPostDTO;
 
 @Entity
 @Table(name = "endereco")
@@ -29,4 +31,8 @@ public class Endereco {
     private Integer numero;
 
     private String complemento;
+
+    public Endereco(ClienteRequestPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }
