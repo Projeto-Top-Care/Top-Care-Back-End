@@ -34,4 +34,5 @@ public class Usuario {
     private Sexo sexo;
 
     private String senha;
+
 }
