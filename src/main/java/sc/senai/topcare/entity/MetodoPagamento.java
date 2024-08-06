@@ -9,7 +9,7 @@ public enum MetodoPagamento {
     PIX("Pix"),
     CARTAO_CREDITO("Cartão de crédito"),
     BOLETO("Boleto bancário"),
-    CARTAO_DEBITO("CARTAO");
+    PAY_PAL("Paypal");
     
     private final String NOME;
 }

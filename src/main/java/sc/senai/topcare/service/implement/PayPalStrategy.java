@@ -5,10 +5,10 @@ import sc.senai.topcare.entity.MetodoPagamento;
 import sc.senai.topcare.service.interfaces.FormaPagamentoStrategy;
 
 @Service
-public class CartaoDebito implements FormaPagamentoStrategy {
+public class PayPalStrategy implements FormaPagamentoStrategy {
 
     @Override
     public MetodoPagamento pagamento() {
-        return MetodoPagamento.CARTAO_DEBITO;
+        return MetodoPagamento.PAY_PAL;
     }
 }

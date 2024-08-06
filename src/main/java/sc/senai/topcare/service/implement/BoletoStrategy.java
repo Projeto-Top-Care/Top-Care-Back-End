@@ -11,4 +11,5 @@ public class BoletoStrategy implements FormaPagamentoStrategy {
     public MetodoPagamento pagamento() {
         return MetodoPagamento.BOLETO;
     }
+
 }
