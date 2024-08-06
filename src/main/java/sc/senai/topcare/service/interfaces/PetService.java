@@ -6,5 +6,5 @@ import sc.senai.topcare.entity.Pet;
 
 @Service
 public interface PetService {
-    Pet editarPet(Pet pet);
+    Pet editarPet(PetRequestDTO petDTO, Long id);
 }

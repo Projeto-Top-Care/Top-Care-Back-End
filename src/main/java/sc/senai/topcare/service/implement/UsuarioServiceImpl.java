@@ -159,8 +159,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Pet editarPet(PetRequestDTO petRequestDTO, Long id) {
-        Pet pet = new Pet(petRequestDTO);
-        return petService.editarPet(pet);
+        return petService.editarPet(petRequestDTO, id);
     }
 
     public Cliente buscarCliente(Long id){

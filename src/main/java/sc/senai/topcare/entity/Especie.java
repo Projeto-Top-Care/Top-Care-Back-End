@@ -1,10 +1,7 @@
 package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,9 +9,11 @@ import java.util.List;
 @Entity
 @Table(name = "especie")
 @Data
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Especie {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

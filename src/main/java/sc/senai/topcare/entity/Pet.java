@@ -28,6 +28,7 @@ public class Pet {
     private Porte porte;
 
     public Pet(PetRequestDTO petRequestDTO) {
+        this.setEspecie(new Especie(petRequestDTO.idEspecie()));
         BeanUtils.copyProperties(petRequestDTO, this);
     }
 }

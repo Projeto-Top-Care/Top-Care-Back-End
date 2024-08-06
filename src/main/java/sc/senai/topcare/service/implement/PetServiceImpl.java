@@ -14,7 +14,10 @@ public class PetServiceImpl implements PetService {
     private final PetRepository repository;
 
     @Override
-    public Pet editarPet(Pet pet) {
+    public Pet editarPet(PetRequestDTO petDTO, Long id) {
+        Pet pet = new Pet();
+
+
         return repository.save(pet);
     }
 }
