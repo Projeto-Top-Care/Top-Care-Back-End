@@ -44,4 +44,16 @@ public class Agendamento {
     @ManyToOne
     private Pagamento pagamento;
 
+    public Agendamento(Filial local, Double valor, Servico servico, LocalDateTime horario,
+                       Funcionario profissional, Pet pet, Cliente cliente,
+                       Pagamento pagamento) {
+        this.local = local;
+        this.valor = valor;
+        this.servico = servico;
+        this.horario = horario;
+        this.profissional = profissional;
+        this.pet = pet;
+        this.cliente = cliente;
+        this.pagamento = pagamento;
+    }
 }
