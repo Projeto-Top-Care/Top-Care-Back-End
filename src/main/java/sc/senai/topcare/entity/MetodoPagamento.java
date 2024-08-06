@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum MetodoPagamento {
     PIX("Pix"),
     CARTAO_CREDITO("Cartão de crédito"),
-    BOLETO("Boleto bancário");
+    BOLETO("Boleto bancário"),
+    CARTAO_DEBITO("CARTAO");
     
     private final String NOME;
 }
