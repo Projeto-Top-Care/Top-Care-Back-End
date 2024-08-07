@@ -15,17 +15,13 @@ public class CarrinhoServiceImpl {
 
     private final CarrinhoRepository carrinhoRepository;
 
-
-
     public void adicionar(CarrinhoRequestPostDTO carrinhoDto, QuantidadeProduto quantidadeProduto) {
         carrinhoDto.produtos().add(quantidadeProduto);
     }
 
-
     public void remover(CarrinhoRequestPostDTO carrinhoDto, QuantidadeProduto quantidadeProduto) {
         carrinhoDto.produtos().remove(quantidadeProduto);
     }
-
 
     public String getNome() {
         return "Carrinho de Compras";
