@@ -50,8 +50,8 @@ public class NewsletterServiceImpl implements NewsletterService {
         Newsletter newsletter = new Newsletter();
         newsletter.setTexto(newsletterDTO.getTexto());
         newsletter.setSubscribers(newsletterDTO.getSubscribers());
-        Newsletter savedNewsletter = newsletterRepository.save(newsletter);
-        return ResponseEntity.ok(savedNewsletter);
+        Newsletter saveNesletter = newsletterRepository.save(newsletter);
+        return ResponseEntity.ok(saveNesletter);
     }
 
     public ResponseEntity<Newsletter> atualizarNewsletter(Long id, NewsletterDTO newsletterDTO) {
