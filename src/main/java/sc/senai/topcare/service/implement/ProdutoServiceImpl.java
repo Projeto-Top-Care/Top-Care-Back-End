@@ -97,4 +97,12 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoRepository.deleteById(id);
         return nome + " excluido!";
     }
+
+    public ResponseEntity<Produto> atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO) {
+        Produto produto = buscar(id);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(produtoRequestDTO, produto);
+        return produtoRepository.save(Produto);
+    }
+
 }

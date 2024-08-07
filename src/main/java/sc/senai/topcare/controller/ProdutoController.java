@@ -38,6 +38,11 @@ public class ProdutoController {
         return produtoService.cadastroProduto(produtoDTO);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoRequestDTO produtoRequestDTO) {
+        return produtoService.atualizarProduto(id, produtoRequestDTO);
+    }
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarProdutoPorId(@PathVariable Long id){
         return ResponseEntity.ok(produtoService.deletarProduto(id));
