@@ -25,10 +25,6 @@ public class NewsletterServiceImpl implements NewsletterService {
         Newsletter newsletter = newsletterRepository.findById(newsletterId).orElse(null);
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
 
-        if (newsletter == null || usuario == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         newsletter.addSubscriber(usuario);
         newsletterRepository.save(newsletter);
         return ResponseEntity.ok(newsletter);
@@ -38,10 +34,6 @@ public class NewsletterServiceImpl implements NewsletterService {
     public ResponseEntity<Newsletter> unsubscribe(Long newsletterId, Long usuarioId) {
         Newsletter newsletter = newsletterRepository.findById(newsletterId).orElse(null);
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
-
-        if (newsletter == null || usuario == null) {
-            return ResponseEntity.notFound().build();
-        }
 
         newsletter.removeSubscriber(usuario);
         newsletterRepository.save(newsletter);
@@ -64,17 +56,12 @@ public class NewsletterServiceImpl implements NewsletterService {
 
     public ResponseEntity<Newsletter> atualizarNewsletter(Long id, NewsletterDTO newsletterDTO) {
         Optional<Newsletter> optionalNewsletter = newsletterRepository.findById(id);
-        if (optionalNewsletter.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
         Newsletter newsletter = optionalNewsletter.get();
         newsletter.setTexto(newsletterDTO.getTexto());
 
-        // Salva as atualizações
         newsletterRepository.save(newsletter);
 
-        // Notifica os assinantes
         for (Usuario subscriber : newsletter.getSubscribers()) {
             subscriber.update(newsletter.getTexto());
         }

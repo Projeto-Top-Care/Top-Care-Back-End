@@ -32,9 +32,4 @@ public class Newsletter {
         subscribers.remove(usuario);
     }
 
-    private void notifySubscribers() {
-        for (Usuario subscriber : subscribers) {
-            subscriber.update(texto);
-        }
-    }
 }
