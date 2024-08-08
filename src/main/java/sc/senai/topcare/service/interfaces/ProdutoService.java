@@ -19,4 +19,5 @@ public interface ProdutoService {
     Produto buscarProdutoPorId(Long id) throws Exception;
     Produto buscar(Long id);
 
+    Produto atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO);
 }

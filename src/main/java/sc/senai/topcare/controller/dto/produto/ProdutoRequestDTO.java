@@ -8,7 +8,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class ProdutoRequestDTO {
         private Long id;
         private String nome;

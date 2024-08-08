@@ -1,6 +1,7 @@
 package sc.senai.topcare.service.implement;
 
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,6 @@ import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.service.interfaces.ProdutoService;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -97,12 +97,12 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoRepository.deleteById(id);
         return nome + " excluido!";
     }
-
-    public ResponseEntity<Produto> atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO) {
+    @Override
+    public Produto atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO) {
         Produto produto = buscar(id);
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(produtoRequestDTO, produto);
-        return produtoRepository.save(Produto);
+        return produtoRepository.save(produto);
     }
 
 }

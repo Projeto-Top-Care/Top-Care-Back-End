@@ -2,15 +2,11 @@ package sc.senai.topcare.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
-import sc.senai.topcare.controller.dto.usuario.ClienteRequestPostDTO;
-import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Produto;
-import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 
 import java.util.List;
@@ -38,8 +34,8 @@ public class ProdutoController {
         return produtoService.cadastroProduto(produtoDTO);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoRequestDTO produtoRequestDTO) {
+    @PutMapping("/{id}")
+    public Produto atualizarProduto(@PathVariable Long id, @RequestBody ProdutoRequestDTO produtoRequestDTO) {
         return produtoService.atualizarProduto(id, produtoRequestDTO);
     }
 
