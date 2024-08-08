@@ -8,8 +8,8 @@ import sc.senai.topcare.service.interfaces.FormaPagamentoStrategy;
 public class PixStrategy implements FormaPagamentoStrategy {
 
     @Override
-    public MetodoPagamento pagamento() {
-        return MetodoPagamento.PIX;
+    public String pagamento() {
+        return "Pagamento feito por Pix";
     }
 
 }

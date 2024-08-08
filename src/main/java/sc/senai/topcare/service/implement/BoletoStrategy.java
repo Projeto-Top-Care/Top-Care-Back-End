@@ -8,8 +8,8 @@ import sc.senai.topcare.service.interfaces.FormaPagamentoStrategy;
 public class BoletoStrategy implements FormaPagamentoStrategy {
 
     @Override
-    public MetodoPagamento pagamento() {
-        return MetodoPagamento.BOLETO;
+    public String pagamento() {
+        return "Pagamento feito por Boleto";
     }
 
 }

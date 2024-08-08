@@ -5,6 +5,6 @@ import sc.senai.topcare.entity.MetodoPagamento;
 
 @Service
 public interface FormaPagamentoStrategy {
-    MetodoPagamento pagamento();
+    String pagamento();
 
 }

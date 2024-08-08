@@ -8,7 +8,7 @@ import sc.senai.topcare.service.interfaces.FormaPagamentoStrategy;
 public class CartaoStrategy implements FormaPagamentoStrategy {
 
     @Override
-    public MetodoPagamento pagamento() {
-        return MetodoPagamento.CARTAO_CREDITO;
+    public String pagamento() {
+        return "Pagamento feito por Cartão de Crédito";
     }
 }
