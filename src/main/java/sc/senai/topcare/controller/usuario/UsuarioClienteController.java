@@ -2,8 +2,9 @@ package sc.senai.topcare.controller.usuario;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPostDTO;
-import sc.senai.topcare.controller.dto.usuario.request.ClienteRequestPutDTO;
+import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
+import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPutDTO;
+import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.service.implement.UsuarioServiceImpl;
 
@@ -16,8 +17,9 @@ public class UsuarioClienteController extends UsuarioController{
         super(usuarioService);
     }
     @PostMapping("/cadastro")
-    public ResponseEntity<Cliente> cadastro(@RequestBody ClienteRequestPostDTO usuarioDTO){
-        return usuarioService.cadastro(usuarioDTO);
+    public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody ClienteRequestPostDTO usuarioDTO){
+        usuarioService.cadastro(usuarioDTO);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/editar/{id}")

@@ -1,29 +1,35 @@
 package sc.senai.topcare.controller.usuario;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoEditarRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
+import sc.senai.topcare.service.implement.EnderecoServiceImpl;
 import sc.senai.topcare.service.implement.UsuarioServiceImpl;
+import sc.senai.topcare.service.interfaces.EnderecoService;
 
 @RestController
 @RequestMapping("usuario/endereco")
-public class UsuarioEnderecoController extends UsuarioController{
-    public UsuarioEnderecoController(UsuarioServiceImpl usuarioService) {
-        super(usuarioService);
-    }
+@RequiredArgsConstructor
+@CrossOrigin("*")
+public class UsuarioEnderecoController{
+    private final EnderecoServiceImpl service;
     @PatchMapping("/cadastro")
-    public ResponseEntity<Boolean> cadastrarEndereco(@RequestBody EnderecoRequestDTO enderecoDTO){
-        return  usuarioService.cadastrarEndereco(enderecoDTO);
+    public ResponseEntity<Void> cadastrarEndereco(@RequestBody EnderecoRequestDTO enderecoDTO){
+        service.cadastrar(enderecoDTO);
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/editar")
-    public ResponseEntity<Boolean> editarEndereco(@RequestBody EnderecoEditarRequestDTO enderecoDTO){
-        return usuarioService.editarEndereco(enderecoDTO);
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Boolean> editar(@RequestBody EnderecoEditarRequestDTO enderecoDTO,
+                                          @PathVariable Long id){
+        service.editar(enderecoDTO, id);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletar(@PathVariable Long id){
-        return ResponseEntity.ok(usuarioService.deletarEndereco(id));
+        return ResponseEntity.ok(service.deletar(id));
     }
 }

@@ -6,9 +6,6 @@ import sc.senai.topcare.service.implement.UsuarioServiceImpl;
 
 @RestController
 @RequestMapping("usuario/agendamento")
-public class UsuarioAgendamentoController extends UsuarioController{
+public class UsuarioAgendamentoController{
 
-    public UsuarioAgendamentoController(UsuarioServiceImpl usuarioService) {
-        super(usuarioService);
-    }
 }

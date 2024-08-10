@@ -2,6 +2,9 @@ package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
+import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
+import sc.senai.topcare.utils.ModelMapperUtil;
 
 @Entity
 @Table(name = "endereco")
@@ -29,4 +32,13 @@ public class Endereco {
     private Integer numero;
 
     private String complemento;
+
+    public Endereco(ClienteRequestPostDTO dto) {
+        ModelMapperUtil.getModelMapper().map(dto, this);
+        this.nome = dto.getNomeEndereco();
+    }
+
+    public Endereco(EnderecoRequestDTO dto){
+        ModelMapperUtil.getModelMapper().map(dto, this);
+    }
 }
