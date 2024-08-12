@@ -8,4 +8,6 @@ import sc.senai.topcare.entity.Pet;
 public interface PetService {
     void cadastrar(PetRequestDTO dto);
     Pet editar(PetRequestDTO petDTO, Long id);
+
+    Pet buscarPorId(Long id);
 }

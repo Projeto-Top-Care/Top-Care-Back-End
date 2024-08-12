@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente extends Usuario {
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private List<Endereco> enderecos = new ArrayList<>();

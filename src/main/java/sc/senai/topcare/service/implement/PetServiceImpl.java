@@ -21,13 +21,20 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public Pet editar(PetRequestDTO petDTO, Long id) {
-        Pet pet = new Pet();
+        Pet pet = buscarPorId(id);
+        ModelMapperUtil.getModelMapper().map(petDTO, pet);
+        pet.setId(id);
         return repository.save(pet);
     }
 
     @Override
+    public Pet buscarPorId(Long id) {
+        return repository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
     public void cadastrar(PetRequestDTO dto) {
-        Cliente cliente = usuarioService.buscarCliente(dto.getId());
+        Cliente cliente = usuarioService.buscarCliente(dto.getIdUsuario());
         Pet pet = new Pet();
         ModelMapperUtil.getModelMapper().map(dto, pet);
         pet.setEspecie( new Especie(dto.getIdEspecie()));
