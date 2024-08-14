@@ -6,4 +6,5 @@ import sc.senai.topcare.entity.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+    boolean existsByNome(String nome);
 }
