@@ -12,14 +12,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ProdutoExImpl implements CarrinhoComponent {
+public class ProdutoExImpl  {
 
     private ProdutoExRepository produtoExRepository;
 
     public ProdutoEx salvarProduto(ProdutoEx produto){
         return produtoExRepository.save(produto);
     }
-    @Override
     public double getPreco(Long id) throws Exception {
         ProdutoEx produto = buscarProdutoExPorId(id);
         return produto.getPreco() ;

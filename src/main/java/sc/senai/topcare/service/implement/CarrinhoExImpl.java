@@ -10,21 +10,16 @@ import java.util.List;
 import java.util.Optional;
 @Service
 @AllArgsConstructor
-public class CarrinhoExImpl implements CarrinhoComponent {
+public class CarrinhoExImpl{
 
     private CarrinhoExRepository carrinhoExRepository;
 
     public CarrinhoEx salvarCarrinhoEx(CarrinhoEx carrinhoEx){
         return carrinhoExRepository.save(carrinhoEx);
     }
-    @Override
     public double getPreco(Long id) throws Exception {
-        double precoTotal = 0;
         CarrinhoEx carrinhoEx = buscarCarrinhoExPorId(id);
-        for (ProdutoEx item : carrinhoEx.getProdutos()) {
-            precoTotal += item.getPreco();
-        }
-        return precoTotal;
+        return carrinhoEx.getPreco();
     }
     public CarrinhoEx buscarCarrinhoExPorId(Long id) throws Exception {
         Optional<CarrinhoEx> optional =  carrinhoExRepository.findById(id);

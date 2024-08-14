@@ -1,4 +1,4 @@
-package sc.senai.topcare.controller.usuario;
+package sc.senai.topcare.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,6 @@ public class CarrinhoExController {
     public ResponseEntity<CarrinhoEx> cadastroProdutoEx(@RequestBody CarrinhoEx carrinhoEx) {
         return new ResponseEntity<>(carrinhoService.salvarCarrinhoEx(carrinhoEx), HttpStatus.OK);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<CarrinhoEx> buscarProdutoExPorId(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(carrinhoService.buscarCarrinhoExPorId(id), HttpStatus.OK);

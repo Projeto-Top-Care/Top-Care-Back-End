@@ -4,6 +4,5 @@ import sc.senai.topcare.entity.CarrinhoEx;
 
 @Service
 public interface CarrinhoComponent {
-        double getPreco(Long id) throws Exception;
-
+        double getPreco();
 }

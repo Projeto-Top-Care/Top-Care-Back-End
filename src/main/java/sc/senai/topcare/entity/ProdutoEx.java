@@ -10,11 +10,14 @@ import sc.senai.topcare.service.interfaces.CarrinhoComponent;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoEx {
+public class ProdutoEx implements CarrinhoComponent{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private double preco;
-
+    @Override
+    public double getPreco(){
+        return this.preco;
+    }
 }
