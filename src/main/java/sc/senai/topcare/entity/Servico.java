@@ -31,7 +31,7 @@ public class Servico {
     @ManyToMany
     private List<Especie> especies;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "id_servico")
     private List<VarianteServico> variantes;
 

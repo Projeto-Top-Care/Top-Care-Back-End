@@ -11,20 +11,18 @@ import sc.senai.topcare.repository.EnderecoRepository;
 import sc.senai.topcare.service.interfaces.EnderecoService;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class EnderecoServiceImpl implements EnderecoService {
 
     private final EnderecoRepository repository;
-    private final UsuarioServiceImpl usuarioService;
+    private final ClienteServiceImpl clienteService;
 
     @Override
     public void cadastrar(EnderecoRequestDTO enderecoDTO) {
-        Cliente cliente = usuarioService.buscarCliente(enderecoDTO.getIdUsuario());
+        Cliente cliente = clienteService.buscarCliente(enderecoDTO.getIdUsuario());
         cliente.getEnderecos().add(new Endereco(enderecoDTO));
-        usuarioService.salvar(cliente);
+        clienteService.salvar(cliente);
     }
 
     @Override

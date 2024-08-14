@@ -15,6 +15,7 @@ import java.util.List;
 public class UsuarioResponseDTO{
         Long id;
         String nome;
+        Role role;
         String email;
         String celular;
         String cpf;

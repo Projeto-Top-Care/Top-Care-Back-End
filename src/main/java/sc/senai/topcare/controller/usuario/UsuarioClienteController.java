@@ -1,30 +1,31 @@
 package sc.senai.topcare.controller.usuario;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPutDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.entity.Cliente;
-import sc.senai.topcare.service.implement.UsuarioServiceImpl;
+import sc.senai.topcare.service.interfaces.ClienteService;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("usuario/cliente")
-public class UsuarioClienteController extends UsuarioController{
+@RequiredArgsConstructor
+public class UsuarioClienteController{
 
-    public UsuarioClienteController(UsuarioServiceImpl usuarioService) {
-        super(usuarioService);
-    }
+    private final ClienteService clienteService;
+
     @PostMapping("/cadastro")
     public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody ClienteRequestPostDTO usuarioDTO){
-        usuarioService.cadastro(usuarioDTO);
+        clienteService.cadastro(usuarioDTO);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/editar/{id}")
     public ResponseEntity<Cliente> editar(@RequestBody ClienteRequestPutDTO dto,
                                           @PathVariable Long id){
-        return ResponseEntity.ok(usuarioService.editar(dto, id));
+        return ResponseEntity.ok(clienteService.editar(dto, id));
     }
 }
