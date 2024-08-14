@@ -9,9 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class ProdutoRequestDTO {
-        private Long id;
         private String nome;
-        private Double notaAvaliacao;
+//        private Double notaAvaliacao;
         private Long imagemId;
         private String marca;
         private List<VarianteProdutoDTO> variantes;
@@ -22,10 +21,10 @@ public class ProdutoRequestDTO {
         private Double preco;
         private Double desconto;
         private Double precoDesconto;
-        private Integer quantidadeVendas;
+//        private Integer quantidadeVendas;
         private List<String> descricao;
         private List<EspecificacaoDTO> especificacoes;
-        private List<AvaliacaoDTO> avaliacoes;
+//        private List<AvaliacaoDTO> avaliacoes;
         private List<String> tags;
     }
 

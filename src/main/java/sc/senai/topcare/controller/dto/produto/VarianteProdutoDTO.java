@@ -1,9 +1,14 @@
 package sc.senai.topcare.controller.dto.produto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import sc.senai.topcare.entity.TipoVariante;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class VarianteProdutoDTO {
-    private Long id;
     private TipoVariante tipoVariante;
     private Double preco;
     private Double desconto;

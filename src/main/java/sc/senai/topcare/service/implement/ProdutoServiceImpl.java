@@ -63,17 +63,6 @@ public class ProdutoServiceImpl implements ProdutoService {
                     .collect(Collectors.toList());
             produto.setEspecificacao(especificacoes);
 
-            List<Avaliacao> avaliacoes = produtoDTO.getAvaliacoes().stream()
-                    .map(dto -> {
-
-                        Avaliacao avaliacao = new Avaliacao();
-                        BeanUtils.copyProperties(dto, avaliacao);
-                        return avaliacao;
-
-                    })
-                    .collect(Collectors.toList());
-            produto.setAvaliacao(avaliacoes);
-
             Produto savedProduto = produtoRepository.save(produto);
             return new ResponseEntity<>(savedProduto, HttpStatus.CREATED);
         } catch (Exception e) {
