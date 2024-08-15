@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
+import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.List;
 
@@ -34,5 +36,9 @@ public class Servico {
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "id_servico")
     private List<VarianteServico> variantes;
+
+    public Servico(ServicoRequestDTO dto){
+        ModelMapperUtil.getModelMapper().map(dto, this);
+    }
 
 }

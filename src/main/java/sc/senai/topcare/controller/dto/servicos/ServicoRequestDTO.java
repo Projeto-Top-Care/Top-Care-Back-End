@@ -3,6 +3,8 @@ package sc.senai.topcare.controller.dto.servicos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.entity.Especie;
+import sc.senai.topcare.entity.Funcionario;
 import sc.senai.topcare.entity.VarianteServico;
 
 import java.util.List;
@@ -12,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ServicoRequestDTO {
     String nome;
-    List<Long> especiesId;
+    List<Especie> especies;
     String descricao;
-    List<Long> funcionariosId;
+    List<Funcionario> funcionarios;
     List<VarianteServico> variantes;
 }
