@@ -22,6 +22,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     public void cadastrar(EnderecoRequestDTO enderecoDTO) {
         Cliente cliente = clienteService.buscarCliente(enderecoDTO.getIdUsuario());
         cliente.getEnderecos().add(new Endereco(enderecoDTO));
+        System.out.println(cliente.getEnderecos());
         clienteService.salvar(cliente);
     }
 

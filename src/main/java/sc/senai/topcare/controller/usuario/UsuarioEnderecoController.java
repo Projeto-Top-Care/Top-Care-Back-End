@@ -13,6 +13,7 @@ import sc.senai.topcare.service.endereco.EnderecoServiceImpl;
 @CrossOrigin("*")
 public class UsuarioEnderecoController{
     private final EnderecoServiceImpl service;
+
     @PatchMapping("/cadastro")
     public ResponseEntity<Void> cadastrarEndereco(@RequestBody EnderecoRequestDTO enderecoDTO){
         service.cadastrar(enderecoDTO);

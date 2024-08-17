@@ -17,11 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Cliente extends Usuario {
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_usuario")
     private List<Endereco> enderecos = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_usuario")
     private List<Pet> pets = new ArrayList<>();
 
