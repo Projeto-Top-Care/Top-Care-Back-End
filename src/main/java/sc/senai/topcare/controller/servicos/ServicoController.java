@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
-import sc.senai.topcare.service.interfaces.ServicoService;
+import sc.senai.topcare.service.servico.ServicoService;
 
 @RestController
 @CrossOrigin("*")

@@ -1,4 +1,4 @@
-package sc.senai.topcare.service.implement;
+package sc.senai.topcare.service.endereco;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Endereco;
 import sc.senai.topcare.exceptions.EnderecoNaoEncontradoException;
 import sc.senai.topcare.repository.EnderecoRepository;
-import sc.senai.topcare.service.interfaces.EnderecoService;
+import sc.senai.topcare.service.cliente.ClienteServiceImpl;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 @Service
@@ -43,7 +43,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public Boolean editar(EnderecoEditarRequestDTO dto, Long id) {
         Endereco endereco = buscar(id);
-        ModelMapperUtil.getModelMapper().map(dto, endereco);
+        ModelMapperUtil.map(dto, endereco);
         salvar(endereco);
         return true;
     }

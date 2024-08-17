@@ -1,4 +1,4 @@
-package sc.senai.topcare.service.interfaces;
+package sc.senai.topcare.service.usuario;
 
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;

@@ -1,4 +1,4 @@
-package sc.senai.topcare.service.implement;
+package sc.senai.topcare.service.cliente;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -8,7 +8,6 @@ import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPut
 import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.ClienteRepository;
-import sc.senai.topcare.service.interfaces.ClienteService;
 
 @Service
 @RequiredArgsConstructor

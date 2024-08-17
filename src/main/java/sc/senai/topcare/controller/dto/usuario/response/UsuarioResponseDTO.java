@@ -27,7 +27,7 @@ public class UsuarioResponseDTO{
         List<Agendamento> agendamentos;
         List<Pedido> pedidos;
 
-        public UsuarioResponseDTO(Cliente cliente){
-                ModelMapperUtil.getModelMapper().map(cliente, this);
+        public UsuarioResponseDTO(Usuario usuario){
+                ModelMapperUtil.map(usuario, this);
         }
 }

@@ -1,20 +1,13 @@
-package sc.senai.topcare.service.implement;
+package sc.senai.topcare.service.usuario;
 
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
-import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPutDTO;
 import sc.senai.topcare.controller.dto.usuario.request.usuario.LoginRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.response.LoginResonseDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
-import sc.senai.topcare.repository.ClienteRepository;
-import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Usuario;
-import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.UsuarioRepository;
-import sc.senai.topcare.service.interfaces.UsuarioService;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.Optional;
@@ -42,7 +35,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioResponseDTO buscarUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
-        return ModelMapperUtil.getModelMapper().map(usuario, UsuarioResponseDTO.class);
+        ModelMapperUtil.map(usuario, UsuarioResponseDTO.class);
+        return new UsuarioResponseDTO(usuario);
     }
 
 }

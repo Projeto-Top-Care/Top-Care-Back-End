@@ -1,4 +1,4 @@
-package sc.senai.topcare.service.interfaces;
+package sc.senai.topcare.service.cliente;
 
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPutDTO;

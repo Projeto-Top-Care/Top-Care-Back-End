@@ -7,7 +7,7 @@ import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPos
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPutDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
 import sc.senai.topcare.entity.Cliente;
-import sc.senai.topcare.service.interfaces.ClienteService;
+import sc.senai.topcare.service.cliente.ClienteService;
 
 @RestController
 @CrossOrigin("*")

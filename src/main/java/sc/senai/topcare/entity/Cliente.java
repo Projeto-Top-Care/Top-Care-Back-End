@@ -42,7 +42,7 @@ public class Cliente extends Usuario {
     private List<Agendamento> agendamentos = new ArrayList<>();
 
     public Cliente(ClienteRequestPostDTO dto){
-        ModelMapperUtil.getModelMapper().map(dto, this);
+        ModelMapperUtil.map(dto, this);
         this.enderecos.add(new Endereco(dto));
     }
 
