@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,4 +27,16 @@ public class Funcionario extends Usuario{
     private List<Horario> horariosAgendados;
 
 
+    public Funcionario(String nome, Role role, String email, String celular, String cpf,
+                       LocalDate dataNascimento, Sexo sexo, String senha, Filial filial) {
+        this.setNome(nome);
+        this.setRole(role);
+        this.setEmail(email);
+        this.setCelular(celular);
+        this.setCpf(cpf);
+        this.setDataNascimento(dataNascimento);
+        this.setSexo(sexo);
+        this.setSenha(senha);
+        this.filial = filial;
+    }
 }
