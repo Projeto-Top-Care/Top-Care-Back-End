@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.usuario.request.usuario.LoginRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.response.LoginResonseDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
-import sc.senai.topcare.service.implement.UsuarioServiceImpl;
+import sc.senai.topcare.service.usuario.UsuarioServiceImpl;
 
 @RestController
 @CrossOrigin("*")

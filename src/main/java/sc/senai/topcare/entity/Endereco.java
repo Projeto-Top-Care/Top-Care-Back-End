@@ -34,11 +34,11 @@ public class Endereco {
     private String complemento;
 
     public Endereco(ClienteRequestPostDTO dto) {
-        ModelMapperUtil.getModelMapper().map(dto, this);
+        ModelMapperUtil.map(dto, this);
         this.nome = dto.getNomeEndereco();
     }
 
     public Endereco(EnderecoRequestDTO dto){
-        ModelMapperUtil.getModelMapper().map(dto, this);
+        ModelMapperUtil.map(dto, this);
     }
 }

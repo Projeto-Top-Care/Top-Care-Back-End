@@ -17,11 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Cliente extends Usuario {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_usuario")
     private List<Endereco> enderecos = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_usuario")
     private List<Pet> pets = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class Cliente extends Usuario {
     private List<Agendamento> agendamentos = new ArrayList<>();
 
     public Cliente(ClienteRequestPostDTO dto){
-        ModelMapperUtil.getModelMapper().map(dto, this);
+        ModelMapperUtil.map(dto, this);
         this.enderecos.add(new Endereco(dto));
     }
 

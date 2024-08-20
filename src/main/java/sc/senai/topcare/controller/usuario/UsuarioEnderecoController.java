@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoEditarRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
-import sc.senai.topcare.service.implement.EnderecoServiceImpl;
-import sc.senai.topcare.service.implement.UsuarioServiceImpl;
-import sc.senai.topcare.service.interfaces.EnderecoService;
+import sc.senai.topcare.service.endereco.EnderecoServiceImpl;
 
 @RestController
 @RequestMapping("usuario/endereco")
@@ -15,6 +13,7 @@ import sc.senai.topcare.service.interfaces.EnderecoService;
 @CrossOrigin("*")
 public class UsuarioEnderecoController{
     private final EnderecoServiceImpl service;
+
     @PatchMapping("/cadastro")
     public ResponseEntity<Void> cadastrarEndereco(@RequestBody EnderecoRequestDTO enderecoDTO){
         service.cadastrar(enderecoDTO);
