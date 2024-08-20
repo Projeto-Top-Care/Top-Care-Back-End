@@ -1,10 +1,7 @@
 package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 @Data
@@ -12,16 +9,19 @@ import java.time.LocalDate;
 @Table(name = "usuario")
 @AllArgsConstructor
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Builder
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 //    @OneToOne
 //    private File foto;
 
     private String nome;
+
+    private Role role;
 
     private String email;
 
