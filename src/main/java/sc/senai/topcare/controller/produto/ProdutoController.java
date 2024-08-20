@@ -1,4 +1,4 @@
-package sc.senai.topcare.controller;
+package sc.senai.topcare.controller.produto;
 
 
 import lombok.AllArgsConstructor;

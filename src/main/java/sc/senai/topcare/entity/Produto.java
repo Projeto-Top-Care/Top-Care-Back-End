@@ -26,7 +26,7 @@ public class Produto {
 
     private String marca;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_produto")
     private List<VarianteProduto> variantes;
 
