@@ -11,7 +11,7 @@ import java.util.List;
 public interface FuncionarioService {
     Boolean cadastro(FuncionarioPostDto dto);
     Funcionario editarFuncionario(Long id, FuncionarioPostDto dto);
-    Funcionario buscarFuncionario(Long id);
+    FuncionarioResponseDTO buscarFuncionario(Long id);
     List<FuncionarioSimplesResponseDto> buscarTodos() throws ListaVaziaException;
     Boolean excluir(Long id);
 }

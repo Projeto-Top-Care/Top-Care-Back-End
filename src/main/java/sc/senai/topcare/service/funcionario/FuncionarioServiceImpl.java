@@ -25,9 +25,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public Boolean cadastro(FuncionarioPostDto dto) {
-        Filial filial = filialRepository.findById(dto.getIdFilial()).get();
+        Filial filial = filialRepository.findByNome(dto.getNomeFilial());
         Funcionario funcionario = new Funcionario(
                 dto.getNome(),
+                dto.getCodigo(),
                 dto.getRole(),
                 dto.getEmail(),
                 dto.getCelular(),
@@ -43,9 +44,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public Funcionario editarFuncionario(Long id, FuncionarioPostDto dto) {
-        Filial filial = filialRepository.findById(dto.getIdFilial()).get();
+        Filial filial = filialRepository.findByNome(dto.getNomeFilial());
         Funcionario funcionario = new Funcionario(
                 dto.getNome(),
+                dto.getCodigo(),
                 dto.getRole(),
                 dto.getEmail(),
                 dto.getCelular(),
@@ -61,8 +63,19 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public Funcionario buscarFuncionario(Long id) {
-        return funcionarioRepository.findById(id).get();
+    public FuncionarioResponseDTO buscarFuncionario(Long id) {
+        Funcionario funcionario = funcionarioRepository.findById(id).get();
+        String nomeFilial = filialRepository.findById(funcionario.getFilial().getId()).get().getNome();
+        return new FuncionarioResponseDTO(
+                funcionario.getNome(),
+                funcionario.getCodigo(),
+                funcionario.getEmail(),
+                funcionario.getCelular(),
+                funcionario.getCpf(),
+                funcionario.getDataNascimento(),
+                funcionario.getSexo(),
+                nomeFilial
+        );
     }
 
     @Override

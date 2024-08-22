@@ -12,6 +12,8 @@ import java.time.LocalDate;
 public class FuncionarioPostDto {
     String nome;
 
+    Long codigo;
+
     Role role;
 
     String email;
@@ -26,5 +28,5 @@ public class FuncionarioPostDto {
 
     String senha;
 
-    Long idFilial;
+    String nomeFilial;
 }

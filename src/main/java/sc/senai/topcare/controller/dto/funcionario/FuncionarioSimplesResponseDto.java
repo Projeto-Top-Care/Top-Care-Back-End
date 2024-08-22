@@ -12,7 +12,7 @@ public class FuncionarioSimplesResponseDto {
 
         Long id;
         String nome;
-        String cpf;
+        String codigo;
         String email;
 
         public FuncionarioSimplesResponseDto(Funcionario funcionario) {

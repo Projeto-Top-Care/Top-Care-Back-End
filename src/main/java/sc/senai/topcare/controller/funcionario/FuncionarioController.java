@@ -28,7 +28,7 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> buscar(@PathVariable Long id) {
+    public ResponseEntity<FuncionarioResponseDTO> buscar(@PathVariable Long id) {
         return new ResponseEntity<>(service.buscarFuncionario(id), HttpStatus.OK);
     }
 

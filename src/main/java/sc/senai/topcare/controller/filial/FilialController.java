@@ -13,6 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/filiais")
 public class FilialController {
     private final FilialServiceImpl filialService;
