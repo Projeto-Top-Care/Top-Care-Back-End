@@ -15,6 +15,7 @@ import java.util.List;
 public class ServicoRequestDTO {
     String nome;
     List<Especie> especies;
+    String categoria;
     String descricao;
     List<Funcionario> funcionarios;
     List<VarianteServico> variantes;

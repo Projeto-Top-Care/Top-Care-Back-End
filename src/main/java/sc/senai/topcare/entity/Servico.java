@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
+import sc.senai.topcare.controller.dto.servicos.ServicoResponseDTO;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.List;
@@ -43,4 +44,8 @@ public class Servico {
         ModelMapperUtil.map(dto, this);
     }
 
+    public ServicoResponseDTO editar(ServicoRequestDTO dto) {
+        ModelMapperUtil.map(dto, this);
+        return new ServicoResponseDTO(this);
+    }
 }

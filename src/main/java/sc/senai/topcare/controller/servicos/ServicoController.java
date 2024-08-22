@@ -39,4 +39,10 @@ public class ServicoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> atualizar(@RequestBody ServicoRequestDTO dto, @PathVariable Long id){
+        service.editar(dto, id);
+        return ResponseEntity.ok().build();
+    }
+
 }

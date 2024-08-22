@@ -47,7 +47,9 @@ public class ServicoServiceImpl implements ServicoService {
 
     @Override
     public Boolean editar(ServicoRequestDTO dto, Long id) {
-        return null;
+        Servico servico = repository.findById(id).orElseThrow(RuntimeException::new);
+        servico.editar(dto);
+        return true;
     }
 
     @Override
