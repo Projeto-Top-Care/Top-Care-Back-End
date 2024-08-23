@@ -1,105 +1,86 @@
 package sc.senai.topcare.service.quantidadeProduto;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoPatchDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestSimplesDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoResponseSimplesDTO;
 import sc.senai.topcare.entity.QuantidadeProduto;
-import sc.senai.topcare.repository.ProdutoRepository;
+import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.QuantidadeProdutoRepository;
 import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class QuantidadeProdutoServiceImpl {
+public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
 
     private final QuantidadeProdutoRepository repository;
     private final ProdutoServiceImpl produtoService;
 
-    public ResponseEntity<QuantidadeProduto> criarQuantProduto(QuantidadeProdutoRequestDTO dto) {
-        try {
-            QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
-            quantidadeProduto.setProduto(dto.getProduto());
-            quantidadeProduto.setQuantidade(dto.getQuantidade());
-            repository.save(quantidadeProduto);
-            return new ResponseEntity<>(quantidadeProduto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @Override
+    public QuantidadeProduto criarQuantProduto(QuantidadeProdutoRequestDTO dto) {
+        QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
+        quantidadeProduto.setProduto(dto.getProduto());
+        quantidadeProduto.setQuantidade(dto.getQuantidade());
+        return repository.save(quantidadeProduto);
     }
 
-    public ResponseEntity<QuantidadeProduto> criarQuantProdutoSimples(QuantidadeProdutoRequestSimplesDTO dto) {
-        try {
-            QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
-            quantidadeProduto.setProduto(produtoService.buscar(dto.getProdutoId()));
-            quantidadeProduto.setQuantidade(dto.getQuantidade());
-            repository.save(quantidadeProduto);
-            return new ResponseEntity<>(quantidadeProduto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @Override
+    public QuantidadeProduto criarQuantProdutoSimples(QuantidadeProdutoRequestSimplesDTO dto) {
+        QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
+        quantidadeProduto.setProduto(produtoService.buscar(dto.getProdutoId()));
+        quantidadeProduto.setQuantidade(dto.getQuantidade());
+        return repository.save(quantidadeProduto);
     }
 
-    public ResponseEntity<QuantidadeProduto> buscarPorId(Long id) {
-        try {
-            QuantidadeProduto quantidadeProduto = repository.findById(id).get();
-            return new ResponseEntity<>(quantidadeProduto, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @Override
+    public QuantidadeProduto buscarPorId(Long id) {
+        Optional<QuantidadeProduto> quantidadeOptional = repository.findById(id);
+        if(quantidadeOptional.isEmpty()){
+            throw new RuntimeException("A quantidade não foi encontrada");
         }
+        return quantidadeOptional.get();
     }
 
-    public ResponseEntity<QuantidadeProdutoResponseSimplesDTO> buscarPorIdSimples(Long id) {
-        try {
-            QuantidadeProduto quantidadeProduto = repository.findById(id).get();
-            return new ResponseEntity<>(quantidadeProduto.paraSimplesResponseDTO(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @Override
+    public List<QuantidadeProduto> buscarTodos() throws ListaVaziaException {
+        List<QuantidadeProduto> quantidadeProdutos = repository.findAll();
+        if (quantidadeProdutos.isEmpty()){
+           throw new ListaVaziaException();
         }
+        return quantidadeProdutos;
     }
 
-    public ResponseEntity<List<QuantidadeProduto>> buscarTodos(){
-        try {
-            List<QuantidadeProduto> quantidadeProdutos = repository.findAll();
-            return new ResponseEntity<>(quantidadeProdutos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @Override
+    public List<QuantidadeProdutoResponseSimplesDTO> buscarTodosSimples() throws ListaVaziaException {
+        List<QuantidadeProduto> quantidadeProdutos = buscarTodos();
+        List<QuantidadeProdutoResponseSimplesDTO> quantidadeDTO = new ArrayList<>();
+        for(QuantidadeProduto quantidade: quantidadeProdutos){
+            quantidadeDTO.add(quantidade.paraSimplesResponseDTO());
         }
+        return quantidadeDTO;
     }
 
-    public ResponseEntity<List<QuantidadeProdutoResponseSimplesDTO>> buscarTodosSimples(){
-        try {
-            List<QuantidadeProduto> quantidadeProdutos = repository.findAll();
-            List<QuantidadeProdutoResponseSimplesDTO> quantidadeDTO = new ArrayList<>();
-            for(QuantidadeProduto quantidade: quantidadeProdutos){
-                quantidadeDTO.add(quantidade.paraSimplesResponseDTO());
-            }
-            return new ResponseEntity<>(quantidadeDTO, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @Override
+    public QuantidadeProduto editarQuantProduto(Long id, QuantidadeProdutoPatchDTO dto) {
+        QuantidadeProduto quantidadeProduto = buscarPorId(id);
+        quantidadeProduto.setQuantidade(dto.getQuantidade());
+        return repository.save(quantidadeProduto);
     }
 
-    public ResponseEntity<QuantidadeProduto> atualizar(Long id, QuantidadeProdutoRequestDTO dto) {
+    @Override
+    public Boolean deletarQuantidadeProduto(Long id){
         try {
-            QuantidadeProduto quantidadeProduto = repository.findById(id).get();
-            quantidadeProduto.setProduto(dto.getProduto());
-            quantidadeProduto.setQuantidade(dto.getQuantidade());
-            repository.save(quantidadeProduto);
-            return new ResponseEntity<>(quantidadeProduto, HttpStatus.OK);
+            repository.deleteById(id);
+            return true;
         } catch (Exception e) {
-            if (e instanceof NoSuchElementException) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }

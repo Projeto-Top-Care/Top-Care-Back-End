@@ -23,10 +23,6 @@ public class QuantidadeProduto {
 
     private Integer quantidade;
 
-    public QuantidadeProdutoRequestSimplesDTO paraSimplesRequestDTO(){
-        return new QuantidadeProdutoRequestSimplesDTO(this.produto.getId(), this.quantidade);
-    }
-
     public QuantidadeProdutoResponseSimplesDTO paraSimplesResponseDTO(){
         return new QuantidadeProdutoResponseSimplesDTO(this.id, this.produto.getId(), this.quantidade);
     }
