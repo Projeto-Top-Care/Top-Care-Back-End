@@ -16,15 +16,15 @@ public class ProdutoRequestDTO {
         private List<VarianteProdutoDTO> variantes;
         private Boolean disponivel;
         private Long codigo;
-        private Integer estoque;
-        private Boolean temVariante;
-        private Double preco;
-        private Double desconto;
-        private Double precoDesconto;
+//        private Integer estoque;
+//        private Boolean temVariante;
+//        private Double preco;
+//        private Double desconto;
+//        private Double precoDesconto;
 //        private Integer quantidadeVendas;
         private List<String> descricao;
         private List<EspecificacaoDTO> especificacoes;
 //        private List<AvaliacaoDTO> avaliacoes;
-        private List<String> tags;
+//        private List<String> tags;
     }
 
