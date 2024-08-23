@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -18,14 +19,15 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Servico servico;
+    @OneToOne(mappedBy = "horario")
+    private Agendamento agendamento;
 
     private Boolean reservado;
 
     private LocalDate dia;
 
-    @OneToMany
-    @JoinColumn(name = "id_horario")
-    private List<Periodo> horarios;
+    private LocalTime horaInicio;
+
+    private LocalTime horaFim;
+
 }

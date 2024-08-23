@@ -24,10 +24,12 @@ public class Agendamento {
 
     private Double valor;
 
-    @ManyToOne
-    private Servico servico;
+    @OneToOne
+    private Horario horario;
 
-    private LocalDateTime horario;
+    @ManyToOne
+    @JoinColumn(name = "id_servico")
+    private VarianteServico servico;
 
     @ManyToOne
     private Funcionario profissional;

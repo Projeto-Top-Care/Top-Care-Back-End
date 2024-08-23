@@ -3,6 +3,7 @@ package sc.senai.topcare.controller.dto.usuario.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.usuario.response.pet.PetResponseDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
@@ -22,12 +23,19 @@ public class UsuarioResponseDTO{
         LocalDate dataNascimento;
         Sexo sexo;
         List<Endereco> enderecos;
-        List<Pet> pets;
+        List<PetResponseDTO> pets;
         List<Cartao> cartoes;
         List<Agendamento> agendamentos;
         List<Pedido> pedidos;
 
         public UsuarioResponseDTO(Usuario usuario){
-                ModelMapperUtil.map(usuario, this);
+                if(usuario instanceof Cliente cliente){
+                        List<Pet> pets1 = cliente.getPets();
+                        cliente.setPets(null);
+                        ModelMapperUtil.map(usuario, this);
+                        this.pets = pets1.stream().map(PetResponseDTO::new).toList();
+                }else{
+                        ModelMapperUtil.map(usuario,this);
+                }
         }
 }
