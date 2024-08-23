@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoResponseDTO;
 import sc.senai.topcare.utils.ModelMapperUtil;
@@ -36,7 +37,7 @@ public class Servico {
     @ManyToMany
     private List<Especie> especies;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_servico")
     private List<VarianteServico> variantes;
 
@@ -45,7 +46,7 @@ public class Servico {
     }
 
     public ServicoResponseDTO editar(ServicoRequestDTO dto) {
-        ModelMapperUtil.map(dto, this);
+        BeanUtils.copyProperties(dto, this);
         return new ServicoResponseDTO(this);
     }
 }

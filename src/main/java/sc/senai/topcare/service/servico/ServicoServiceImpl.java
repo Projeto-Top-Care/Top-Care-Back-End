@@ -49,6 +49,7 @@ public class ServicoServiceImpl implements ServicoService {
     public Boolean editar(ServicoRequestDTO dto, Long id) {
         Servico servico = repository.findById(id).orElseThrow(RuntimeException::new);
         servico.editar(dto);
+        repository.save(servico);
         return true;
     }
 

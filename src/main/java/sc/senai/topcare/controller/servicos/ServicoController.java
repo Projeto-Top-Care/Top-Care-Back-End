@@ -45,4 +45,10 @@ public class ServicoController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> remover(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
