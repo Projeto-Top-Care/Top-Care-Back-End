@@ -3,6 +3,7 @@ package sc.senai.topcare.service.funcionario;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
+import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
 import sc.senai.topcare.entity.Filial;
@@ -43,23 +44,26 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public Funcionario editarFuncionario(Long id, FuncionarioPostDto dto) {
+    public FuncionarioRequestPutDto editarFuncionario(Long id, FuncionarioRequestPutDto dto) {
         Filial filial = filialRepository.findByNome(dto.getNomeFilial());
         Funcionario funcionario = new Funcionario(
                 dto.getNome(),
-                dto.getCodigo(),
-                dto.getRole(),
                 dto.getEmail(),
                 dto.getCelular(),
-                dto.getCpf(),
                 dto.getDataNascimento(),
                 dto.getSexo(),
-                dto.getSenha(),
                 filial
         );
         funcionario.setId(id);
         funcionarioRepository.save(funcionario);
-        return funcionario;
+        return new FuncionarioRequestPutDto(
+                funcionario.getNome(),
+                funcionario.getEmail(),
+                funcionario.getCelular(),
+                funcionario.getDataNascimento(),
+                funcionario.getSexo(),
+                filial.getNome()
+        );
     }
 
     @Override

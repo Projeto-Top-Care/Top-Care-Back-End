@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
+import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
 import sc.senai.topcare.entity.Funcionario;
@@ -42,7 +43,7 @@ public class FuncionarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Funcionario> editarFuncionario(@PathVariable Long id, @RequestBody FuncionarioPostDto dto) {
+    public ResponseEntity<FuncionarioRequestPutDto> editarFuncionario(@PathVariable Long id, @RequestBody FuncionarioRequestPutDto dto) {
         return new ResponseEntity<>(service.editarFuncionario(id, dto), HttpStatus.OK);
     }
 

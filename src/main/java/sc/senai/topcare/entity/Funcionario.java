@@ -42,4 +42,14 @@ public class Funcionario extends Usuario{
         this.setSenha(senha);
         this.filial = filial;
     }
+
+    public Funcionario(String nome, String email, String celular, LocalDate dataNascimento,
+                       Sexo sexo, Filial filial) {
+        this.setNome(nome);
+        this.setEmail(email);
+        this.setCelular(celular);
+        this.setDataNascimento(dataNascimento);
+        this.setSexo(sexo);
+        this.filial = filial;
+    }
 }
