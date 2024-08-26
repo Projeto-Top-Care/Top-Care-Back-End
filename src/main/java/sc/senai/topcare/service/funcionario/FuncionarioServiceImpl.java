@@ -46,14 +46,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     public FuncionarioRequestPutDto editarFuncionario(Long id, FuncionarioRequestPutDto dto) {
         Filial filial = filialRepository.findByNome(dto.getNomeFilial());
-        Funcionario funcionario = new Funcionario(
-                dto.getNome(),
-                dto.getEmail(),
-                dto.getCelular(),
-                dto.getDataNascimento(),
-                dto.getSexo(),
-                filial
-        );
+        Funcionario funcionario = funcionarioRepository.findById(id).get();
+        funcionario.setSexo(dto.getSexo());
+        funcionario.setNome(dto.getNome());
+        funcionario.setEmail(dto.getEmail());
+        funcionario.setCelular(dto.getCelular());
+        funcionario.setDataNascimento(dto.getDataNascimento());
+        funcionario.setFilial(filial);
+
         funcionario.setId(id);
         funcionarioRepository.save(funcionario);
         return new FuncionarioRequestPutDto(

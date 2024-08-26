@@ -2,6 +2,7 @@ package sc.senai.topcare.service.filial;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sc.senai.topcare.controller.dto.filial.FilialCompletaResponseDto;
 import sc.senai.topcare.controller.dto.filial.FilialPostDto;
 import sc.senai.topcare.controller.dto.filial.FilialSimplesRequestDTO;
 import sc.senai.topcare.entity.Endereco;
@@ -31,6 +32,8 @@ public class FilialServiceImpl implements FilialService {
         );
         Filial filial = new Filial();
         filial.setEndereco(endereco);
+        filial.setDiasDaSemana(filialDto.getDiasDaSemana());
+        filial.setHorarioFuncionamento(filialDto.getHorarioFuncionamento());
         filial.setNome(filialDto.getNome());
         filialRepository.save(filial);
         return true;
@@ -68,5 +71,30 @@ public class FilialServiceImpl implements FilialService {
         filial.setNome(filialDto.getNome());
         filialRepository.save(filial);
         return new FilialSimplesRequestDTO(filial.getNome());
+    }
+
+    @Override
+    public Boolean editarFilial(Long id, FilialCompletaResponseDto filialDto) {
+        Endereco endereco = new Endereco();
+        Filial filial = new Filial();
+        filial.setId(id);
+        filial.setDiasDaSemana(filialDto.getDiasDaSemana());
+        filial.setHorarioFuncionamento(filialDto.getHorarioFuncionamento());
+        filial.setNome(filialDto.getNome());
+
+        endereco.setNome(filialDto.getNomeEndereco());
+        endereco.setCep(filialDto.getCep());
+        endereco.setEstado(filialDto.getEstado());
+        endereco.setCidade(filialDto.getCidade());
+        endereco.setBairro(filialDto.getBairro());
+        endereco.setRua(filialDto.getRua());
+        endereco.setNumero(filialDto.getNumero());
+        endereco.setComplemento(filialDto.getComplemento());
+
+        filial.setEndereco(endereco);
+
+        filialRepository.save(filial);
+
+        return true;
     }
 }

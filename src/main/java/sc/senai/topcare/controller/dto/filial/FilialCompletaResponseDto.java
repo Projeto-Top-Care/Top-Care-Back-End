@@ -18,4 +18,6 @@ public class FilialCompletaResponseDto {
     String nomeEndereco;
     Integer numero;
     String rua;
+    String diasDaSemana;
+    String horarioFuncionamento;
 }

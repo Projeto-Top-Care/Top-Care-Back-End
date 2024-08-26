@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.filial.FilialCompletaResponseDto;
 import sc.senai.topcare.controller.dto.filial.FilialPostDto;
 import sc.senai.topcare.controller.dto.filial.FilialSimplesRequestDTO;
 import sc.senai.topcare.entity.Filial;
@@ -41,5 +42,10 @@ public class FilialController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> remover(@PathVariable Long id) {
         return new ResponseEntity<>(filialService.excluir(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> editar(@PathVariable Long id, @RequestBody FilialCompletaResponseDto filialDto) {
+        return new ResponseEntity<>(filialService.editarFilial(id, filialDto), HttpStatus.OK);
     }
 }

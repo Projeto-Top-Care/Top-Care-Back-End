@@ -20,7 +20,10 @@ public class Filial {
     private String nome;
 
     @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Endereco endereco;
 
+    private String diasDaSemana;
+
+    private String horarioFuncionamento;
 }

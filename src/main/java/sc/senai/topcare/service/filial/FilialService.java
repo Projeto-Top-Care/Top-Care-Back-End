@@ -1,5 +1,6 @@
 package sc.senai.topcare.service.filial;
 
+import sc.senai.topcare.controller.dto.filial.FilialCompletaResponseDto;
 import sc.senai.topcare.controller.dto.filial.FilialPostDto;
 import sc.senai.topcare.controller.dto.filial.FilialSimplesRequestDTO;
 import sc.senai.topcare.entity.Filial;
@@ -12,5 +13,6 @@ public interface FilialService {
     List<FilialSimplesRequestDTO> buscarFiliais();
     Boolean excluir(Long id);
     FilialSimplesRequestDTO atualizar(Long id, FilialSimplesRequestDTO filialDto);
+    Boolean editarFilial(Long id, FilialCompletaResponseDto filialPostDto);
 
 }
