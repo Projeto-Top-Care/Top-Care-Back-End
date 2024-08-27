@@ -13,13 +13,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ServicoRepository;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,7 +76,7 @@ class ServicoControllerTest {
     };
 
     @Test
-    void testServicoControllerPostOk() throws Exception {
+    void testServicoControllerPostCreated() throws Exception {
         when(servicoRepository.save(new Servico()))
                 .then(invocationOnMock ->
                         criarServico()
@@ -97,10 +98,38 @@ class ServicoControllerTest {
     }
 
     @Test
+    void testServicoControllerPostBadRequest() throws Exception {
+        when(servicoRepository.save(new Servico())).then(invocationOnMock -> Optional.empty());
+        mockMvc.perform(MockMvcRequestBuilders.post("/servicos")).andExpect(status().isBadRequest());
+    }
+
+    @Test // não é pra funionar, a controller ainda não tratou esse erro
+    void testServicoControllerPostConflict() throws Exception {
+            when(servicoRepository.save(new Servico())).thenThrow(new SQLIntegrityConstraintViolationException());
+            when(servicoRepository.findById(1L)).then(invocationOnMock -> Optional.of(criarServico()));
+            mockMvc.perform(MockMvcRequestBuilders.post("/servicos")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("""
+                                        {
+                                          "nome":  "Teste",
+                                          "especies": [],
+                                          "categoria": "Categoria tete",
+                                          "descricao": "Descricao teste",
+                                          "funcionarios": [],
+                                          "variantes": []
+                                        }
+                            """)
+            ).andExpect(status().isConflict());
+
+        }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    @Test
     void testServicoControllerGetUm() throws Exception {
         when(servicoRepository.findById(1L)).then(
                 invocationOnMock -> {
-                    return criarServico();
+                    return Optional.of(criarServico());
                 });
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/servicos/1")).andExpectAll(status().isOk())
@@ -165,7 +194,7 @@ class ServicoControllerTest {
     }
 
     @Test
-    void testSerivcoControllerGetUmNotFotFaund() throws Exception {
+    void testSerivcoControllerGetUmNotFound() throws Exception {
         when(servicoRepository.findById(1L)).then(invocationOnMock ->
                 Optional.empty()
         );
@@ -175,11 +204,126 @@ class ServicoControllerTest {
     }
 
     @Test
-    void testServioontrollerPutOk() throws Exception {
+    void testSerivcoControllerGetUmBadRequest() throws Exception {
+        when(servicoRepository.findById(1L)).then(invocationOnMock ->
+                Optional.empty()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.get("/servicos/t")).andExpect(
+                status().isBadRequest()
+        );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Test // eu acho que é pra dar erro tbm, n sei
+    void testServicoControllerPutNoContent() throws Exception {
+        Servico servico = criarServico();
         when(servicoRepository.save(new Servico()))
                 .then(invocationOnMock ->
-                        criarServico()
+                        servico
                 );
+        when(servicoRepository.findById(1L))
+                .then(invocationOnMock ->
+                        Optional.of(servico)
+                );
+        mockMvc.perform(MockMvcRequestBuilders.put("/servicos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nome":  "Teste",
+                                  "especies": [],
+                                  "categoria": "Categoria tete",
+                                  "descricao": "Descricao teste",
+                                  "funcionarios": [],
+                                  "variantes": []
+                                }
+                                """))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testServicoControllerPutBadRequestBody() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/servicos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testServicoControllerPutBadRequestPathVariable() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/servicos/t")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nome":  "Teste",
+                                  "especies": [],
+                                  "categoria": "Categoria tete",
+                                  "descricao": "Descricao teste",
+                                  "funcionarios": [],
+                                  "variantes": []
+                                }
+                                """))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test //é pra dar erro ainda
+    void testServicoControllerPutNotFound() throws Exception {
+        when(servicoRepository.findById(1L))
+                .then(invocationOnMock ->
+                        Optional.empty()
+                );
+        mockMvc.perform(MockMvcRequestBuilders.put("/servicos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nome":  "Teste",
+                                  "species": [],
+                                  "categoria": "Categoria tete",
+                                  "descricao": "Descricao teste",
+                                  "funcionarios": [],
+                                  "variantes": []
+                                }
+                                """))
+                .andExpect(status().isNotFound()
+                );
+    }
+
+    @Test // é pra dar erro ainda
+    void testServicoControllerPutConflict() throws Exception {
+        when(servicoRepository.save(new Servico())).
+                thenThrow(new SQLIntegrityConstraintViolationException());
+        when(servicoRepository.findById(1L))
+                .then(invocationOnMock ->
+                        Optional.of(criarServico())
+                );
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/servicos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nome":  "Teste",
+                                  "especies": [],
+                                  "categoria": "Categoria tete",
+                                  "descricao": "Descricao teste",
+                                  "funcionarios": [],
+                                  "variantes": []
+                                }
+                                """))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    void testServioontrollerDeleteNoContent() throws Exception {
+//        doThrow(new NUllPointerException()).when(servicoRepository).deleteById(1L); // ESSE DEVE DAR ERRO
+        //pode ser SQLIntegrityConstraintViolationException
+//        doNothing().when(servicoRepository).deleteById(1L);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/servicos/t")).andExpect(
+                status().isBadRequest()
+//                status().isNoContent()
+//                status().isNotFound()
+        );
     }
 
 }
