@@ -34,8 +34,52 @@ class ServicoControllerTest {
     @MockBean
     ServicoRepository servicoRepository;
 
+    private Servico criarServico() {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setId(1L);
+        Periodo periodo = new Periodo(1L, LocalTime.now(), LocalTime.now());
+        Horario horario = new Horario();
+        horario.setId(1L);
+        funcionario.setNome("Funcionario");
+        funcionario.setCelular("23234234224");
+        funcionario.setCpf("22232323");
+        funcionario.setEmail("funcionaro@gmail.com");
+        funcionario.setDataNascimento(LocalDate.of(2020, 1, 1));
+        funcionario.setRole(Role.BASIC);
+        funcionario.setSenha("asfdf");
+        funcionario.setSexo(Sexo.FEMININO);
+        horario.setReservado(false);
+        horario.setDia(LocalDate.now());
+        horario.setHorarios(List.of(periodo));
+        Endereco endereco = new Endereco(1L, "sdbs", "asdfs", Estado.SC, "cidade", "bairro", "rua", 123, "asdf");
+        funcionario.setFilial(new Filial(1L, "Nome", endereco));
+        VarianteServico varianteServico = new VarianteServico(1L, "noansd", "sdbfasdf", 123.2);
+        Especie especie = new Especie();
+        especie.setId(1L);
+        especie.setNome("Especie");
+
+        Servico servico = new Servico(
+                1L,
+                "Nome",
+                "categoria",
+                new File(1L, "Caminho"),
+                "descricao",
+                List.of(funcionario),
+                List.of(especie),
+                List.of(varianteServico)
+        );
+        horario.setServico(servico);
+        funcionario.setServicos(List.of(servico));
+        especie.setServicos(List.of(servico));
+        return servico;
+    };
+
     @Test
-    void testServicoControllerCadastro() throws Exception {
+    void testServicoControllerPostOk() throws Exception {
+        when(servicoRepository.save(new Servico()))
+                .then(invocationOnMock ->
+                        criarServico()
+                );
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/servicos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,43 +100,7 @@ class ServicoControllerTest {
     void testServicoControllerGetUm() throws Exception {
         when(servicoRepository.findById(1L)).then(
                 invocationOnMock -> {
-                    Funcionario funcionario = new Funcionario();
-                    funcionario.setId(1L);
-                    Periodo periodo = new Periodo(1L, LocalTime.now(), LocalTime.now());
-                    Horario horario = new Horario();
-                    horario.setId(1L);
-                    funcionario.setNome("Funcionario");
-                    funcionario.setCelular("232234234224");
-                    funcionario.setCpf("223232323");
-                    funcionario.setEmail("funcionario@gmail.com");
-                    funcionario.setDataNascimento(LocalDate.of(2020, 1, 1));
-                    funcionario.setRole(Role.BASIC);
-                    funcionario.setSenha("asfsdf");
-                    funcionario.setSexo(Sexo.FEMININO);
-                    horario.setReservado(false);
-                    horario.setDia(LocalDate.now());
-                    horario.setHorarios(List.of(periodo));
-                    Endereco endereco = new Endereco(1L, "sdbs", "asdfs", Estado.SC, "cidade", "bairro", "rua", 123, "asdf");
-                    funcionario.setFilial(new Filial(1L, "Nome", endereco));
-                    VarianteServico varianteServico = new VarianteServico(1L, "noansd", "sdbfasdf", 123.2);
-                    Especie especie = new Especie();
-                    especie.setId(1L);
-                    especie.setNome("Especie");
-
-                    Servico servico = new Servico(
-                            1L,
-                            "Nome",
-                            "categoria",
-                            new File(1L, "Caminho"),
-                            "descricao",
-                            List.of(funcionario),
-                            List.of(especie),
-                            List.of(varianteServico)
-                    );
-                    horario.setServico(servico);
-                    funcionario.setServicos(List.of(servico));
-                    especie.setServicos(List.of(servico));
-                    return Optional.of(servico);
+                    return criarServico();
                 });
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/servicos/1")).andExpectAll(status().isOk())
@@ -118,7 +126,60 @@ class ServicoControllerTest {
                 ).andExpectAll(
                         jsonPath("$.variantes[0].tipo").exists(),
                         jsonPath("$.variantes[0].nome").exists(),
-                        jsonPath("$.variantes[0].preco").isNumber()                );
+                        jsonPath("$.variantes[0].preco").isNumber()
+                );
+    }
+
+    @Test
+    void testServicoControllerGetTodos() throws Exception {
+        when(servicoRepository.findAll()).then(
+          invocationOnMock ->
+              List.of(criarServico())
+        );
+        mockMvc.perform(MockMvcRequestBuilders.get("/servicos")).andExpect(
+                status().isNoContent()
+        ).andExpect(
+                jsonPath("$.*").isArray()
+        ).andExpectAll(
+                jsonPath("$[0].id").isNumber(),
+                jsonPath("$[0].imagem").exists(),
+                jsonPath("$[0].nome").isString(),
+                jsonPath("$[0].categoria").isString(),
+                jsonPath("$[0].descricao").isString(),
+                jsonPath("$[0].funcionarios").isArray(),
+                jsonPath("$[0].especies").isArray(),
+                jsonPath("$[0].variantes").isArray(),
+                jsonPath("$[0].*").exists()
+        ).andExpectAll(
+                jsonPath("$[0].funcionarios").value(Matchers.hasSize(1)),
+                jsonPath("$[0].funcionarios[0].id").isNumber(),
+                jsonPath("$[0].funcionarios[0].nome").exists()
+        ).andExpectAll(
+                jsonPath("$[0].especies[0].id").exists(),
+                jsonPath("$[0].especies[0].nome").exists()
+        ).andExpectAll(
+                jsonPath("$[0].variantes[0].tipo").exists(),
+                jsonPath("$[0].variantes[0].nome").exists(),
+                jsonPath("$[0].variantes[0].*").isNumber()
+        );
+    }
+
+    @Test
+    void testSerivcoControllerGetUmNotFotFaund() throws Exception {
+        when(servicoRepository.findById(1L)).then(invocationOnMock ->
+                Optional.empty()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.get("/servicos/1")).andExpect(
+                status().isNotFound()
+        );
+    }
+
+    @Test
+    void testServioontrollerPutOk() throws Exception {
+        when(servicoRepository.save(new Servico()))
+                .then(invocationOnMock ->
+                        criarServico()
+                );
     }
 
 }
