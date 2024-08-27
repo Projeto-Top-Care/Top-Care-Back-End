@@ -19,7 +19,7 @@ public class QuantidadeProduto {
     private Long id;
 
     @ManyToOne
-    private Produto produto;
+    private VarianteProduto produto;
 
     private Integer quantidade;
 

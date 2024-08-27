@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.carrinho.CarrinhoResponseDTO;
 
 import java.util.List;
 
@@ -33,4 +34,7 @@ public class Carrinho {
 
     private Double subTotal;
 
+    public CarrinhoResponseDTO paraResponseDTO(){
+        return new CarrinhoResponseDTO(this.id, this.usuario.getId(), this.produtos, this.subTotal, this.desconto, this.total);
+    }
 }

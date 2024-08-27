@@ -24,15 +24,10 @@ public class QuantidadeProdutoController {
     private final QuantidadeProdutoServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<QuantidadeProduto> cadastrar(@RequestBody QuantidadeProdutoRequestDTO dto) {
+    public ResponseEntity<QuantidadeProduto> cadastrarQuantProduto(@RequestBody QuantidadeProdutoRequestDTO dto) {
         return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
     }
 
-    @PostMapping("/produto")
-    public ResponseEntity<QuantidadeProdutoResponseSimplesDTO> cadastrarSimples(@RequestBody QuantidadeProdutoRequestSimplesDTO dto) {
-        QuantidadeProduto quantidadeProduto = service.criarQuantProdutoSimples(dto);
-        return new ResponseEntity<>(quantidadeProduto.paraSimplesResponseDTO(), HttpStatusCode.valueOf(201));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<QuantidadeProduto> buscarPorId(@PathVariable Long id) {

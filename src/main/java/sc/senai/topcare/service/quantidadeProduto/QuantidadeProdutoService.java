@@ -12,8 +12,6 @@ import java.util.List;
 public interface QuantidadeProdutoService {
     QuantidadeProduto criarQuantProduto(QuantidadeProdutoRequestDTO dto);
 
-    QuantidadeProduto criarQuantProdutoSimples(QuantidadeProdutoRequestSimplesDTO dto);
-
     QuantidadeProduto buscarPorId(Long id);
 
     List<QuantidadeProduto> buscarTodos() throws ListaVaziaException;

@@ -20,20 +20,11 @@ import java.util.Optional;
 public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
 
     private final QuantidadeProdutoRepository repository;
-    private final ProdutoServiceImpl produtoService;
 
     @Override
     public QuantidadeProduto criarQuantProduto(QuantidadeProdutoRequestDTO dto) {
         QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
         quantidadeProduto.setProduto(dto.getProduto());
-        quantidadeProduto.setQuantidade(dto.getQuantidade());
-        return repository.save(quantidadeProduto);
-    }
-
-    @Override
-    public QuantidadeProduto criarQuantProdutoSimples(QuantidadeProdutoRequestSimplesDTO dto) {
-        QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
-        quantidadeProduto.setProduto(produtoService.buscar(dto.getProdutoId()));
         quantidadeProduto.setQuantidade(dto.getQuantidade());
         return repository.save(quantidadeProduto);
     }
