@@ -19,6 +19,9 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private Funcionario funcionario;
+
     @OneToOne(mappedBy = "horario")
     private Agendamento agendamento;
 

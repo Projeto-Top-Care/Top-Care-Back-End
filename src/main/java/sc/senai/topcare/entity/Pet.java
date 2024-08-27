@@ -17,6 +17,10 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "imagem_id")
+    private File imagem;
+
     private String nome;
 
     @ManyToOne

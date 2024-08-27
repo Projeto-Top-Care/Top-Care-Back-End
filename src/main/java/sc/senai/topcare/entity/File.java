@@ -15,6 +15,10 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String referencia;
+
+    private String nomeOriginal;
+
     private String caminho;
 }
 

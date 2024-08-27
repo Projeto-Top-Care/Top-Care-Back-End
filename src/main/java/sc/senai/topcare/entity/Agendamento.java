@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.agendamento.AgendamentoRequestDTO;
+import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,9 +34,6 @@ public class Agendamento {
     private VarianteServico servico;
 
     @ManyToOne
-    private Funcionario profissional;
-
-    @ManyToOne
     private Pet pet;
 
     @ManyToOne
@@ -43,7 +42,11 @@ public class Agendamento {
     @Enumerated(EnumType.STRING)
     private StatusAgendamento status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Pagamento pagamento;
 
+    public Agendamento(AgendamentoRequestDTO dto){
+        ModelMapperUtil.map(dto, this);
+        this.status = StatusAgendamento.EM_ANDAMENTO;
+    }
 }

@@ -1,5 +1,6 @@
 package sc.senai.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Funcionario extends Usuario{
     @ManyToMany(mappedBy = "funcionarios")
+    @JsonIgnore
     private List<Servico> servicos;
 
     @ManyToOne
     private Filial filial;
 
-    @OneToMany
-    @JoinColumn(name = "id_funcionario")
+    @OneToMany(mappedBy = "funcionario")
+    @JsonIgnore
     private List<Horario> horariosAgendados;
 
 

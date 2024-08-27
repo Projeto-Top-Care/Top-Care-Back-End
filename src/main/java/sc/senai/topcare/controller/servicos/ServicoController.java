@@ -5,10 +5,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.horarios.FuncionarioHorarioDTO;
+import sc.senai.topcare.controller.dto.horarios.HorarioResponseDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoResponseDTO;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.service.servico.ServicoService;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -49,6 +53,12 @@ public class ServicoController {
     public ResponseEntity<Void> remover(@PathVariable Long id){
         service.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/{dia}")
+    public ResponseEntity<List<FuncionarioHorarioDTO>> buscarHorarios(@PathVariable Long id,
+                                                                      @PathVariable LocalDate dia){
+        return ResponseEntity.ok(service.buscarHorariosPorServico(id, dia));
     }
 
 }

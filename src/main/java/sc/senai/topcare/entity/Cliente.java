@@ -43,6 +43,7 @@ public class Cliente extends Usuario {
 
     public Cliente(ClienteRequestPostDTO dto){
         ModelMapperUtil.map(dto, this);
+        this.setRole(Role.BASIC);
         this.enderecos.add(new Endereco(dto));
     }
 
