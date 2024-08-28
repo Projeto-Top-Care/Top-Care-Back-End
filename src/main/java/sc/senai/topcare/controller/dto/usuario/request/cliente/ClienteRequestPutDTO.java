@@ -1,7 +1,7 @@
 package sc.senai.topcare.controller.dto.usuario.request.cliente;
 
 import lombok.Getter;
-import sc.senai.topcare.entity.Sexo;
+import sc.senai.topcare.enuns.Sexo;
 
 import java.time.LocalDate;
 

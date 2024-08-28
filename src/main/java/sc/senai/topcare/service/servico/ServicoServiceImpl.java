@@ -72,14 +72,18 @@ public class ServicoServiceImpl implements ServicoService {
     public List<FuncionarioHorarioDTO> buscarHorariosPorServico(Long id, LocalDate dia) {
         Servico servico = repository.findById(id).orElseThrow(NoSuchElementException::new);
         List<FuncionarioHorarioDTO> funcionarioHorarios = new ArrayList<>();
+
         servico.getFuncionarios().forEach(funcionario -> {
             List<Horario> horarios = horarioService.buscarPorDiaELivre(dia, funcionario.getId());
-            FuncionarioHorarioDTO funcionarioHorario = new FuncionarioHorarioDTO(
-                    funcionario.getNome(),
-                    horarios
-            );
-            funcionarioHorarios.add(funcionarioHorario);
+            if(!horarios.isEmpty()){
+                FuncionarioHorarioDTO funcionarioHorario = new FuncionarioHorarioDTO(
+                        funcionario.getNome(),
+                        horarios
+                );
+                funcionarioHorarios.add(funcionarioHorario);
+            }
         });
+
         return funcionarioHorarios;
     }
 }

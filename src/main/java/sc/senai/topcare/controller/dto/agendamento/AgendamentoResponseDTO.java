@@ -19,7 +19,7 @@ public class AgendamentoResponseDTO {
     PetResponseDTO pet;
     String status;
     String cliente;
-    Pagamento pagamento;
+    PagamentoResponseDTO pagamento;
 
     public AgendamentoResponseDTO(Agendamento agendamento) {
         this.id = agendamento.getId();
@@ -30,6 +30,6 @@ public class AgendamentoResponseDTO {
         this.pet = new PetResponseDTO(agendamento.getPet());
         this.status = agendamento.getStatus().getNOME();
         this.cliente = agendamento.getCliente().getNome();
-        this.pagamento = agendamento.getPagamento();
+        this.pagamento = new PagamentoResponseDTO(agendamento.getPagamento());
     }
 }

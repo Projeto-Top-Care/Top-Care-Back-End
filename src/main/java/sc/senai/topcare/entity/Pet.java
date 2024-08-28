@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import sc.senai.topcare.controller.dto.usuario.request.pet.PetRequestDTO;
+import sc.senai.topcare.enuns.Porte;
 
 @Entity
 @Table(name = "pet")

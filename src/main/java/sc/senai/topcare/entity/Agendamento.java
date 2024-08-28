@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.agendamento.AgendamentoRequestDTO;
+import sc.senai.topcare.enuns.StatusAgendamento;
 import sc.senai.topcare.utils.ModelMapperUtil;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Data

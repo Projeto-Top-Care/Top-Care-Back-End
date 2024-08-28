@@ -2,7 +2,7 @@ package sc.senai.topcare.controller.dto.usuario.request.endereco;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sc.senai.topcare.entity.Estado;
+import sc.senai.topcare.enuns.Estado;
 
 @AllArgsConstructor
 @Getter

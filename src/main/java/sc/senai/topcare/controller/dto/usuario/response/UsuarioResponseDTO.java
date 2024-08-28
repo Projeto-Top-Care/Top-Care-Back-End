@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
 import sc.senai.topcare.controller.dto.usuario.response.pet.PetResponseDTO;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.Role;
+import sc.senai.topcare.enuns.Sexo;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDate;

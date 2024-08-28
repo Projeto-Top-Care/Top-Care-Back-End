@@ -1,4 +1,4 @@
-package sc.senai.topcare.entity;
+package sc.senai.topcare.enuns;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

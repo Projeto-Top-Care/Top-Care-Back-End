@@ -5,14 +5,12 @@ import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.usuario.request.usuario.LoginRequestDTO;
 import sc.senai.topcare.controller.dto.usuario.response.LoginResonseDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
-import sc.senai.topcare.entity.Cliente;
-import sc.senai.topcare.entity.Role;
+import sc.senai.topcare.enuns.Role;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.entity.Usuario;
 import sc.senai.topcare.repository.UsuarioRepository;
 import sc.senai.topcare.service.cliente.ClienteService;
 import sc.senai.topcare.service.funcionario.FuncionarioService;
-import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.Optional;
 
