@@ -2,6 +2,7 @@ package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sc.senai.topcare.controller.dto.filial.FilialPostDto;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
 import sc.senai.topcare.utils.ModelMapperUtil;
@@ -40,5 +41,17 @@ public class Endereco {
 
     public Endereco(EnderecoRequestDTO dto){
         ModelMapperUtil.map(dto, this);
+    }
+
+    public Endereco(String nomeEndereco, String cep, Estado estado, String cidade, String bairro,
+                    String rua, Integer numero, String complemento) {
+        this.nome = nomeEndereco;
+        this.cep = cep;
+        this.estado = estado;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
     }
 }

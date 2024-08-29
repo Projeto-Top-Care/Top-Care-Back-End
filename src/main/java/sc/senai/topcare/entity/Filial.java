@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "filial")
@@ -19,6 +20,10 @@ public class Filial {
     private String nome;
 
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Endereco endereco;
 
+    private String diasDaSemana;
+
+    private String horarioFuncionamento;
 }
