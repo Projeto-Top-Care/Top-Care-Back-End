@@ -2,7 +2,7 @@ package sc.senai.topcare.controller.dto.filial;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import sc.senai.topcare.entity.Estado;
+import sc.senai.topcare.enuns.Estado;
 
 @AllArgsConstructor
 @Data

@@ -36,7 +36,7 @@ public class FuncionarioController {
     @GetMapping
     public ResponseEntity<List<FuncionarioSimplesResponseDto>> buscarTodos(){
         try{
-            return ResponseEntity.ok(service.buscarTodos());
+            return ResponseEntity.ok(service.buscarTodosSimples());
         }catch(ListaVaziaException e){
             return ResponseEntity.noContent().build();
         }
