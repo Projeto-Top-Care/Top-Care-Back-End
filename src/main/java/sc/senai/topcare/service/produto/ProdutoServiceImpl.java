@@ -1,4 +1,4 @@
-package sc.senai.topcare.service.implement;
+package sc.senai.topcare.service.produto;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ProdutoRepository;
-import sc.senai.topcare.service.interfaces.ProdutoService;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 
 import java.util.List;

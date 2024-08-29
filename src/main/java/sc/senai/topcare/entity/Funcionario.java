@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.enuns.Role;
+import sc.senai.topcare.enuns.Sexo;
 
 import java.time.LocalDate;
 import java.util.List;

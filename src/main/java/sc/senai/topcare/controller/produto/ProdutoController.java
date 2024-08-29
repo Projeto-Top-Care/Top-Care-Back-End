@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.entity.Produto;
-import sc.senai.topcare.service.implement.ProdutoServiceImpl;
+import sc.senai.topcare.service.produto.ProdutoServiceImpl;
 
 import java.util.List;
 

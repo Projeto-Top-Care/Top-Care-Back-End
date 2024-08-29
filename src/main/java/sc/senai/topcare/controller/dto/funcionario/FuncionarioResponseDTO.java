@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.filial.FilialSimplesRequestDTO;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.Sexo;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDate;

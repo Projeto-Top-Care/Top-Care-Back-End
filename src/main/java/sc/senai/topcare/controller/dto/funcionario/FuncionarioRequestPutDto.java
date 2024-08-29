@@ -2,8 +2,7 @@ package sc.senai.topcare.controller.dto.funcionario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import sc.senai.topcare.entity.Role;
-import sc.senai.topcare.entity.Sexo;
+import sc.senai.topcare.enuns.Sexo;
 
 import java.time.LocalDate;
 

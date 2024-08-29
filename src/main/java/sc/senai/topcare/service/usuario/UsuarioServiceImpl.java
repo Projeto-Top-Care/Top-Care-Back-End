@@ -42,7 +42,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario.getRole().equals(Role.BASIC)){
             usuario = clienteService.buscarCliente(id);
         } else if (usuario.getRole().equals(Role.FUNCIONARIO)) {
-            usuario = funcionarioService.buscarFuncionario(id);
+            usuario = funcionarioService.buscarFuncionarioPorId(id);
         }
         return new UsuarioResponseDTO(usuario);
     }

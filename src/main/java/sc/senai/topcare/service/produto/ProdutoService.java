@@ -1,9 +1,8 @@
-package sc.senai.topcare.service.interfaces;
+package sc.senai.topcare.service.produto;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
-import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 
