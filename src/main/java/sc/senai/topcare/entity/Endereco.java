@@ -5,6 +5,7 @@ import lombok.*;
 import sc.senai.topcare.controller.dto.filial.FilialPostDto;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.request.endereco.EnderecoRequestDTO;
+import sc.senai.topcare.enuns.Estado;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 @Entity

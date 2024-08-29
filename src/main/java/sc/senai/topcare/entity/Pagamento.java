@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.enuns.MetodoPagamento;
 
 @Entity
 @Table(name = "pagamento")

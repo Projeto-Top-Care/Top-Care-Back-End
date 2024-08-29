@@ -15,6 +15,8 @@ import sc.senai.topcare.repository.FuncionarioRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -83,7 +85,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public List<FuncionarioSimplesResponseDto> buscarTodos() throws ListaVaziaException {
+    public List<FuncionarioSimplesResponseDto> buscarTodosSimples() throws ListaVaziaException {
         List<FuncionarioSimplesResponseDto> funcionarios = repository.findAll().stream().map(FuncionarioSimplesResponseDto::new).toList();
         if(funcionarios.isEmpty()){
             throw new ListaVaziaException();
@@ -95,5 +97,23 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     public Boolean excluir(Long id) {
         funcionarioRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<FuncionarioResponseDTO> buscarTodos() throws ListaVaziaException {
+        List<FuncionarioResponseDTO> funcionarios = repository.findAll().stream().map(FuncionarioResponseDTO::new).toList();
+        if(funcionarios.isEmpty()){
+            throw new ListaVaziaException();
+        }
+        return funcionarios;
+    }
+
+    @Override
+    public Funcionario buscarFuncionarioPorId(Long id) {
+        Optional<Funcionario> funcionario = repository.findById(id);
+        if(funcionario.isEmpty()){
+            throw new NoSuchElementException("O funcionario não existe");
+        }
+        return funcionario.get();
     }
 }

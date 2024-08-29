@@ -3,8 +3,8 @@ package sc.senai.topcare.components;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import sc.senai.topcare.entity.Role;
-import sc.senai.topcare.entity.Sexo;
+import sc.senai.topcare.enuns.Role;
+import sc.senai.topcare.enuns.Sexo;
 import sc.senai.topcare.entity.Usuario;
 import sc.senai.topcare.repository.UsuarioRepository;
 

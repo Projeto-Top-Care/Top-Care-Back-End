@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
 import sc.senai.topcare.controller.dto.usuario.response.UsuarioResponseDTO;
+import sc.senai.topcare.enuns.Role;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class Cliente extends Usuario {
 
     public Cliente(ClienteRequestPostDTO dto){
         ModelMapperUtil.map(dto, this);
+        this.setRole(Role.BASIC);
         this.enderecos.add(new Endereco(dto));
     }
 

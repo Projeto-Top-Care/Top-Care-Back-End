@@ -13,6 +13,8 @@ public interface FuncionarioService {
     Boolean cadastro(FuncionarioPostDto dto);
     FuncionarioRequestPutDto editarFuncionario(Long id, FuncionarioRequestPutDto dto);
     FuncionarioResponseDTO buscarFuncionario(Long id);
-    List<FuncionarioSimplesResponseDto> buscarTodos() throws ListaVaziaException;
+    List<FuncionarioSimplesResponseDto> buscarTodosSimples() throws ListaVaziaException;
     Boolean excluir(Long id);
+    List<FuncionarioResponseDTO> buscarTodos() throws ListaVaziaException;
+    Funcionario buscarFuncionarioPorId(Long id);
 }
