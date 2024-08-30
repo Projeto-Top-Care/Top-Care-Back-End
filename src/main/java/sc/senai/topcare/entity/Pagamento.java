@@ -21,6 +21,7 @@ public class Pagamento {
     private MetodoPagamento metodoPagamento;
 
     private Integer parcelas;
+
     private Boolean pago;
 
 }

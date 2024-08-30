@@ -78,6 +78,7 @@ public class ServicoServiceImpl implements ServicoService {
             List<Horario> horarios = horarioService.buscarPorDiaELivre(dia, funcionario.getId());
             if(!horarios.isEmpty()){
                 FuncionarioHorarioDTO funcionarioHorario = new FuncionarioHorarioDTO(
+                        funcionario.getId(),
                         funcionario.getNome(),
                         horarios
                 );

@@ -21,5 +21,6 @@ public class Especie {
     private String nome;
 
     @ManyToMany(mappedBy = "especies")
+    @ToString.Exclude
     private List<Servico> servicos = new ArrayList<>();
 }

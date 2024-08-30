@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum StatusAgendamento {
     AGUARDANDO_CLIENTE("Aguardando cliente"),
     EM_ANDAMENTO("Em andamento"),
-    AGUARDANDO_RETIRADA("Aguardando retirada do pet");
+    AGUARDANDO_RETIRADA("Aguardando retirada do pet"),
+    CONCLUIDO("Concluído");
 
     private final String NOME;
 }

@@ -6,6 +6,7 @@ import sc.senai.topcare.entity.Horario;
 import sc.senai.topcare.repository.HorarioRepository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -16,7 +17,15 @@ public class HorarioServiceImpl implements HorarioService {
 
     @Override
     public List<Horario> buscarPorDiaELivre(LocalDate dia, Long id) {
-        return repository.findAllByDiaAndReservadoAndFuncionario_Id(dia, false, id);
+        LocalDate hoje = LocalDate.now();
+        LocalTime agora = LocalTime.now();
+
+        List<Horario> horarios = repository.findAllByDiaAndReservadoAndFuncionario_Id(dia, false, id);
+
+        if(dia.isEqual(hoje)){
+            horarios.removeIf(horario -> horario.getHoraInicio().isBefore(agora));
+        }
+        return horarios;
     }
 
     @Override

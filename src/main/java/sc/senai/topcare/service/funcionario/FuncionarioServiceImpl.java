@@ -9,6 +9,8 @@ import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
 import sc.senai.topcare.entity.Filial;
 import sc.senai.topcare.entity.Funcionario;
+import sc.senai.topcare.entity.Horario;
+import sc.senai.topcare.entity.Servico;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.repository.FilialRepository;
@@ -23,7 +25,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FuncionarioServiceImpl implements FuncionarioService {
 
-    private final FuncionarioRepository funcionarioRepository;
     private FuncionarioRepository repository;
     private FilialRepository filialRepository;
 
@@ -42,14 +43,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
                 dto.getSenha(),
                 filial
         );
-        funcionarioRepository.save(funcionario);
+        repository.save(funcionario);
         return true;
     }
 
     @Override
     public FuncionarioRequestPutDto editarFuncionario(Long id, FuncionarioRequestPutDto dto) {
         Filial filial = filialRepository.findByNome(dto.getNomeFilial());
-        Funcionario funcionario = funcionarioRepository.findById(id).get();
+        Funcionario funcionario = repository.findById(id).get();
         funcionario.setSexo(dto.getSexo());
         funcionario.setNome(dto.getNome());
         funcionario.setEmail(dto.getEmail());
@@ -58,7 +59,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         funcionario.setFilial(filial);
 
         funcionario.setId(id);
-        funcionarioRepository.save(funcionario);
+        repository.save(funcionario);
         return new FuncionarioRequestPutDto(
                 funcionario.getNome(),
                 funcionario.getEmail(),
@@ -71,7 +72,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public FuncionarioResponseDTO buscarFuncionario(Long id) {
-        Funcionario funcionario = funcionarioRepository.findById(id).get();
+        Funcionario funcionario = repository.findById(id).get();
         String nomeFilial = filialRepository.findById(funcionario.getFilial().getId()).get().getNome();
         return new FuncionarioResponseDTO(
                 funcionario.getNome(),
@@ -96,7 +97,18 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public Boolean excluir(Long id) {
-        funcionarioRepository.deleteById(id);
+        Funcionario funcionario = buscarFuncionarioPorId(id);
+
+        for(Servico s : funcionario.getServicos()){
+            s.getFuncionarios().remove(funcionario);
+        }
+        for(Horario horario : funcionario.getHorariosAgendados()){
+            horario.setFuncionario(null);
+        }
+        funcionario.getServicos().clear();
+        funcionario.getHorariosAgendados().clear();
+        repository.save(funcionario);
+        repository.delete(funcionario);
         return true;
     }
 

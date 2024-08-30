@@ -24,8 +24,10 @@ public class PetServiceImpl implements PetService {
     @Override
     public Pet editar(PetRequestDTO petDTO, Long id) {
         Pet pet = buscarPorId(id);
-        ModelMapperUtil.map(petDTO, pet);
-        pet.setId(id);
+        pet.setEspecie(new Especie(petDTO.getIdEspecie()));
+        pet.setNome(petDTO.getNome());
+        pet.setRaca(petDTO.getRaca());
+        pet.setPorte(petDTO.getPorte());
         return repository.save(pet);
     }
 

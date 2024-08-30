@@ -10,10 +10,12 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class FuncionarioHorarioDTO {
+    Long id;
     String nome;
     List<HorarioResponseDTO> horarios;
 
-    public FuncionarioHorarioDTO(String nome, List<Horario> horarios) {
+    public FuncionarioHorarioDTO(Long id, String nome, List<Horario> horarios) {
+        this.id = id;
         this.nome = nome;
         this.horarios = horarios.stream().map(HorarioResponseDTO::new).toList();
     }
