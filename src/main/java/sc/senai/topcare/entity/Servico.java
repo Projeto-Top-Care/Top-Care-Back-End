@@ -43,6 +43,7 @@ public class Servico {
     private List<VarianteServico> variantes;
 
     public Servico(ServicoRequestDTO dto){
+        System.out.println(dto);
         ModelMapperUtil.map(dto, this);
     }
 

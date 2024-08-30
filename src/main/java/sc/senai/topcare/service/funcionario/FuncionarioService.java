@@ -1,5 +1,6 @@
 package sc.senai.topcare.service.funcionario;
 
+import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
@@ -15,6 +16,6 @@ public interface FuncionarioService {
     FuncionarioResponseDTO buscarFuncionario(Long id);
     List<FuncionarioSimplesResponseDto> buscarTodosSimples() throws ListaVaziaException;
     Boolean excluir(Long id);
-    List<FuncionarioResponseDTO> buscarTodos() throws ListaVaziaException;
+    List<IdNomeResponseDTO> buscarTodos() throws ListaVaziaException;
     Funcionario buscarFuncionarioPorId(Long id);
 }

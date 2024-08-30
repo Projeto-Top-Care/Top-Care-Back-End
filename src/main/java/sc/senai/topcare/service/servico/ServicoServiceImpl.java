@@ -29,6 +29,7 @@ public class ServicoServiceImpl implements ServicoService {
     @Override
     public void cadastrar(ServicoRequestDTO dto) {
         Servico servico = new Servico(dto);
+        System.out.println(servico);
         repository.save(servico);
     }
 

@@ -2,6 +2,7 @@ package sc.senai.topcare.service.funcionario;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
@@ -100,8 +101,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public List<FuncionarioResponseDTO> buscarTodos() throws ListaVaziaException {
-        List<FuncionarioResponseDTO> funcionarios = repository.findAll().stream().map(FuncionarioResponseDTO::new).toList();
+    public List<IdNomeResponseDTO> buscarTodos() throws ListaVaziaException {
+        List<IdNomeResponseDTO> funcionarios = repository.findAll().stream().map(IdNomeResponseDTO::new).toList();
         if(funcionarios.isEmpty()){
             throw new ListaVaziaException();
         }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
@@ -37,6 +38,14 @@ public class FuncionarioController {
     public ResponseEntity<List<FuncionarioSimplesResponseDto>> buscarTodos(){
         try{
             return ResponseEntity.ok(service.buscarTodosSimples());
+        }catch(ListaVaziaException e){
+            return ResponseEntity.noContent().build();
+        }
+    }
+    @GetMapping("/simples")
+    public ResponseEntity<List<IdNomeResponseDTO>> buscarTodosSimples(){
+        try{
+            return ResponseEntity.ok(service.buscarTodos());
         }catch(ListaVaziaException e){
             return ResponseEntity.noContent().build();
         }
