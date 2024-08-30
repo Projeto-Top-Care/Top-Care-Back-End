@@ -1,5 +1,7 @@
 package sc.senai.topcare.service.funcionario;
 
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
@@ -7,13 +9,16 @@ import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
-import sc.senai.topcare.entity.Filial;
-import sc.senai.topcare.entity.Funcionario;
+import sc.senai.topcare.controller.dto.horarios.HorariosReservadosDto;
+import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.Porte;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.exceptions.UsuarioNaoEncontradoException;
 import sc.senai.topcare.repository.FilialRepository;
 import sc.senai.topcare.repository.FuncionarioRepository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -73,6 +78,17 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     public FuncionarioResponseDTO buscarFuncionario(Long id) {
         Funcionario funcionario = funcionarioRepository.findById(id).get();
         String nomeFilial = filialRepository.findById(funcionario.getFilial().getId()).get().getNome();
+        Agendamento agendamento = new Agendamento();
+        agendamento.setValor(8985.7);
+        Horario horario = new Horario(
+                null,
+                funcionario,
+                agendamento,
+                true,
+                LocalDate.now(),
+                LocalTime.now(),
+                LocalTime.now().plusMinutes(30));
+
         return new FuncionarioResponseDTO(
                 funcionario.getNome(),
                 funcionario.getCodigo(),
@@ -81,7 +97,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
                 funcionario.getCpf(),
                 funcionario.getDataNascimento(),
                 funcionario.getSexo(),
-                nomeFilial
+                nomeFilial,
+                List.of(horario, horario)
         );
     }
 
@@ -116,5 +133,11 @@ public class FuncionarioServiceImpl implements FuncionarioService {
             throw new NoSuchElementException("O funcionario não existe");
         }
         return funcionario.get();
+    }
+
+    @Override
+    public List<HorariosReservadosDto> buscarHorariosReservados(Long id) {
+        Funcionario funcionario = funcionarioRepository.findById(id).get();
+        return null;
     }
 }

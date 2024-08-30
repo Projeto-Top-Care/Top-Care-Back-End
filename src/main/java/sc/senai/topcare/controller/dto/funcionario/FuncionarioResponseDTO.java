@@ -10,6 +10,7 @@ import sc.senai.topcare.enuns.Sexo;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +31,8 @@ public class FuncionarioResponseDTO {
     Sexo sexo;
 
     String nomeFilial;
+
+    List<Horario> horarios;
 
     public FuncionarioResponseDTO(Funcionario funcionario) {
         ModelMapperUtil.map(funcionario, this);

@@ -9,6 +9,7 @@ import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
+import sc.senai.topcare.controller.dto.horarios.HorariosReservadosDto;
 import sc.senai.topcare.entity.Funcionario;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.service.funcionario.FuncionarioService;
@@ -59,5 +60,10 @@ public class FuncionarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> remover(@PathVariable Long id) {
         return new ResponseEntity<>(service.excluir(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/reservados/{id}")
+    public ResponseEntity<List<HorariosReservadosDto>> verHorariosReservados(@PathVariable Long id) {
+        return new ResponseEntity<>(service.buscarHorariosReservados(id), HttpStatus.OK);
     }
 }
