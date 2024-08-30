@@ -26,7 +26,7 @@ public class Produto {
 
     private String marca;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_produto")
     private List<VarianteProduto> variantes;
 
@@ -49,7 +49,7 @@ public class Produto {
     @ElementCollection
     private List<String> descricao;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto")
     private List<Especificacao> especificacao;
 
