@@ -20,18 +20,18 @@ public class Produto {
 
     private String nome;
 
-    private Double notaAvaliacao;
+    private Double notaAvaliacao = 0.0;
 
     @OneToOne
     private File imagem;
 
     private String marca;
 
-    private Boolean disponivel;
+    private Boolean disponivel = true;
 
     private Long codigo;
 
-    private Integer quantidadeVendas;
+    private Integer quantidadeVendas = 0;
 
     private String descricao;
 
