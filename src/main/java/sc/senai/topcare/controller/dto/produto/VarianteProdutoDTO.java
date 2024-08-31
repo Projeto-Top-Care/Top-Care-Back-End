@@ -9,10 +9,11 @@ import sc.senai.topcare.enuns.TipoVariante;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VarianteProdutoDTO {
-    private TipoVariante tipoVariante;
-    private Double preco;
-    private Double desconto;
-    private Integer estoque;
-    private Double precoDesconto;
+    String cor;
+    String tamanho;
+    Integer peso;
+    Integer unidades;
+    Double preco;
+    Integer estoque;
 
 }

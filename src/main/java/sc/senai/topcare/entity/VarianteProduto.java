@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.produto.VarianteProdutoDTO;
 import sc.senai.topcare.enuns.TipoVariante;
+import sc.senai.topcare.utils.ModelMapperUtil;
 
 @Entity
 @Table(name = "variante_produto")
@@ -17,8 +19,13 @@ public class VarianteProduto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private TipoVariante tipoVariante;
+    private String cor;
+
+    private String tamanho;
+
+    private Integer peso;
+
+    private Integer unidades;
 
     private Double preco;
 
@@ -26,6 +33,8 @@ public class VarianteProduto {
 
     private Integer estoque;
 
-    private Double precoDesconto;
+    public VarianteProduto (VarianteProdutoDTO dto){
+        ModelMapperUtil.map(dto, this);
+    }
 
 }

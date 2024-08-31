@@ -34,39 +34,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
     @Override
-    public ResponseEntity<Produto> cadastroProduto(ProdutoRequestDTO produtoDTO) {
-        try {
-            Produto produto = new Produto();
-
-            BeanUtils.copyProperties(produtoDTO, produto);
-
-            List<VarianteProduto> variantes = produtoDTO.getVariantes().stream()
-                    .map(dto -> {
-
-                        VarianteProduto variante = new VarianteProduto();
-                        BeanUtils.copyProperties(dto, variante);
-                        return variante;
-
-                    })
-                    .collect(Collectors.toList());
-            produto.setVariantes(variantes);
-
-            List<Especificacao> especificacoes = produtoDTO.getEspecificacoes().stream()
-                    .map(dto -> {
-
-                        Especificacao especificacao = new Especificacao();
-                        BeanUtils.copyProperties(dto, especificacao);
-                        return especificacao;
-
-                    })
-                    .collect(Collectors.toList());
-            produto.setEspecificacao(especificacoes);
-
-            Produto savedProduto = produtoRepository.save(produto);
-            return new ResponseEntity<>(savedProduto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public void cadastroProduto(ProdutoRequestDTO produtoDTO) {
+        Produto produto = new Produto(produtoDTO);
+        produtoRepository.save(produto);
     }
 
     @Override

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 
 import java.util.List;
 
@@ -26,28 +27,17 @@ public class Produto {
 
     private String marca;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_produto")
-    private List<VarianteProduto> variantes;
-
     private Boolean disponivel;
 
     private Long codigo;
 
-    private Integer estoque;
-
-    private Boolean temVariante;
-
-    private Double preco;
-
-    private Double desconto;
-
-    private Double precoDesconto;
-
     private Integer quantidadeVendas;
 
-    @ElementCollection
-    private List<String> descricao;
+    private String descricao;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_produto")
+    private List<VarianteProduto> variantes;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto")
@@ -57,6 +47,13 @@ public class Produto {
     @JoinColumn(name = "id_produto")
     private List<Avaliacao> avaliacao;
 
-    @ElementCollection
-    private List<String> tags;
+    public Produto(ProdutoRequestDTO dto){
+        this.nome = dto.getNome();
+        this.marca = dto.getMarca();
+        this.codigo = dto.getCodigo();
+        this.descricao = dto.getDescricao();
+        this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
+        this.especificacao = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
+    }
+
 }
