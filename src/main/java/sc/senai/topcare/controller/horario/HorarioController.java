@@ -17,7 +17,12 @@ public class HorarioController {
     private HorarioService horarioService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<HorarioResponseDTO>> findAll(@PathVariable Long id) {
-        return new ResponseEntity<>(horarioService.verHorariosPorUsuario(id), HttpStatus.OK);
+    public ResponseEntity<List<HorarioResponseDTO>> verHorariosDisponiveis(@PathVariable Long id) {
+        return new ResponseEntity<>(horarioService.verHorariosDisponiveis(id), HttpStatus.OK);
     }
+
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<Boolean> reservarHorario(@PathVariable Long id) {
+//        return new ResponseEntity<>(horarioService.agendarHorario(id), HttpStatus.OK);
+//    }
 }

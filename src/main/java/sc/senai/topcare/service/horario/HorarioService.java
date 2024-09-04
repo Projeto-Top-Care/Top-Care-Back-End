@@ -11,5 +11,6 @@ public interface HorarioService {
 
     List<Horario> buscarPorDiaELivre(LocalDate dia, Long id);
     void mudarReservado(Long id);
-    List<HorarioResponseDTO> verHorariosPorUsuario(Long id);
+    List<HorarioResponseDTO> verHorariosDisponiveis(Long id);
+//    Boolean agendarHorario(Long id);
 }
