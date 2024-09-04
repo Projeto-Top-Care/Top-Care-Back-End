@@ -137,7 +137,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public List<HorariosReservadosDto> buscarHorariosReservados(Long id) {
-        Funcionario funcionario = funcionarioRepository.findById(id).get();
+//        Funcionario funcionario = funcionarioRepository.findById(id).get();
+//        List<Horario>horarios =  funcionario.getHorariosAgendados().stream().filter();
+////        List<Horario>
         return null;
     }
 }
