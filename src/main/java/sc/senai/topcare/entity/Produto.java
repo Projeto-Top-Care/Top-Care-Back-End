@@ -23,6 +23,7 @@ public class Produto {
     private Double notaAvaliacao = 0.0;
 
     @OneToMany
+    @JoinColumn(name = "id_produto")
     private List<Imagem> imagens;
 
     private String marca;

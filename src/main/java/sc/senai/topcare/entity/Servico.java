@@ -27,6 +27,7 @@ public class Servico {
     private String categoria;
 
     @OneToOne
+    @JoinColumn(name = "imagem_id")
     private Imagem imagem;
 
     private String descricao;

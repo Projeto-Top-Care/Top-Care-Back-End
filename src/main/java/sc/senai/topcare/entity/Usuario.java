@@ -18,8 +18,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToOne
-//    private File foto;
+    @OneToOne
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String nome;
 
