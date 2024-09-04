@@ -1,5 +1,6 @@
 package sc.senai.topcare.controller.filial;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class FilialController {
     private final FilialServiceImpl filialService;
 
     @PostMapping
-    public ResponseEntity<Boolean> cadastro(@RequestBody FilialPostDto filialPostDto) {
+    public ResponseEntity<Boolean> cadastro(@Valid @RequestBody FilialPostDto filialPostDto) {
         return new ResponseEntity<>(filialService.cadastro(filialPostDto), HttpStatus.OK);
     }
 
