@@ -3,10 +3,13 @@ package sc.senai.topcare.service.produto;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
+import sc.senai.topcare.controller.dto.produto.ProdutoResponseCardDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
@@ -21,8 +24,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private ProdutoRepository produtoRepository;
     @Override
-    public List<Produto> buscarTodosProdutos() {
-        return produtoRepository.findAll();
+    public Page<ProdutoResponseCardDTO> buscarTodosProdutos(Pageable pageable) {
+        return produtoRepository.findAll(pageable).map(ProdutoResponseCardDTO::new);
     }
     @Override
     public Produto buscarProdutoPorId(Long id) throws Exception {

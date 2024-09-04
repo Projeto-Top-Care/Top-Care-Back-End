@@ -2,10 +2,14 @@ package sc.senai.topcare.controller.produto;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
+import sc.senai.topcare.controller.dto.produto.ProdutoResponseCardDTO;
 import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.service.produto.ProdutoServiceImpl;
 
@@ -19,9 +23,8 @@ public class ProdutoController {
     private ProdutoServiceImpl produtoService;
 
     @GetMapping
-    public ResponseEntity<List<Produto>> buscarTodosProdutos() {
-        List<Produto> produtos = produtoService.buscarTodosProdutos();
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<Page<ProdutoResponseCardDTO>> buscarTodosProdutos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+        return ResponseEntity.ok(produtoService.buscarTodosProdutos(pageable));
     }
 
     @GetMapping("/{id}")
