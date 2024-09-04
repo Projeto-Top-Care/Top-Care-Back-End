@@ -22,8 +22,8 @@ public class Produto {
 
     private Double notaAvaliacao = 0.0;
 
-    @OneToOne
-    private File imagem;
+    @OneToMany
+    private List<Imagem> imagens;
 
     private String marca;
 
@@ -41,11 +41,11 @@ public class Produto {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto")
-    private List<Especificacao> especificacao;
+    private List<Especificacao> especificacoes;
 
     @OneToMany
     @JoinColumn(name = "id_produto")
-    private List<Avaliacao> avaliacao;
+    private List<Avaliacao> avaliacoes;
 
     public Produto(ProdutoRequestDTO dto){
         this.nome = dto.getNome();
@@ -53,7 +53,7 @@ public class Produto {
         this.codigo = dto.getCodigo();
         this.descricao = dto.getDescricao();
         this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
-        this.especificacao = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
+        this.especificacoes = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
     }
 
 }

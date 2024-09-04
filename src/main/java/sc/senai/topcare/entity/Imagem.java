@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @Entity
-@Table(name = "file")
+@Table(name = "imagem")
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class File {
+public class Imagem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +19,7 @@ public class File {
 
     private String nomeOriginal;
 
-    private String caminho = "";
+    @Column(columnDefinition = "TEXT")
+    private String caminho;
 }
 
