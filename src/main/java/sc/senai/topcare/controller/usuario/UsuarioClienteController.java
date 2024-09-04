@@ -1,5 +1,6 @@
 package sc.senai.topcare.controller.usuario;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class UsuarioClienteController{
     private final ClienteService clienteService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody ClienteRequestPostDTO usuarioDTO){
+    public ResponseEntity<UsuarioResponseDTO> cadastro(@Valid @RequestBody ClienteRequestPostDTO usuarioDTO){
         clienteService.cadastro(usuarioDTO);
         return ResponseEntity.ok().build();
     }
