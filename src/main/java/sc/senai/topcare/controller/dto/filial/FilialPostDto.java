@@ -15,7 +15,12 @@ public class FilialPostDto {
     @NotEmpty @Size(max = 9)
     String cep;
 
-    @NotEmpty
+    @NotEmpty @Pattern(regexp = "/" +
+                    "(?=.*/d)" +
+                    "(?=.*/[a-z])" +
+                    "(?=.*/[A-Z])" +
+            "(?=.*/[$*&@#])" +
+            "[0-9a-zA-Z$*&@#]{16,}/")
     String cidade;
 
     @NotEmpty
