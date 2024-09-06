@@ -1,5 +1,6 @@
 package sc.senai.topcare.controller.quantidadeProduto;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,7 +18,7 @@ import sc.senai.topcare.service.quantidadeProduto.QuantidadeProdutoServiceImpl;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/quantidadeProduto")
 public class QuantidadeProdutoController {
 
@@ -27,7 +28,6 @@ public class QuantidadeProdutoController {
     public ResponseEntity<QuantidadeProduto> cadastrarQuantProduto(@RequestBody QuantidadeProdutoRequestDTO dto) {
         return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<QuantidadeProduto> buscarPorId(@PathVariable Long id) {

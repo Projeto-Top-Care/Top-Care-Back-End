@@ -2,6 +2,7 @@ package sc.senai.topcare.service.carrinho;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sc.senai.topcare.controller.dto.carrinho.CarrinhoRequestBasicoDTO;
 import sc.senai.topcare.controller.dto.carrinho.CarrinhoRequestDTO;
 import sc.senai.topcare.entity.Carrinho;
 import sc.senai.topcare.entity.QuantidadeProduto;
@@ -24,6 +25,12 @@ public class CarrinhoServiceImpl {
         return carrinhoRepository.save(carrinho);
     }
 
+    public Carrinho criarCarrinhoSimples(CarrinhoRequestBasicoDTO dto){
+        Carrinho carrinho = new Carrinho();
+        carrinho.setUsuario(usuarioRepository.findById(dto.getUsuarioId()).orElseThrow(RuntimeException::new));
+        return carrinhoRepository.save(carrinho);
+    }
+
     public Carrinho buscarPorId(Long id) {
         return carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
     }
@@ -43,6 +50,12 @@ public class CarrinhoServiceImpl {
     public Carrinho adicionarDesconto(Long id, Double desconto) {
         Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
         carrinho.setDesconto(desconto);
+        return carrinhoRepository.save(carrinho);
+    }
+
+    public Carrinho adicionarFrete(Long id, Double frete) {
+        Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
+        carrinho.setFrete(frete);
         return carrinhoRepository.save(carrinho);
     }
 

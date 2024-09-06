@@ -1,9 +1,11 @@
 package sc.senai.topcare.controller.carrinho;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.carrinho.CarrinhoRequestBasicoDTO;
 import sc.senai.topcare.controller.dto.carrinho.CarrinhoRequestDTO;
 import sc.senai.topcare.controller.dto.carrinho.CarrinhoResponseDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestDTO;
@@ -14,14 +16,22 @@ import sc.senai.topcare.service.carrinho.CarrinhoServiceImpl;
 
 @RestController
 @RequestMapping("/carrinho")
+@CrossOrigin("*")
 @AllArgsConstructor
 public class CarrinhoController {
 
+    @Autowired
     private CarrinhoServiceImpl service;
 
     @PostMapping
     public ResponseEntity<CarrinhoResponseDTO> criarCarrinho(@RequestBody CarrinhoRequestDTO dto) {
         Carrinho carrinho = service.criarCarrinho(dto);
+        return new ResponseEntity<>(carrinho.paraResponseDTO(), HttpStatusCode.valueOf(201));
+    }
+
+    @PostMapping("/basico")
+    public ResponseEntity<CarrinhoResponseDTO> criarCarrinhoVazio(@RequestBody CarrinhoRequestBasicoDTO dto) {
+        Carrinho carrinho = service.criarCarrinhoSimples(dto);
         return new ResponseEntity<>(carrinho.paraResponseDTO(), HttpStatusCode.valueOf(201));
     }
 
