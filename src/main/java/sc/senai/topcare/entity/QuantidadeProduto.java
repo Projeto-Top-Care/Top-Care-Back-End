@@ -17,10 +17,8 @@ public class QuantidadeProduto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Produto produto;
 
     private Integer quantidade;
-
 }

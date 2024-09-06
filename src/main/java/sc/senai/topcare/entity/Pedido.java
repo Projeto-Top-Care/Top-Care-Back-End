@@ -1,9 +1,15 @@
 package sc.senai.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import sc.senai.topcare.controller.dto.pedido.PedidoRequestDTO;
+import sc.senai.topcare.controller.dto.pedido.PedidoResponseDTO;
+import sc.senai.topcare.utils.ModelMapperUtil;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,5 +48,14 @@ public class Pedido {
     @OneToMany
     @JoinColumn(name = "id_pedido")
     private List<QuantidadeProduto> produtos;
+
+    public Pedido(PedidoRequestDTO dto){
+        ModelMapperUtil.map(dto, this);
+    }
+
+    public PedidoResponseDTO editar(PedidoRequestDTO dto) {
+        BeanUtils.copyProperties(dto, this);
+        return new PedidoResponseDTO(this);
+    }
 
 }

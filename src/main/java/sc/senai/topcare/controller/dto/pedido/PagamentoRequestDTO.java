@@ -1,2 +1,16 @@
-package sc.senai.topcare.controller.dto.pedido;public class PagamentoDTO {
+package sc.senai.topcare.controller.dto.pedido;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import sc.senai.topcare.entity.MetodoPagamento;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class PagamentoRequestDTO {
+
+    private MetodoPagamento metodoPagamento;
+    private Integer parcelas;
+    private Boolean pago;
 }
