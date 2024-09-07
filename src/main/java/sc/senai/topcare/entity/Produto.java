@@ -29,6 +29,10 @@ public class Produto {
 
     private String marca;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
     private Boolean disponivel = true;
 
     private Long codigo;
