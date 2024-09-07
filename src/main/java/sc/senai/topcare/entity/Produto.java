@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Produto {
 
     @OneToMany
     @JoinColumn(name = "id_produto")
-    private List<Imagem> imagens;
+    private List<Imagem> imagens = new ArrayList<>();
 
     private String marca;
 

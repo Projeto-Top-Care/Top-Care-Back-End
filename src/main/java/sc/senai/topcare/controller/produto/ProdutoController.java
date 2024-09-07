@@ -7,10 +7,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.service.produto.ProdutoServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/produto")
@@ -30,9 +33,12 @@ public class ProdutoController {
         return new ResponseEntity<>(produtoService.buscarProdutoPorId(id), HttpStatus.OK);
     }
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<Void> cadastroProduto(@RequestBody ProdutoRequestDTO produtoDTO) {
-        produtoService.cadastroProduto(produtoDTO);
+    @PostMapping(consumes = {"application/json", "multipart/form-data"})
+    public ResponseEntity<Void> cadastroProduto(
+            @RequestPart ProdutoRequestDTO produtoDTO,
+            @RequestPart List<MultipartFile> files
+            ) {
+        produtoService.cadastroProduto(produtoDTO, files);
         return ResponseEntity.ok().build();
     }
 

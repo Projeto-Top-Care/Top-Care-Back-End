@@ -5,13 +5,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.controller.dto.produto.ProdutoResponseCardDTO;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.repository.ImagemRepository;
 import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
+import sc.senai.topcare.service.imagem.ImagemService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +24,8 @@ import java.util.Optional;
 public class ProdutoServiceImpl implements ProdutoService {
 
     private ProdutoRepository produtoRepository;
+    private ImagemService imagemService;
+
     @Override
     public PaginaProdutos buscarTodosProdutos(Pageable pageable) {
         Page<ProdutoResponseCardDTO> produtos = produtoRepository.findAll(pageable).map(ProdutoResponseCardDTO::new);
@@ -34,8 +41,14 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
     @Override
-    public void cadastroProduto(ProdutoRequestDTO produtoDTO) {
+    public void cadastroProduto(ProdutoRequestDTO produtoDTO, List<MultipartFile> files) {
         Produto produto = new Produto(produtoDTO);
+        List<Imagem> imagensProduto = produto.getImagens();
+        for(MultipartFile file: files){
+            Imagem imagem = imagemService.salvarImagem(file);
+            imagensProduto.add(imagem);
+        }
+        produto.setImagens(imagensProduto);
         produtoRepository.save(produto);
     }
 

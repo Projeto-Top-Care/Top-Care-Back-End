@@ -7,7 +7,9 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,8 @@ import sc.senai.topcare.entity.Imagem;
 import sc.senai.topcare.repository.ImagemRepository;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -59,7 +63,8 @@ public class ImagemServiceImp implements ImagemService{
             File file = File.createTempFile("tmp", multipartFile.getOriginalFilename());
             multipartFile.transferTo(file);
 
-            getClient().putObject(getBucket(), chave, file);
+            getClient().putObject(new PutObjectRequest(getBucket(), chave, file)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
 
             Imagem imagem =
                     new Imagem(null, chave, multipartFile.getOriginalFilename(), getCaminho(chave));
@@ -77,11 +82,7 @@ public class ImagemServiceImp implements ImagemService{
     }
 
     private String getCaminho(String ref){
-        GeneratePresignedUrlRequest generatePresignedUrlRequest =
-                new GeneratePresignedUrlRequest(getBucket(), ref)
-                        .withMethod(HttpMethod.GET);
-
-        return getClient().generatePresignedUrl(generatePresignedUrlRequest).toString();
+        return "https://" + getBucket() + ".s3.us-east-2.amazonaws.com/" + ref;
     }
 
     @Override

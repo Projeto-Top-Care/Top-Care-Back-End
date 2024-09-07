@@ -14,12 +14,14 @@ import java.util.List;
 public class ProdutoResponseCardDTO {
     Long id;
     String nome;
+    String imagem;
     Double notaAvaliacao;
     Double preco;
 
     public ProdutoResponseCardDTO(Produto produto){
         this.id = produto.getId();
         this.nome = produto.getNome();
+        this.imagem = produto.getImagens().getFirst().getCaminho();
         this.notaAvaliacao = produto.getNotaAvaliacao();
         this.preco = getMenorPreco(produto.getVariantes());
     }
