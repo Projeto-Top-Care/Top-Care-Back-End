@@ -21,8 +21,8 @@ public class HorarioController {
         return new ResponseEntity<>(horarioService.verHorariosDisponiveis(id), HttpStatus.OK);
     }
 
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<Boolean> reservarHorario(@PathVariable Long id) {
-//        return new ResponseEntity<>(horarioService.agendarHorario(id), HttpStatus.OK);
-//    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Boolean> reservarHorario(@PathVariable Long id) {
+        return new ResponseEntity<>(horarioService.agendarHorario(id), HttpStatus.OK);
+    }
 }

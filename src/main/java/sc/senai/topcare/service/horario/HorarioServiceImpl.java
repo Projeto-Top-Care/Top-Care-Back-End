@@ -45,11 +45,11 @@ public class HorarioServiceImpl implements HorarioService {
         return horariosDTO;
     }
 
-//    @Override
-//    public Boolean agendarHorario(Long id) {
-//        Horario horario = repository.findById(id).get();
-//        horario.setReservado(true);
-//        repository.save(horario);
-//        return true;
-//    }
+    @Override
+    public Boolean agendarHorario(Long id) {
+        Horario horario = repository.findById(id).get();
+        horario.setReservado(true);
+        repository.save(horario);
+        return true;
+    }
 }
