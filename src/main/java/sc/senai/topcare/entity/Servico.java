@@ -1,6 +1,5 @@
 package sc.senai.topcare.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +27,8 @@ public class Servico {
     private String categoria;
 
     @OneToOne
-    private File imagem;
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String descricao;
 

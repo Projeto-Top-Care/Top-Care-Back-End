@@ -20,7 +20,7 @@ public class Pet {
 
     @OneToOne
     @JoinColumn(name = "imagem_id")
-    private File imagem;
+    private Imagem imagem;
 
     private String nome;
 

@@ -2,9 +2,13 @@ package sc.senai.topcare.controller.produto;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.service.produto.ProdutoServiceImpl;
@@ -13,15 +17,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produto")
+@CrossOrigin("*")
 @AllArgsConstructor
 public class ProdutoController {
 
     private ProdutoServiceImpl produtoService;
 
     @GetMapping
-    public ResponseEntity<List<Produto>> buscarTodosProdutos() {
-        List<Produto> produtos = produtoService.buscarTodosProdutos();
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<PaginaProdutos> buscarTodosProdutos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+        return ResponseEntity.ok(produtoService.buscarTodosProdutos(pageable));
     }
 
     @GetMapping("/{id}")
@@ -29,9 +33,12 @@ public class ProdutoController {
         return new ResponseEntity<>(produtoService.buscarProdutoPorId(id), HttpStatus.OK);
     }
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<Void> cadastroProduto(@RequestBody ProdutoRequestDTO produtoDTO) {
-        produtoService.cadastroProduto(produtoDTO);
+    @PostMapping(consumes = {"application/json", "multipart/form-data"})
+    public ResponseEntity<Void> cadastroProduto(
+            @RequestPart ProdutoRequestDTO produtoDTO,
+            @RequestPart List<MultipartFile> files
+            ) {
+        produtoService.cadastroProduto(produtoDTO, files);
         return ResponseEntity.ok().build();
     }
 
@@ -40,7 +47,7 @@ public class ProdutoController {
         return produtoService.atualizarProduto(id, produtoRequestDTO);
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarProdutoPorId(@PathVariable Long id){
         return ResponseEntity.ok(produtoService.deletarProduto(id));
     }

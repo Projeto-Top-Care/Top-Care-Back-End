@@ -2,27 +2,34 @@ package sc.senai.topcare.service.produto;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
+import sc.senai.topcare.controller.dto.produto.ProdutoResponseCardDTO;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.repository.ImagemRepository;
 import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
+import sc.senai.topcare.service.imagem.ImagemService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
 
     private ProdutoRepository produtoRepository;
+    private ImagemService imagemService;
+
     @Override
-    public List<Produto> buscarTodosProdutos() {
-        return produtoRepository.findAll();
+    public PaginaProdutos buscarTodosProdutos(Pageable pageable) {
+        Page<ProdutoResponseCardDTO> produtos = produtoRepository.findAll(pageable).map(ProdutoResponseCardDTO::new);
+        return new PaginaProdutos(pageable, produtos);
     }
     @Override
     public Produto buscarProdutoPorId(Long id) throws Exception {
@@ -34,8 +41,14 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
     @Override
-    public void cadastroProduto(ProdutoRequestDTO produtoDTO) {
+    public void cadastroProduto(ProdutoRequestDTO produtoDTO, List<MultipartFile> files) {
         Produto produto = new Produto(produtoDTO);
+        List<Imagem> imagensProduto = produto.getImagens();
+        for(MultipartFile file: files){
+            Imagem imagem = imagemService.salvarImagem(file);
+            imagensProduto.add(imagem);
+        }
+        produto.setImagens(imagensProduto);
         produtoRepository.save(produto);
     }
 
@@ -51,9 +64,15 @@ public class ProdutoServiceImpl implements ProdutoService {
    
     @Override
     public String deletarProduto(Long id){
-        String nome = buscar(id).getNome();
+        Produto produto = buscar(id);
+        System.out.println(produto.getNome());
+        for(Imagem imagem: produto.getImagens()){
+            System.out.println(imagem.getNomeOriginal());
+            imagemService.deletarImagem(imagem.getId());
+        }
         produtoRepository.deleteById(id);
-        return nome + " excluido!";
+        System.out.println("Cheguei aqui");
+        return " excluido!";
     }
     @Override
     public Produto atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO) {

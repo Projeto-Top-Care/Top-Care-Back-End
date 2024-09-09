@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,18 +21,23 @@ public class Produto {
 
     private String nome;
 
-    private Double notaAvaliacao;
+    private Double notaAvaliacao = 0.0;
 
-    @OneToOne
-    private File imagem;
+    @OneToMany
+    @JoinColumn(name = "id_produto")
+    private List<Imagem> imagens = new ArrayList<>();
 
     private String marca;
 
-    private Boolean disponivel;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    private Boolean disponivel = true;
 
     private Long codigo;
 
-    private Integer quantidadeVendas;
+    private Integer quantidadeVendas = 0;
 
     private String descricao;
 
@@ -41,19 +47,20 @@ public class Produto {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto")
-    private List<Especificacao> especificacao;
+    private List<Especificacao> especificacoes;
 
     @OneToMany
     @JoinColumn(name = "id_produto")
-    private List<Avaliacao> avaliacao;
+    private List<Avaliacao> avaliacoes;
 
     public Produto(ProdutoRequestDTO dto){
         this.nome = dto.getNome();
         this.marca = dto.getMarca();
         this.codigo = dto.getCodigo();
         this.descricao = dto.getDescricao();
+        this.categoria = dto.getCategoria();
         this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
-        this.especificacao = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
+        this.especificacoes = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
     }
 
 }
