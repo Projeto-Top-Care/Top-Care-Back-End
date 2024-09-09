@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface ProdutoService {
 
-    ResponseEntity<Produto> cadastroProduto(ProdutoRequestDTO produtoDTO);
+    void cadastroProduto(ProdutoRequestDTO produtoDTO);
     String deletarProduto(Long id) throws ProdutoNaoEncontradoException;
     List<Produto> buscarTodosProdutos();
     Produto buscarProdutoPorId(Long id) throws Exception;

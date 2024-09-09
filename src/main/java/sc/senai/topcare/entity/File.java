@@ -19,6 +19,6 @@ public class File {
 
     private String nomeOriginal;
 
-    private String caminho;
+    private String caminho = "";
 }
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.usuario.response.pet.PetResponseDTO;
 import sc.senai.topcare.entity.Agendamento;
 import sc.senai.topcare.entity.Pagamento;
+import sc.senai.topcare.entity.VarianteServico;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,20 +14,19 @@ import sc.senai.topcare.entity.Pagamento;
 public class AgendamentoResponseDTO {
     Long id;
     String filial;
-    Double valor;
     HorarioResponseDTO horario;
-    String varianteServico;
+    VarianteServico varianteServico;
     PetResponseDTO pet;
     String status;
     String cliente;
     PagamentoResponseDTO pagamento;
+    String statusAgendamento;
 
     public AgendamentoResponseDTO(Agendamento agendamento) {
         this.id = agendamento.getId();
         this.filial = agendamento.getLocal().getNome();
-        this.valor = agendamento.getValor();
         this.horario = new HorarioResponseDTO(agendamento.getHorario());
-        this.varianteServico = agendamento.getServico().getNome();
+        this.varianteServico = agendamento.getServico();
         this.pet = new PetResponseDTO(agendamento.getPet());
         this.status = agendamento.getStatus().getNOME();
         this.cliente = agendamento.getCliente().getNome();

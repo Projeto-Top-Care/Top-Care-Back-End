@@ -8,6 +8,9 @@ import sc.senai.topcare.controller.dto.agendamento.AgendamentoRequestDTO;
 import sc.senai.topcare.enuns.StatusAgendamento;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Table(name = "agendamento")
@@ -21,8 +24,6 @@ public class Agendamento {
 
     @ManyToOne
     private Filial local;
-
-    private Double valor;
 
     @OneToOne
     private Horario horario;
@@ -39,6 +40,8 @@ public class Agendamento {
 
     @Enumerated(EnumType.STRING)
     private StatusAgendamento status;
+
+    private LocalDateTime horarioConfirmacao = LocalDateTime.now();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Pagamento pagamento;

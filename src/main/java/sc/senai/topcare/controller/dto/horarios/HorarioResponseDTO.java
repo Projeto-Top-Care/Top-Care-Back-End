@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Data
 public class HorarioResponseDTO {
+    Long id;
     LocalDate dia;
     LocalTime horaInicio;
     LocalTime horaFim;

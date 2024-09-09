@@ -30,8 +30,9 @@ public class ProdutoController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Produto> cadastroProduto(@RequestBody ProdutoRequestDTO produtoDTO) {
-        return produtoService.cadastroProduto(produtoDTO);
+    public ResponseEntity<Void> cadastroProduto(@RequestBody ProdutoRequestDTO produtoDTO) {
+        produtoService.cadastroProduto(produtoDTO);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")

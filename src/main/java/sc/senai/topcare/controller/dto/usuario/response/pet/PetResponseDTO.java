@@ -19,7 +19,7 @@ public class PetResponseDTO {
 
     public PetResponseDTO(Pet pet){
         this.id = pet.getId();
-        this.imagem = pet.getImagem().getCaminho();
+//        this.imagem = pet.getImagem().getCaminho() == null ?  "": pet.getImagem().getCaminho();
         this.nome = pet.getNome();
         this.raca = pet.getRaca();
         this.especie = pet.getEspecie().getNome();

@@ -10,7 +10,6 @@ import sc.senai.topcare.entity.*;
 @Data
 public class AgendamentoRequestDTO {
     Filial local;
-    Double valor;
     Horario horario;
     VarianteServico varianteServico;
     Pet pet;
