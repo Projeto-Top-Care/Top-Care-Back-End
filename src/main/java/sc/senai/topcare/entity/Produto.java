@@ -58,6 +58,7 @@ public class Produto {
         this.marca = dto.getMarca();
         this.codigo = dto.getCodigo();
         this.descricao = dto.getDescricao();
+        this.categoria = dto.getCategoria();
         this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
         this.especificacoes = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
     }

@@ -64,9 +64,15 @@ public class ProdutoServiceImpl implements ProdutoService {
    
     @Override
     public String deletarProduto(Long id){
-        String nome = buscar(id).getNome();
+        Produto produto = buscar(id);
+        System.out.println(produto.getNome());
+        for(Imagem imagem: produto.getImagens()){
+            System.out.println(imagem.getNomeOriginal());
+            imagemService.deletarImagem(imagem.getId());
+        }
         produtoRepository.deleteById(id);
-        return nome + " excluido!";
+        System.out.println("Cheguei aqui");
+        return " excluido!";
     }
     @Override
     public Produto atualizarProduto(Long id, ProdutoRequestDTO produtoRequestDTO) {
