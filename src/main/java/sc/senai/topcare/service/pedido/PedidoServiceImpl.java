@@ -4,13 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.pedido.PedidoRequestDTO;
 import sc.senai.topcare.controller.dto.pedido.PedidoResponseDTO;
+import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoResponseSimplesDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.exceptions.ListaVaziaException;
-import sc.senai.topcare.repository.ClienteRepository;
-import sc.senai.topcare.repository.PedidoRepository;
+import sc.senai.topcare.repository.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 @Service
 @RequiredArgsConstructor
@@ -18,22 +22,28 @@ public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository repository;
     private final ClienteRepository clienteRepository;
+    private final PagamentoRepository pagamentoRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final QuantidadeProdutoRepository quantidadeProdutoRepository;
 
-
-
-    public void criarPedido(PedidoRequestDTO dto) {
+    public Pedido criarPedido(PedidoRequestDTO dto) throws ListaVaziaException {
         Pedido pedido = new Pedido();
-        Cliente cliente = new Cliente();
-        clienteRepository.save(cliente);
+        Cliente cliente = clienteRepository.findById(dto.getClienteId()).orElseThrow(RuntimeException::new);
+        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId()).orElseThrow(RuntimeException::new);
+        Endereco endereco = enderecoRepository.findById(dto.getEnderecoId()).orElseThrow(RuntimeException::new);
+        List<QuantidadeProduto> produtos = quantidadeProdutoRepository.findAllById(dto.getProdutosId());
+        pedido.setProdutos(produtos);
         pedido.setCliente(cliente);
+        pedido.setPagamento(pagamento);
+        pedido.setEndereco(endereco);
         pedido.setCodigo(dto.getCodigo());
-        pedido.setDataCompra(dto.getDataCompra());
-        pedido.setStatus(dto.getStatus());
         pedido.setFrete(dto.getFrete());
         pedido.setDesconto(dto.getDesconto());
         pedido.setSubTotal(dto.getSubTotal());
         pedido.setTotal(dto.getTotal());
-        repository.save(pedido);
+        pedido.setDataCompra(LocalDateTime.now());
+        pedido.setStatus(StatusPedido.CRIADO);
+        return repository.save(pedido);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class PedidoController {
     private PedidoService service;
 
     @PostMapping
-    public ResponseEntity<Void> criarPedido(@RequestBody PedidoRequestDTO dto){
+    public ResponseEntity<Void> criarPedido(@RequestBody PedidoRequestDTO dto) throws ListaVaziaException {
         service.criarPedido(dto);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }

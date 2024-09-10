@@ -1,5 +1,6 @@
 package sc.senai.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPostDTO;
@@ -36,6 +37,7 @@ public class Cliente extends Usuario {
     private List<Cupom> cupons = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
