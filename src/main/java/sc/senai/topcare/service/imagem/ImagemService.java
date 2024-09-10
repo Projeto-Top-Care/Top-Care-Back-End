@@ -9,4 +9,5 @@ public interface ImagemService {
     Imagem salvarImagem(MultipartFile multipartFile);
     Imagem getImagem(Long id);
     void deletarImagem(Long id);
+    void deletarImagem(String caminho);
 }

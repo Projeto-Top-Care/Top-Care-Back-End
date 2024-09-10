@@ -41,13 +41,16 @@ public class Produto {
 
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JoinColumn(name = "id_produto")
     private List<VarianteProduto> variantes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JoinColumn(name = "id_produto")
     private List<Especificacao> especificacoes;
+
+    @ManyToMany
+    private List<Especie> especies;
 
     @OneToMany
     @JoinColumn(name = "id_produto")
