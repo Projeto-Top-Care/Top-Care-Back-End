@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.entity.Categoria;
+import sc.senai.topcare.entity.Especie;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class ProdutoRequestDTO {
         private String marca;
         private Long codigo;
         private String descricao;
+        private List<Especie> especies;
         private Categoria categoria;
         private List<VarianteProdutoDTO> variantes;
         private List<EspecificacaoDTO> especificacoes;

@@ -102,4 +102,9 @@ public class ImagemServiceImp implements ImagemService{
         getClient().deleteObject(getBucket(), ref);
         repository.delete(file);
     }
+
+    public void deletarImagem(String caminho){
+        Imagem imagem = repository.findByCaminho(caminho).orElseThrow(NoSuchElementException::new);
+        deletarImagem(imagem.getId());
+    }
 }
