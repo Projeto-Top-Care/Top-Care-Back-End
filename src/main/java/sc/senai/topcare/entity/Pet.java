@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import sc.senai.topcare.controller.dto.usuario.request.pet.PetRequestDTO;
+import sc.senai.topcare.enuns.Porte;
 
 @Entity
 @Table(name = "pet")
@@ -16,6 +17,10 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String nome;
 

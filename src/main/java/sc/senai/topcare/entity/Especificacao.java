@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.produto.EspecificacaoDTO;
 
 @Entity
 @Table(name = "especificacao")
@@ -18,5 +19,10 @@ public class Especificacao {
 
     private String nome;
     private String conteudo;
+
+    public Especificacao(EspecificacaoDTO dto){
+        this.nome = dto.getNome();
+        this.conteudo = dto.getConteudo();
+    }
 
 }

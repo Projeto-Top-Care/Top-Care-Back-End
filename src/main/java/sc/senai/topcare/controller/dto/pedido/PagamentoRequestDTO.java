@@ -3,7 +3,8 @@ package sc.senai.topcare.controller.dto.pedido;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sc.senai.topcare.entity.MetodoPagamento;
+import sc.senai.topcare.enuns.MetodoPagamento;
+
 
 @Getter
 @AllArgsConstructor

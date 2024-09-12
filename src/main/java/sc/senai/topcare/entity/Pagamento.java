@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.enuns.MetodoPagamento;
 
 @Entity
 @Table(name = "pagamento")
@@ -20,6 +21,7 @@ public class Pagamento {
     private MetodoPagamento metodoPagamento;
 
     private Integer parcelas;
+
     private Boolean pago;
 
 }

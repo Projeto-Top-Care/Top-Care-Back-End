@@ -1,6 +1,5 @@
 package sc.senai.topcare.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import sc.senai.topcare.controller.dto.pedido.PedidoRequestDTO;
 import sc.senai.topcare.controller.dto.pedido.PedidoResponseDTO;
 import sc.senai.topcare.utils.ModelMapperUtil;
+import sc.senai.topcare.enuns.StatusPedido;
 
 import java.time.LocalDateTime;
 import java.util.List;

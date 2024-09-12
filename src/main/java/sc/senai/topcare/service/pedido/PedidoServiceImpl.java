@@ -4,17 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.pedido.PedidoRequestDTO;
 import sc.senai.topcare.controller.dto.pedido.PedidoResponseDTO;
-import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoResponseSimplesDTO;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 @Service
 @RequiredArgsConstructor
@@ -69,11 +66,14 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Boolean editar(PedidoRequestDTO dto, Long id) {
-        Pedido pedido = repository.findById(id).orElseThrow(RuntimeException::new);
-        pedido.editar(dto);
-        repository.save(pedido);
-        return true;
+    public Boolean editarStatus(StatusPedido status, Long id) {
+        Optional<Pedido> pedido = repository.findById(id);
+        if(pedido.isEmpty()){
+            throw new RuntimeException("O Pedido não existe");
+        }
+        pedido.get().setStatus(status);
+        repository.save(pedido.get());
+        return null;
     }
 
     @Override

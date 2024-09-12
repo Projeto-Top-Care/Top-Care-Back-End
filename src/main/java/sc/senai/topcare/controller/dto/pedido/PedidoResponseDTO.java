@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDateTime;

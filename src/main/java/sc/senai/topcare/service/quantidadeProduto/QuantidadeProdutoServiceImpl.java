@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoPatchDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestDTO;
-import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestSimplesDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoResponseSimplesDTO;
 import sc.senai.topcare.entity.QuantidadeProduto;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.QuantidadeProdutoRepository;
-import sc.senai.topcare.service.implement.ProdutoServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

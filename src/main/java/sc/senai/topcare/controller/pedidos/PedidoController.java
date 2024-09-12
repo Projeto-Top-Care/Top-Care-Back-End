@@ -44,9 +44,9 @@ public class PedidoController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> atualizar(@RequestBody PedidoRequestDTO dto, @PathVariable Long id){
-        service.editar(dto, id);
+        service.editarStatus(dto.getStatus(), id);
         return ResponseEntity.ok().build();
     }
 

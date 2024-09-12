@@ -6,4 +6,5 @@ import sc.senai.topcare.entity.Filial;
 
 @Repository
 public interface FilialRepository extends JpaRepository<Filial, Long> {
+    Filial findByNome(String nome);
 }

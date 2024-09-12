@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.service.especie.EspecieService;
@@ -23,7 +24,7 @@ public class EspecieController {
     private final EspecieServiceImpl service;
 
     @GetMapping
-    public ResponseEntity<List<FuncionarioResponseDTO>> buscarTodos(){
+    public ResponseEntity<List<IdNomeResponseDTO>> buscarTodos(){
         try{
             return ResponseEntity.ok(service.buscarTodos());
         }catch(ListaVaziaException e){

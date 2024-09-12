@@ -27,7 +27,8 @@ public class Servico {
     private String categoria;
 
     @OneToOne
-    private File imagem;
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String descricao;
 
@@ -42,6 +43,7 @@ public class Servico {
     private List<VarianteServico> variantes;
 
     public Servico(ServicoRequestDTO dto){
+        System.out.println(dto);
         ModelMapperUtil.map(dto, this);
     }
 

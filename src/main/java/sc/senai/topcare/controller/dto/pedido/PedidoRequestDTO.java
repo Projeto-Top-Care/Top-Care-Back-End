@@ -1,11 +1,14 @@
 package sc.senai.topcare.controller.dto.pedido;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.entity.*;
+import sc.senai.topcare.enuns.StatusPedido;
 
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class PedidoRequestDTO {
     private Endereco endereco;
     @NotNull
     private List<QuantidadeProduto> produtos;
+    private StatusPedido status;
+
 
     public Long getClienteId() {
         return cliente.getId();

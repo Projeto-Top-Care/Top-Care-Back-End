@@ -2,6 +2,8 @@ package sc.senai.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sc.senai.topcare.enuns.Role;
+import sc.senai.topcare.enuns.Sexo;
 
 import java.time.LocalDate;
 @Data
@@ -16,8 +18,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToOne
-//    private File foto;
+    @OneToOne
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String nome;
 

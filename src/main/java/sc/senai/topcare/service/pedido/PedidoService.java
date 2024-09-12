@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.pedido.PedidoRequestDTO;
 import sc.senai.topcare.controller.dto.pedido.PedidoResponseDTO;
 import sc.senai.topcare.entity.Pedido;
+import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public interface PedidoService {
 
     List<PedidoResponseDTO> buscarTodos() throws ListaVaziaException;
 
-    Boolean editar(PedidoRequestDTO dto, Long id);
+
+    Boolean editarStatus(StatusPedido status, Long id);
 
     Boolean deletar(Long id);
 }
