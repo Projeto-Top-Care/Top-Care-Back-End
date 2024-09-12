@@ -9,7 +9,7 @@ import sc.senai.topcare.enuns.Estado;
 public class FilialPostDto {
 
     String nome;
-
+    String contato;
     String cep;
     String cidade;
     String bairro;

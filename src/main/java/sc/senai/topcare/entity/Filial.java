@@ -25,4 +25,6 @@ public class Filial {
     private String diasDaSemana;
 
     private String horarioFuncionamento;
+
+    private String contato;
 }
