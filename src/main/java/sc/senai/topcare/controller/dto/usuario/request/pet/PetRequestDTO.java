@@ -2,8 +2,7 @@ package sc.senai.topcare.controller.dto.usuario.request.pet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sc.senai.topcare.entity.Especie;
-import sc.senai.topcare.entity.Porte;
+import sc.senai.topcare.enuns.Porte;
 @AllArgsConstructor
 @Getter
 public class PetRequestDTO {

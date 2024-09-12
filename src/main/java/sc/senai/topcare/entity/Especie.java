@@ -3,6 +3,7 @@ package sc.senai.topcare.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,5 +21,6 @@ public class Especie {
     private String nome;
 
     @ManyToMany(mappedBy = "especies")
-    private List<Servico> servicos;
+    @ToString.Exclude
+    private List<Servico> servicos = new ArrayList<>();
 }

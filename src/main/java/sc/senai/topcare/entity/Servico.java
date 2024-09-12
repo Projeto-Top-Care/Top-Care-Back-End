@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
+import sc.senai.topcare.controller.dto.servicos.ServicoResponseDTO;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.util.List;
@@ -19,11 +21,14 @@ public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     private String categoria;
 
     @OneToOne
-    private File imagem;
+    @JoinColumn(name = "imagem_id")
+    private Imagem imagem;
 
     private String descricao;
 
@@ -33,12 +38,17 @@ public class Servico {
     @ManyToMany
     private List<Especie> especies;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_servico")
     private List<VarianteServico> variantes;
 
     public Servico(ServicoRequestDTO dto){
+        System.out.println(dto);
         ModelMapperUtil.map(dto, this);
     }
 
+    public ServicoResponseDTO editar(ServicoRequestDTO dto) {
+        BeanUtils.copyProperties(dto, this);
+        return new ServicoResponseDTO(this);
+    }
 }
