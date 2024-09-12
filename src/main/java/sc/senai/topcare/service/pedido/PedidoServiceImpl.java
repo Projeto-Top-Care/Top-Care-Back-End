@@ -54,7 +54,7 @@ public class PedidoServiceImpl implements PedidoService {
         }
         return new PedidoResponseDTO(pedido.get());
     }
-
+    
     @Override
     public List<PedidoResponseDTO> buscarTodos() throws ListaVaziaException {
         List<PedidoResponseDTO> pedidos = repository
