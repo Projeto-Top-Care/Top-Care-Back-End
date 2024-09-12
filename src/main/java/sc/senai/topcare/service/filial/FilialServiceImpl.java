@@ -81,6 +81,7 @@ public class FilialServiceImpl implements FilialService {
         filial.setDiasDaSemana(filialDto.getDiasDaSemana());
         filial.setHorarioFuncionamento(filialDto.getHorarioFuncionamento());
         filial.setNome(filialDto.getNome());
+        filial.setContato(filialDto.getContato());
 
         endereco.setNome(filialDto.getNomeEndereco());
         endereco.setCep(filialDto.getCep());

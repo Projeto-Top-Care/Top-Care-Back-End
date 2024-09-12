@@ -10,6 +10,7 @@ public class FilialCompletaResponseDto {
 
     String nome;
     Long id;
+    String contato;
     String cep;
     String cidade;
     String bairro;
