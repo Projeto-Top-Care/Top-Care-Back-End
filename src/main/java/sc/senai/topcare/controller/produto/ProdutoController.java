@@ -2,6 +2,7 @@ package sc.senai.topcare.controller.produto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -19,19 +20,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/produto")
 @CrossOrigin("*")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProdutoController {
 
-    private ProdutoServiceImpl produtoService;
+    private final ProdutoServiceImpl produtoService;
 
-    @GetMapping
-    public ResponseEntity<PaginaProdutos> buscarTodosProdutos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
-        return ResponseEntity.ok(produtoService.buscarTodosProdutos(pageable));
+    private PaginaProdutos paginaProdutos;
+
+    @GetMapping("/page/{query}")
+    public ResponseEntity<PaginaProdutos> buscarTodosProdutos(@PageableDefault(size = 10, page = 0) Pageable pageable, @PathVariable String query){
+        paginaProdutos = produtoService.buscarTodosProdutos(pageable, query);
+        return ResponseEntity.ok(paginaProdutos);
     }
 
-    @GetMapping("/completo")
-    public ResponseEntity<List<Produto>> buscarTodosCompleto(){
-        return ResponseEntity.ok(produtoService.buscarTodosCompleto());
+    @GetMapping("/completo/{query}")
+    public ResponseEntity<List<Produto>> buscarTodosCompleto(@PathVariable String query){
+        return ResponseEntity.ok(produtoService.buscarTodosCompleto(query));
     }
 
     @GetMapping("/{id}")
@@ -61,9 +65,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/filtro")
-    public ResponseEntity<List<String>> buscarEspeciesDosProdutos(
-            @RequestParam String query
-    ){
+    public ResponseEntity<List<String>> buscarEspeciesDosProdutos(@RequestParam String query){
         return ResponseEntity.ok(produtoService.buscarFiltros(query));
     }
 

@@ -1,6 +1,7 @@
 package sc.senai.topcare.service.produto;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -21,21 +22,33 @@ import sc.senai.topcare.utils.ModelMapperUtil;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
 
-    private ProdutoRepository produtoRepository;
-    private ImagemService imagemService;
+    private final ProdutoRepository produtoRepository;
+    private final ImagemService imagemService;
 
     @Override
-    public PaginaProdutos buscarTodosProdutos(Pageable pageable) {
-        Page<ProdutoResponseCardDTO> produtos = produtoRepository.findAll(pageable).map(ProdutoResponseCardDTO::new);
-        return new PaginaProdutos(pageable, produtos);
+    public PaginaProdutos buscarTodosProdutos(Pageable pageable, String query) {
+        Page<Produto> produtos;
+        if(query.equals("empty")){
+            produtos = produtoRepository.findAll(pageable);
+        }else{
+            produtos = produtoRepository.findAllByNomeContainingIgnoreCase(query, pageable);
+        }
+        Page<ProdutoResponseCardDTO> produtosCard = produtos.map(ProdutoResponseCardDTO::new);
+        return new PaginaProdutos(pageable, produtosCard);
     }
 
     @Override
-    public List<Produto> buscarTodosCompleto(){
-        return produtoRepository.findAll();
+    public List<Produto> buscarTodosCompleto(String query){
+        List<Produto> produtos;
+        if(query.equals("empty")){
+            produtos = produtoRepository.findAll();
+        }else{
+            produtos = produtoRepository.findAllByNomeContainingIgnoreCase(query);
+        }
+        return produtos;
     }
 
     @Override
@@ -118,39 +131,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List<String> buscarFiltros(String query) {
-        if(query.equals("marcas")) return buscarMarcas();
-
-        if(query.equals("categorias")) return buscarCategorias();
-
-        if(query.equals("especies")) return buscarEspecies();
-
-        throw new IllegalArgumentException("Filtro não encontrado");
-    }
-
-    private List<String> buscarMarcas(){
-        Set<String> marcas = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
-            marcas.add(produto.getMarca());
-        }
-        return new ArrayList<>(marcas);
-    }
-
-    private List<String> buscarCategorias(){
-        Set<String> categorias = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
-            categorias.add(produto.getCategoria().getNome());
-        }
-        return new ArrayList<>(categorias);
-    }
-
-    private List<String> buscarEspecies(){
-        Set<String> especies = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
-            for(Especie especie : produto.getEspecies()){
-                especies.add(especie.getNome());
-            }
-        }
-        return new ArrayList<>(especies);
+        return new ArrayList<>();
     }
 
 }

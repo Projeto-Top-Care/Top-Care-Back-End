@@ -15,9 +15,9 @@ import java.util.List;
 public interface ProdutoService {
 
     void cadastroProduto(ProdutoRequestDTO produtoDTO, List<MultipartFile> files);
-    List<Produto> buscarTodosCompleto();
+    List<Produto> buscarTodosCompleto(String query);
     String deletarProduto(Long id) throws ProdutoNaoEncontradoException;
-    PaginaProdutos buscarTodosProdutos(Pageable pageable);
+    PaginaProdutos buscarTodosProdutos(Pageable pageable, String query);
     Produto buscarProdutoPorId(Long id) throws Exception;
     Produto buscar(Long id);
     Produto atualizarProduto(Long id, ProdutoRequestPutDTO produtoRequestDTO, List<MultipartFile> files);
