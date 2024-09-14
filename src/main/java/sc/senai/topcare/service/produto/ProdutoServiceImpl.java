@@ -1,41 +1,50 @@
 package sc.senai.topcare.service.produto;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
-import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
-import sc.senai.topcare.controller.dto.produto.ProdutoRequestPutDTO;
-import sc.senai.topcare.controller.dto.produto.ProdutoResponseCardDTO;
+import sc.senai.topcare.controller.dto.produto.*;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ImagemRepository;
 import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
 import sc.senai.topcare.service.imagem.ImagemService;
 import sc.senai.topcare.utils.ModelMapperUtil;
+import sc.senai.topcare.utils.ProdutoSpecification;
 
 import java.util.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
 
-    private ProdutoRepository produtoRepository;
-    private ImagemService imagemService;
+    private final ProdutoRepository produtoRepository;
+    private final ImagemService imagemService;
+
+    private List<Produto> produtosPagina = new ArrayList<>();
 
     @Override
-    public PaginaProdutos buscarTodosProdutos(Pageable pageable) {
-        Page<ProdutoResponseCardDTO> produtos = produtoRepository.findAll(pageable).map(ProdutoResponseCardDTO::new);
-        return new PaginaProdutos(pageable, produtos);
+    public PaginaProdutos buscarTodosProdutos(Pageable pageable, String query) {
+        Page<Produto> produtos;
+        if(query.equals("empty")){
+            produtos = produtoRepository.findAll(pageable);
+        }else{
+            produtos = produtoRepository.findAllByNomeContainingIgnoreCase(query, pageable);
+        }
+        produtosPagina = produtos.getContent();
+        Page<ProdutoResponseCardDTO> produtosCard = produtos.map(ProdutoResponseCardDTO::new);
+        return new PaginaProdutos(pageable, produtosCard);
     }
 
     @Override
-    public List<Produto> buscarTodosCompleto(){
-        return produtoRepository.findAll();
+    public List<ProdutoCompletoResponseDTO> buscarTodosCompleto(){
+        return produtosPagina.stream().map(ProdutoCompletoResponseDTO::new).toList();
     }
 
     @Override
@@ -77,7 +86,6 @@ public class ProdutoServiceImpl implements ProdutoService {
             imagemService.deletarImagem(imagem.getId());
         }
         produtoRepository.deleteById(id);
-        System.out.println("Cheguei aqui");
         return " excluido!";
     }
     @Override
@@ -129,7 +137,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private List<String> buscarMarcas(){
         Set<String> marcas = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
+        for(Produto produto : produtosPagina){
             marcas.add(produto.getMarca());
         }
         return new ArrayList<>(marcas);
@@ -137,7 +145,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private List<String> buscarCategorias(){
         Set<String> categorias = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
+        for(Produto produto : produtosPagina){
             categorias.add(produto.getCategoria().getNome());
         }
         return new ArrayList<>(categorias);
@@ -145,7 +153,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private List<String> buscarEspecies(){
         Set<String> especies = new HashSet<>();
-        for(Produto produto : produtoRepository.findAll()){
+        for(Produto produto : produtosPagina){
             for(Especie especie : produto.getEspecies()){
                 especies.add(especie.getNome());
             }
@@ -153,4 +161,32 @@ public class ProdutoServiceImpl implements ProdutoService {
         return new ArrayList<>(especies);
     }
 
+
+    public List<ProdutoResponseCardDTO> buscarFiltrados(List<String> marcas, List<String> categorias, List<String> especies, Pageable pageable) {
+
+        Specification<Produto> spec = Specification.where(null);
+
+        if (marcas != null && !marcas.isEmpty()) {
+            spec = spec.and(ProdutoSpecification.marcasIn(marcas));
+        }
+
+        if (categorias != null && !categorias.isEmpty()) {
+            spec = spec.and(ProdutoSpecification.categoriasIn(categorias));
+        }
+
+        if (especies != null && !especies.isEmpty()) {
+            spec = spec.and(ProdutoSpecification.especiesIn(especies));
+        }
+        List<Produto> filtrados = produtoRepository.findAll(spec, pageable).stream().toList();
+        List<Produto> filtradosByQuery = new ArrayList<>();
+
+        for(Produto produto : produtosPagina){
+            for(Produto produtoFiltrado : filtrados){
+                if(produto.getId().equals(produtoFiltrado.getId())){
+                    filtradosByQuery.add(produto);
+                }
+            }
+        }
+        return filtradosByQuery.stream().map(ProdutoResponseCardDTO::new).toList();
+    }
 }
