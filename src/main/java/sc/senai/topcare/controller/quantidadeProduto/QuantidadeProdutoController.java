@@ -29,6 +29,11 @@ public class QuantidadeProdutoController {
         return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
     }
 
+    @PostMapping("/basico")
+    public ResponseEntity<QuantidadeProduto> cadastrarQuantProdutoBasico(@RequestBody QuantidadeProdutoRequestDTO dto) {
+        return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<QuantidadeProduto> buscarPorId(@PathVariable Long id) {
         QuantidadeProduto quantidadeProduto = service.buscarPorId(id);

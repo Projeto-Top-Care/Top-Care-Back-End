@@ -6,4 +6,6 @@ import sc.senai.topcare.entity.Carrinho;
 
 @Repository
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
+
+    Carrinho findByUsuarioId(Long id);
 }

@@ -32,7 +32,15 @@ public class CarrinhoServiceImpl {
     }
 
     public Carrinho buscarPorId(Long id) {
-        return carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
+        try {
+            return carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Carrinho buscarPorUsuarioId(Long id) {
+        return carrinhoRepository.findByUsuarioId(id);
     }
 
     public void adicionarProduto(Long id, QuantidadeProduto quantidadeProduto) {

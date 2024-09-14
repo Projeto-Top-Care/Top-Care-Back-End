@@ -38,6 +38,18 @@ public class CarrinhoController {
     @GetMapping("/{id}")
     public ResponseEntity<CarrinhoResponseDTO> buscarPorId(@PathVariable Long id) {
         Carrinho carrinho = service.buscarPorId(id);
+        if (carrinho == null) {
+            return new ResponseEntity<>(null, HttpStatusCode.valueOf(404));
+        }
+        return new ResponseEntity<>(carrinho.paraResponseDTO(), HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<CarrinhoResponseDTO> buscarPorUsuarioId(@PathVariable Long id) {
+        Carrinho carrinho = service.buscarPorUsuarioId(id);
+        if (carrinho == null) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
         return new ResponseEntity<>(carrinho.paraResponseDTO(), HttpStatusCode.valueOf(200));
     }
 
