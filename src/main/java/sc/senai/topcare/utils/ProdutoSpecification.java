@@ -5,24 +5,29 @@ import org.springframework.data.jpa.domain.Specification;
 import sc.senai.topcare.entity.Especie;
 import sc.senai.topcare.entity.Produto;
 
+import java.util.List;
+
 public class ProdutoSpecification {
 
-    public static Specification<Produto> especieIgual(String nomeEspecie) {
+    // Filtro para marcas
+    public static Specification<Produto> marcasIn(List<String> marcas) {
+        return (root, query, criteriaBuilder) ->
+                root.get("marca").in(marcas);
+    }
+
+    // Filtro para categorias
+    public static Specification<Produto> categoriasIn(List<String> categorias) {
+        return (root, query, criteriaBuilder) ->
+                root.get("categoria").get("nome").in(categorias);
+    }
+
+    // Filtro para espécies
+    public static Specification<Produto> especiesIn(List<String> especies) {
         return (root, query, criteriaBuilder) -> {
-            // Fazendo o join com a lista de especies
+            // Join com a lista de especies
             Join<Produto, Especie> especieJoin = root.join("especies");
-            return criteriaBuilder.equal(especieJoin.get("nome"), nomeEspecie);
+            return especieJoin.get("nome").in(especies);
         };
-    }
-
-    public static Specification<Produto> marcaIgual(String marca) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("marca"), marca);
-    }
-
-    public static Specification<Produto> categoriaIgual(String categoria) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("categoria").get("nome"), categoria);
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.produto.PaginaProdutos;
+import sc.senai.topcare.controller.dto.produto.ProdutoCompletoResponseDTO;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestDTO;
 import sc.senai.topcare.controller.dto.produto.ProdutoRequestPutDTO;
 import sc.senai.topcare.entity.Produto;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ProdutoService {
 
     void cadastroProduto(ProdutoRequestDTO produtoDTO, List<MultipartFile> files);
-    List<Produto> buscarTodosCompleto(String query);
+    List<ProdutoCompletoResponseDTO> buscarTodosCompleto();
     String deletarProduto(Long id) throws ProdutoNaoEncontradoException;
     PaginaProdutos buscarTodosProdutos(Pageable pageable, String query);
     Produto buscarProdutoPorId(Long id) throws Exception;
