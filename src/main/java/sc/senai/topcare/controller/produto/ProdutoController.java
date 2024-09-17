@@ -78,4 +78,9 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.buscarFiltrados(marcas, categorias, especies, pageable));
     }
 
+    @GetMapping("/variante/{id}")
+    public ResponseEntity<VarianteProdutoDTO> buscarVariantePorId(@PathVariable Long id){
+        return ResponseEntity.ok(produtoService.buscarVariante(id));
+    }
+
 }

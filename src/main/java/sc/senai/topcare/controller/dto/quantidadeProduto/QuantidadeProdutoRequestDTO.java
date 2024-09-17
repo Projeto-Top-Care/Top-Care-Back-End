@@ -10,8 +10,9 @@ import sc.senai.topcare.entity.VarianteProduto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuantidadeProdutoRequestDTO {
+    private Long produtoId;
 
-    private VarianteProduto produto;
+    private Long varianteProdutoId;
 
     private Integer quantidade;
 }

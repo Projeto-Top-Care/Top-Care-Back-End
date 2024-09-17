@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoPatchDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoRequestDTO;
 import sc.senai.topcare.controller.dto.quantidadeProduto.QuantidadeProdutoResponseSimplesDTO;
+import sc.senai.topcare.entity.Produto;
 import sc.senai.topcare.entity.QuantidadeProduto;
+import sc.senai.topcare.entity.VarianteProduto;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.QuantidadeProdutoRepository;
 
@@ -22,7 +24,8 @@ public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
     @Override
     public QuantidadeProduto criarQuantProduto(QuantidadeProdutoRequestDTO dto) {
         QuantidadeProduto quantidadeProduto = new QuantidadeProduto();
-        quantidadeProduto.setProduto(dto.getProduto());
+        quantidadeProduto.setVarianteProduto(new VarianteProduto(dto.getVarianteProdutoId()));
+        quantidadeProduto.setProduto(new Produto(dto.getProdutoId()));
         quantidadeProduto.setQuantidade(dto.getQuantidade());
         return repository.save(quantidadeProduto);
     }

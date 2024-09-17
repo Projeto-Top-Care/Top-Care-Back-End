@@ -14,6 +14,7 @@ import sc.senai.topcare.entity.*;
 import sc.senai.topcare.repository.ImagemRepository;
 import sc.senai.topcare.repository.ProdutoRepository;
 import sc.senai.topcare.exceptions.ProdutoNaoEncontradoException;
+import sc.senai.topcare.repository.VarianteProdutoRepository;
 import sc.senai.topcare.service.imagem.ImagemService;
 import sc.senai.topcare.utils.ModelMapperUtil;
 import sc.senai.topcare.utils.ProdutoSpecification;
@@ -26,6 +27,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
     private final ImagemService imagemService;
+    private final VarianteProdutoRepository varianteRepository;
 
     private List<Produto> produtosPagina = new ArrayList<>();
 
@@ -188,5 +190,11 @@ public class ProdutoServiceImpl implements ProdutoService {
             }
         }
         return filtradosByQuery.stream().map(ProdutoResponseCardDTO::new).toList();
+    }
+
+    public VarianteProdutoDTO buscarVariante(Long id) {
+        VarianteProduto varianteProduto = varianteRepository.findById(id).orElseThrow(()->
+                new NoSuchElementException("A variante não foi localizada!"));
+        return new VarianteProdutoDTO(varianteProduto);
     }
 }

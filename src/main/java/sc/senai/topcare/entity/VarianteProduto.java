@@ -36,5 +36,8 @@ public class VarianteProduto {
     public VarianteProduto (VarianteProdutoDTO dto){
         ModelMapperUtil.map(dto, this);
     }
+    public VarianteProduto (Long id){
+        this.id = id;
+    }
 
 }

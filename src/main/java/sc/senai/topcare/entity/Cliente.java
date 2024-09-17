@@ -50,6 +50,10 @@ public class Cliente extends Usuario {
         this.enderecos.add(new Endereco(dto));
     }
 
+    public Cliente (Long id){
+        super.setId(id);
+    }
+
     public UsuarioResponseDTO toDTO(){
         return new UsuarioResponseDTO(this);
     }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.carrinho.CarrinhoResponseDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,9 @@ public class Carrinho {
     @OneToOne
     private Usuario usuario;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carrinho")
-    private List<QuantidadeProduto> produtos;
+    private List<QuantidadeProduto> produtos = new ArrayList<>();
 
     private Double desconto;
 

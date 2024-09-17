@@ -66,5 +66,8 @@ public class Produto {
         this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
         this.especificacoes = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
     }
+    public Produto (Long id){
+        this.id = id;
+    }
 
 }
