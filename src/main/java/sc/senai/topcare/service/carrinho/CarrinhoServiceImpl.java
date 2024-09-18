@@ -58,4 +58,10 @@ public class CarrinhoServiceImpl {
         carrinho.setFrete(frete);
         return carrinhoRepository.save(carrinho);
     }
+
+    public void limparCarrinho(Long id) {
+        Carrinho carrinho = buscarPorUsuarioId(id);
+        carrinho.getProdutos().clear();
+        carrinhoRepository.save(carrinho);
+    }
 }

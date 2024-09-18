@@ -18,7 +18,5 @@ public interface QuantidadeProdutoService {
 
     List<QuantidadeProdutoResponseSimplesDTO> buscarTodosSimples() throws ListaVaziaException;
 
-    QuantidadeProduto editarQuantProduto(Long id, QuantidadeProdutoPatchDTO dto);
-
     Boolean deletarQuantidadeProduto(Long id);
 }

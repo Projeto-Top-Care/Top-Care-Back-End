@@ -58,11 +58,18 @@ public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
         return quantidadeDTO;
     }
 
-    @Override
-    public QuantidadeProduto editarQuantProduto(Long id, QuantidadeProdutoPatchDTO dto) {
+    public Integer adicionarQuantidade(Long id){
         QuantidadeProduto quantidadeProduto = buscarPorId(id);
-        quantidadeProduto.setQuantidade(dto.getQuantidade());
-        return repository.save(quantidadeProduto);
+        quantidadeProduto.setQuantidade(quantidadeProduto.getQuantidade() + 1);
+        repository.save(quantidadeProduto);
+        return quantidadeProduto.getQuantidade();
+    }
+
+    public Integer removerQuantidade(Long id){
+        QuantidadeProduto quantidadeProduto = buscarPorId(id);
+        quantidadeProduto.setQuantidade(quantidadeProduto.getQuantidade() - 1);
+        repository.save(quantidadeProduto);
+        return quantidadeProduto.getQuantidade();
     }
 
     @Override

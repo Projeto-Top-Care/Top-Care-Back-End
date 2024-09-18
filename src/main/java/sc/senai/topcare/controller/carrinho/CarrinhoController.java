@@ -47,4 +47,10 @@ public class CarrinhoController {
         service.removerProduto(id, produto);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> limparCarrinho(@PathVariable Long id) {
+        service.limparCarrinho(id);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
 }
