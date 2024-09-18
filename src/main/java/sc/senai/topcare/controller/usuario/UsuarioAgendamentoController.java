@@ -7,6 +7,8 @@ import sc.senai.topcare.controller.dto.agendamento.AgendamentoRequestDTO;
 import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
 import sc.senai.topcare.service.agendamento.AgendamentoService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("usuario/agendamento")
@@ -17,7 +19,7 @@ public class UsuarioAgendamentoController{
 
     @PostMapping("/{id}")
     public ResponseEntity<Long> fazerAgendamento(@RequestBody AgendamentoRequestDTO dto,
-                                                    @PathVariable Long id){
+                                                 @PathVariable Long id){
         return ResponseEntity.ok(service.criarAgendamento(dto, id));
     }
 
@@ -41,5 +43,10 @@ public class UsuarioAgendamentoController{
     @GetMapping("/cancelamento/{id}")
     public ResponseEntity<Boolean> podeExcluir(@PathVariable Long id){
         return ResponseEntity.ok(service.podeExcluir(id));
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<AgendamentoResponseDTO>> buscarTodosAgendamentos(){
+        return ResponseEntity.ok(service.buscarTodosAgendamentos());
     }
 }

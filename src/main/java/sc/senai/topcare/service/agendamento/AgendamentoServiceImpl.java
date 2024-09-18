@@ -6,16 +6,14 @@ import sc.senai.topcare.controller.dto.agendamento.AgendamentoRequestDTO;
 import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
 import sc.senai.topcare.entity.Agendamento;
 import sc.senai.topcare.entity.Cliente;
-import sc.senai.topcare.entity.Pagamento;
-import sc.senai.topcare.entity.Usuario;
 import sc.senai.topcare.repository.AgendamentoRepository;
 import sc.senai.topcare.service.cliente.ClienteService;
 import sc.senai.topcare.service.horario.HorarioService;
-import sc.senai.topcare.service.usuario.UsuarioService;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -43,6 +41,15 @@ public class AgendamentoServiceImpl implements AgendamentoService{
     public AgendamentoResponseDTO buscarPorId(Long id) {
         Agendamento agendamento = repository.findById(id).orElseThrow(NullPointerException::new);
         return new AgendamentoResponseDTO(agendamento);
+    }
+    @Override
+    public List<AgendamentoResponseDTO> buscarTodosAgendamentos(){
+        List<Agendamento> agendamentos = repository.findAll();
+        List<AgendamentoResponseDTO> agendamentosDTO = new ArrayList<>();
+        for (Agendamento agendamento : agendamentos) {
+            agendamentosDTO.add(new AgendamentoResponseDTO(agendamento));
+        }
+        return agendamentosDTO;
     }
 
     @Override
