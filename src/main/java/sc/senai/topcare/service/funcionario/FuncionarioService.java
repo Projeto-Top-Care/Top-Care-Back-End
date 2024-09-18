@@ -1,5 +1,7 @@
 package sc.senai.topcare.service.funcionario;
 
+import org.springframework.http.HttpStatusCode;
+import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
 import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
@@ -27,4 +29,6 @@ public interface FuncionarioService {
     Funcionario buscarFuncionarioPorId(Long id);
 
     List<HorariosReservadosDto> buscarHorariosReservados(Long id);
+
+    List<AgendamentoResponseDTO> verAgendamentos(Long id);
 }
