@@ -30,16 +30,4 @@ public class PedidoRequestDTO {
     private Endereco endereco;
     @NotNull
     private List<QuantidadeProduto> produtos;
-
-    public Long getPagamentoId() {
-        return pagamento.getId();
-    }
-
-    public Long getEnderecoId() {
-        return endereco.getId();
-    }
-
-    public List<Long> getProdutosId() {
-        return produtos.stream().map(QuantidadeProduto::getId).toList();
-    }
 }

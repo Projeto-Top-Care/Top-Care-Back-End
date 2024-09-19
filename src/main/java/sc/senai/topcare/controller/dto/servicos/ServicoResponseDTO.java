@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
+import sc.senai.topcare.entity.Imagem;
 import sc.senai.topcare.entity.Servico;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ServicoResponseDTO {
     Long id;
-    String imagem;
+    Imagem imagem;
     String nome;
     String categoria;
     String descricao;

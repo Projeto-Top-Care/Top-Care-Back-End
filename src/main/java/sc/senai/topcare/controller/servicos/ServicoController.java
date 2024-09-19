@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.horarios.FuncionarioHorarioDTO;
 import sc.senai.topcare.controller.dto.horarios.HorarioResponseDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
@@ -24,9 +25,9 @@ public class ServicoController {
     @Qualifier("servicoService")
     private final ServicoService service;
 
-    @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody ServicoRequestDTO dto){
-        service.cadastrar(dto);
+    @PostMapping(consumes = {"application/json", "multipart/form-data"})
+    public ResponseEntity<Void> cadastrar(@RequestPart ServicoRequestDTO dto, @RequestPart MultipartFile imagem){
+        service.cadastrar(dto, imagem);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
     @GetMapping("/{id}")

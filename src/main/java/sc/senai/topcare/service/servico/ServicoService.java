@@ -1,6 +1,7 @@
 package sc.senai.topcare.service.servico;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.horarios.FuncionarioHorarioDTO;
 import sc.senai.topcare.controller.dto.horarios.HorarioResponseDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 public interface ServicoService {
-    void cadastrar(ServicoRequestDTO dto);
+    void cadastrar(ServicoRequestDTO dto, MultipartFile multipartFile);
     List<ServicoResponseDTO> buscarTodos() throws ListaVaziaException;
     ServicoResponseDTO buscarPorId(Long id);
     Boolean editar(ServicoRequestDTO dto, Long id);

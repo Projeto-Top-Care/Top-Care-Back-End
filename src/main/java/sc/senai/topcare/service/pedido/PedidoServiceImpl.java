@@ -8,6 +8,7 @@ import sc.senai.topcare.entity.*;
 import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.*;
+import sc.senai.topcare.service.carrinho.CarrinhoServiceImpl;
 import sc.senai.topcare.service.cliente.ClienteServiceImpl;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository repository;
     private final ClienteServiceImpl clienteService;
+    private final CarrinhoServiceImpl carrinhoService;
 
     public Pedido criarPedido(PedidoRequestDTO dto, Long id) throws ListaVaziaException {
         Pedido pedido = new Pedido(dto);
@@ -27,6 +29,11 @@ public class PedidoServiceImpl implements PedidoService {
         cliente.getPedidos().add(pedido);
         pedido.setCliente(cliente);
         clienteService.salvar(cliente);
+        for(QuantidadeProduto qp : pedido.getProdutos()){
+            qp.getVarianteProduto().setEstoque(qp.getVarianteProduto().getEstoque() - qp.getQuantidade());
+            qp.getProduto().setQuantidadeVendas(qp.getProduto().getQuantidadeVendas() + qp.getQuantidade());
+        }
+        carrinhoService.limparCarrinho(id);
         return repository.save(pedido);
     }
 
@@ -51,6 +58,8 @@ public class PedidoServiceImpl implements PedidoService {
         }
         return pedidos;
     }
+
+
 
     @Override
     public Boolean editarStatus(String status, Long id) {

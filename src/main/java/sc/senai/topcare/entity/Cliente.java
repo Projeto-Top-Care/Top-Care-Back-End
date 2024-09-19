@@ -30,7 +30,7 @@ public class Cliente extends Usuario {
     @ManyToMany
     private List<Produto> favoritos = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private List<Cartao> cartoes = new ArrayList<>();
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sc.senai.topcare.controller.dto.cartao.CartaoRequestDTO;
+import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDate;
 
@@ -17,11 +19,17 @@ public class Cartao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String nomeNoCartao;
 
-    private Long numero;
+    private String nomeDoCartao;
 
-    private LocalDate validade;
+    private String cpf;
 
-    private String agencia;
+    private String numero;
+
+    private String validade;
+
+    public Cartao(CartaoRequestDTO dto){
+        ModelMapperUtil.map(dto, this);
+    }
 }

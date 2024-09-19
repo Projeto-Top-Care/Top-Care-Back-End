@@ -29,17 +29,20 @@ public class UsuarioResponseDTO{
         List<PetResponseDTO> pets;
         List<Cartao> cartoes;
         List<AgendamentoResponseDTO> agendamentos;
-        List<Pedido> pedidos;
+        List<PedidoCardResponseDTO> pedidos;
 
         public UsuarioResponseDTO(Usuario usuario){
                 if(usuario instanceof Cliente cliente){
                         List<Pet> pets1 = cliente.getPets();
                         List<Agendamento> agendamentos = cliente.getAgendamentos();
+                        List<Pedido> pedidos = cliente.getPedidos();
                         cliente.setPets(null);
                         cliente.setAgendamentos(null);
+                        cliente.setPedidos(null);
                         ModelMapperUtil.map(usuario, this);
                         this.pets = pets1.stream().map(PetResponseDTO::new).toList();
                         this.agendamentos = agendamentos.stream().map(AgendamentoResponseDTO::new).toList();
+                        this.pedidos = pedidos.stream().map(PedidoCardResponseDTO::new).toList();
                 }else{
                         ModelMapperUtil.map(usuario,this);
                 }
