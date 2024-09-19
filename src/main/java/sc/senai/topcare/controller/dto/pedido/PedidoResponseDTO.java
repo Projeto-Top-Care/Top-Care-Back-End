@@ -22,11 +22,16 @@ public class PedidoResponseDTO {
     private Double desconto;
     private Double subTotal;
     private Double total;
-    private Cliente cliente;
-    private Pagamento pagamento;
-    private Endereco endereco;
     private List<QuantidadeProduto> produtos;
 
+    private Long clienteId;
+    private String clienteNome;
+
+    private Long pagamentoId;
+    private String metodoPagamento;
+
+    private Long enderecoId;
+    private String enderecoCep;
 
     public PedidoResponseDTO(Pedido pedido) {
         ModelMapperUtil.map(pedido, this);
