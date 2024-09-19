@@ -1,5 +1,6 @@
 package sc.senai.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,18 +42,18 @@ public class Produto {
 
     private String descricao;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_produto")
     private List<VarianteProduto> variantes;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_produto")
     private List<Especificacao> especificacoes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Especie> especies;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_produto")
     private List<Avaliacao> avaliacoes;
 
@@ -64,6 +65,9 @@ public class Produto {
         this.categoria = dto.getCategoria();
         this.variantes = dto.getVariantes().stream().map(VarianteProduto::new).toList();
         this.especificacoes = dto.getEspecificacoes().stream().map(Especificacao::new).toList();
+    }
+    public Produto (Long id){
+        this.id = id;
     }
 
 }

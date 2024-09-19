@@ -8,6 +8,7 @@ import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.utils.ModelMapperUtil;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Data
@@ -16,12 +17,13 @@ import java.util.List;
 public class PedidoResponseDTO {
     private Long id;
     private Long codigo;
-    private LocalDateTime dataCompra;
-    private StatusPedido status;
+    private String dataCompra;
+    private String status;
     private Double frete;
     private Double desconto;
-    private Double subTotal;
     private Double total;
+    private Pagamento pagamento;
+    private Endereco endereco;
     private List<QuantidadeProduto> produtos;
 
     private Long clienteId;
@@ -35,5 +37,7 @@ public class PedidoResponseDTO {
 
     public PedidoResponseDTO(Pedido pedido) {
         ModelMapperUtil.map(pedido, this);
+        this.status = pedido.getStatus().getNOME();
+        this.dataCompra = pedido.getDataCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }

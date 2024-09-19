@@ -2,16 +2,19 @@ package sc.senai.topcare.service.servico;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sc.senai.topcare.controller.dto.horarios.FuncionarioHorarioDTO;
 import sc.senai.topcare.controller.dto.horarios.HorarioResponseDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoRequestDTO;
 import sc.senai.topcare.controller.dto.servicos.ServicoResponseDTO;
 import sc.senai.topcare.entity.Funcionario;
 import sc.senai.topcare.entity.Horario;
+import sc.senai.topcare.entity.Imagem;
 import sc.senai.topcare.entity.Servico;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.ServicoRepository;
 import sc.senai.topcare.service.horario.HorarioService;
+import sc.senai.topcare.service.imagem.ImagemServiceImp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,11 +28,13 @@ public class ServicoServiceImpl implements ServicoService {
 
     private final ServicoRepository repository;
     private final HorarioService horarioService;
+    private final ImagemServiceImp imagemService;
 
     @Override
-    public void cadastrar(ServicoRequestDTO dto) {
+    public void cadastrar(ServicoRequestDTO dto, MultipartFile multipartFile) {
         Servico servico = new Servico(dto);
-        System.out.println(servico);
+        Imagem imagem = imagemService.salvarImagem(multipartFile);
+        servico.setImagem(imagem);
         repository.save(servico);
     }
 

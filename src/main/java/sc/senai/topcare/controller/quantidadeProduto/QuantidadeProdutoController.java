@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/quantidadeProduto")
 public class QuantidadeProdutoController {
 
@@ -26,6 +27,11 @@ public class QuantidadeProdutoController {
 
     @PostMapping
     public ResponseEntity<QuantidadeProduto> cadastrarQuantProduto(@RequestBody QuantidadeProdutoRequestDTO dto) {
+        return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
+    }
+
+    @PostMapping("/basico")
+    public ResponseEntity<QuantidadeProduto> cadastrarQuantProdutoBasico(@RequestBody QuantidadeProdutoRequestDTO dto) {
         return new ResponseEntity<>(service.criarQuantProduto(dto), HttpStatusCode.valueOf(201));
     }
 
@@ -61,10 +67,14 @@ public class QuantidadeProdutoController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<QuantidadeProdutoResponseSimplesDTO> atualizarQuantidade(@PathVariable Long id, @RequestBody QuantidadeProdutoPatchDTO dto) {
-        QuantidadeProduto quantidadeProduto = service.editarQuantProduto(id, dto);
-        return new ResponseEntity<>(quantidadeProduto.paraSimplesResponseDTO(), HttpStatusCode.valueOf(200));
+    @PatchMapping("/adicionar/{id}")
+    public ResponseEntity<Integer> adicionarQuantidade(@PathVariable Long id) {
+        return ResponseEntity.ok(service.adicionarQuantidade(id));
+    }
+
+    @PatchMapping("/remover/{id}")
+    public ResponseEntity<Integer> removerQuantidade(@PathVariable Long id) {
+        return ResponseEntity.ok(service.removerQuantidade(id));
     }
 
     @DeleteMapping("/{id}")

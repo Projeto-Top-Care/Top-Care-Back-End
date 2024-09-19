@@ -8,6 +8,8 @@ import sc.senai.topcare.entity.*;
 import sc.senai.topcare.enuns.StatusPedido;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.*;
+import sc.senai.topcare.service.carrinho.CarrinhoServiceImpl;
+import sc.senai.topcare.service.cliente.ClienteServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,28 +20,20 @@ import java.util.Optional;
 public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository repository;
-    private final ClienteRepository clienteRepository;
-    private final PagamentoRepository pagamentoRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final QuantidadeProdutoRepository quantidadeProdutoRepository;
+    private final ClienteServiceImpl clienteService;
+    private final CarrinhoServiceImpl carrinhoService;
 
-    public Pedido criarPedido(PedidoRequestDTO dto) throws ListaVaziaException {
-        Pedido pedido = new Pedido();
-        Cliente cliente = clienteRepository.findById(dto.getClienteId()).orElseThrow(RuntimeException::new);
-        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId()).orElseThrow(RuntimeException::new);
-        Endereco endereco = enderecoRepository.findById(dto.getEnderecoId()).orElseThrow(RuntimeException::new);
-        List<QuantidadeProduto> produtos = quantidadeProdutoRepository.findAllById(dto.getProdutosId());
-        pedido.setProdutos(produtos);
+    public Pedido criarPedido(PedidoRequestDTO dto, Long id) throws ListaVaziaException {
+        Pedido pedido = new Pedido(dto);
+        Cliente cliente = clienteService.buscarCliente(id);
+        cliente.getPedidos().add(pedido);
         pedido.setCliente(cliente);
-        pedido.setPagamento(pagamento);
-        pedido.setEndereco(endereco);
-        pedido.setCodigo(dto.getCodigo());
-        pedido.setFrete(dto.getFrete());
-        pedido.setDesconto(dto.getDesconto());
-        pedido.setSubTotal(dto.getSubTotal());
-        pedido.setTotal(dto.getTotal());
-        pedido.setDataCompra(LocalDateTime.now());
-        pedido.setStatus(StatusPedido.CRIADO);
+        clienteService.salvar(cliente);
+        for(QuantidadeProduto qp : pedido.getProdutos()){
+            qp.getVarianteProduto().setEstoque(qp.getVarianteProduto().getEstoque() - qp.getQuantidade());
+            qp.getProduto().setQuantidadeVendas(qp.getProduto().getQuantidadeVendas() + qp.getQuantidade());
+        }
+        carrinhoService.limparCarrinho(id);
         return repository.save(pedido);
     }
 
@@ -65,13 +59,15 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidos;
     }
 
+
+
     @Override
-    public Boolean editarStatus(StatusPedido status, Long id) {
+    public Boolean editarStatus(String status, Long id) {
         Optional<Pedido> pedido = repository.findById(id);
         if(pedido.isEmpty()){
             throw new RuntimeException("O Pedido não existe");
         }
-        pedido.get().setStatus(status);
+        pedido.get().setStatus(StatusPedido.valueOf(status));
         repository.save(pedido.get());
         return null;
     }

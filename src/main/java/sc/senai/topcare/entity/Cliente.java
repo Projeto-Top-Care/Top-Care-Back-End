@@ -30,7 +30,7 @@ public class Cliente extends Usuario {
     @ManyToMany
     private List<Produto> favoritos = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private List<Cartao> cartoes = new ArrayList<>();
 
@@ -48,6 +48,10 @@ public class Cliente extends Usuario {
         ModelMapperUtil.map(dto, this);
         this.setRole(Role.BASIC);
         this.enderecos.add(new Endereco(dto));
+    }
+
+    public Cliente (Long id){
+        super.setId(id);
     }
 
     public UsuarioResponseDTO toDTO(){

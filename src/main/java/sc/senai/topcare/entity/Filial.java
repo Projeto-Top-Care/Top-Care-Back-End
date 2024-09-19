@@ -19,11 +19,12 @@ public class Filial {
 
     private String nome;
 
-    @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 
     private String diasDaSemana;
 
     private String horarioFuncionamento;
+
+    private String contato;
 }

@@ -33,13 +33,12 @@ public class Pedido {
 
     private Double frete;
     private Double desconto;
-    private Double subTotal;
     private Double total;
 
     @ManyToOne
     private Cliente cliente;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @ManyToOne
@@ -51,6 +50,8 @@ public class Pedido {
 
     public Pedido(PedidoRequestDTO dto){
         ModelMapperUtil.map(dto, this);
+        this.dataCompra = LocalDateTime.now();
+        this.status = StatusPedido.CRIADO;
     }
 
     public PedidoResponseDTO editar(PedidoRequestDTO dto) {

@@ -23,7 +23,7 @@ public class VarianteProduto {
 
     private String tamanho;
 
-    private Integer peso;
+    private String peso;
 
     private Integer unidades;
 
@@ -35,6 +35,9 @@ public class VarianteProduto {
 
     public VarianteProduto (VarianteProdutoDTO dto){
         ModelMapperUtil.map(dto, this);
+    }
+    public VarianteProduto (Long id){
+        this.id = id;
     }
 
 }

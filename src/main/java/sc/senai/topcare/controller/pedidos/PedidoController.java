@@ -25,8 +25,8 @@ public class PedidoController {
     private PedidoService service;
 
     @PostMapping
-    public ResponseEntity<Void> criarPedido(@RequestBody PedidoRequestDTO dto) throws ListaVaziaException {
-        service.criarPedido(dto);
+    public ResponseEntity<Void> criarPedido(@RequestBody PedidoRequestDTO dto, @RequestParam Long id) throws ListaVaziaException {
+        service.criarPedido(dto, id);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
 
@@ -44,9 +44,9 @@ public class PedidoController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@RequestBody PedidoRequestDTO dto, @PathVariable Long id){
-        service.editarStatus(dto.getStatus(), id);
+    @PatchMapping("/{id}/{status}")
+    public ResponseEntity<Void> atualizar(@PathVariable String status, @PathVariable Long id){
+        service.editarStatus(status, id);
         return ResponseEntity.ok().build();
     }
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
 import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
@@ -65,5 +66,10 @@ public class FuncionarioController {
     @GetMapping("/reservados/{id}")
     public ResponseEntity<List<HorariosReservadosDto>> verHorariosReservados(@PathVariable Long id) {
         return new ResponseEntity<>(service.buscarHorariosReservados(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/agendamentos/{id}")
+    public ResponseEntity<List<AgendamentoResponseDTO>> verAgendamentos(@PathVariable Long id) {
+        return new ResponseEntity<>(service.verAgendamentos(id), HttpStatus.OK);
     }
 }

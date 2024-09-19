@@ -2,23 +2,31 @@ package sc.senai.topcare.service.funcionario;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sc.senai.topcare.controller.dto.agendamento.AgendamentoResponseDTO;
+import sc.senai.topcare.controller.dto.agendamento.HorarioResponseDTO;
+import sc.senai.topcare.controller.dto.agendamento.PagamentoResponseDTO;
 import sc.senai.topcare.controller.dto.conjuntas.IdNomeResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioPostDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioRequestPutDto;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioResponseDTO;
 import sc.senai.topcare.controller.dto.funcionario.FuncionarioSimplesResponseDto;
 import sc.senai.topcare.controller.dto.horarios.HorariosReservadosDto;
+import sc.senai.topcare.controller.dto.usuario.response.pet.PetResponseDTO;
 import sc.senai.topcare.entity.*;
 import sc.senai.topcare.entity.Filial;
 import sc.senai.topcare.entity.Funcionario;
 import sc.senai.topcare.entity.Horario;
 import sc.senai.topcare.entity.Servico;
 import sc.senai.topcare.exceptions.ListaVaziaException;
+import sc.senai.topcare.repository.AgendamentoRepository;
 import sc.senai.topcare.repository.FilialRepository;
 import sc.senai.topcare.repository.FuncionarioRepository;
+import sc.senai.topcare.repository.HorarioRepository;
+import sc.senai.topcare.service.agendamento.AgendamentoServiceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -27,8 +35,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FuncionarioServiceImpl implements FuncionarioService {
 
-    private FuncionarioRepository repository;
     private FilialRepository filialRepository;
+    private FuncionarioRepository repository;
+    private AgendamentoRepository agendamentoRepository;
 
     @Override
     public Boolean cadastro(FuncionarioPostDto dto) {
@@ -51,8 +60,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public FuncionarioRequestPutDto editarFuncionario(Long id, FuncionarioRequestPutDto dto) {
-        Filial filial = filialRepository.findByNome(dto.getNomeFilial());
         Funcionario funcionario = repository.findById(id).get();
+        Filial filial = funcionario.getFilial();
         funcionario.setSexo(dto.getSexo());
         funcionario.setNome(dto.getNome());
         funcionario.setEmail(dto.getEmail());
@@ -75,9 +84,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     public FuncionarioResponseDTO buscarFuncionario(Long id) {
         Funcionario funcionario = repository.findById(id).get();
-        String nomeFilial = filialRepository.findById(funcionario.getFilial().getId()).get().getNome();
+        String nomeFilial = funcionario.getFilial().getNome();
         Agendamento agendamento = new Agendamento();
-//        agendamento.setValor(8985.7);
         Horario horario = new Horario(
                 null,
                 funcionario,
@@ -150,5 +158,28 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 //        List<Horario>horarios =  funcionario.getHorariosAgendados().stream().filter();
 ////        List<Horario>
         return null;
+    }
+
+    @Override
+    public List<AgendamentoResponseDTO> verAgendamentos(Long id) {
+        List<Agendamento> agendamentosTodos = agendamentoRepository.findAllByHorario_Funcionario_Id(id);
+        List<AgendamentoResponseDTO> agendamentos = new ArrayList<>();
+        for(Agendamento agendamento : agendamentosTodos){
+            agendamentos.add(new AgendamentoResponseDTO(
+                    agendamento.getId(),
+                    agendamento.getLocal().getNome(),
+                    new HorarioResponseDTO(
+                            agendamento.getHorario().getId(),
+                            agendamento.getHorario().getDia(),
+                            agendamento.getHorario().getHoraInicio(),
+                            agendamento.getHorario().getFuncionario().getNome()),
+                    agendamento.getServico(),
+                    new PetResponseDTO(agendamento.getPet()),
+                    agendamento.getStatus().getNOME(),
+                    agendamento.getCliente().getNome(),
+                    new PagamentoResponseDTO(agendamento.getPagamento()),
+                    agendamento.getStatus().getNOME()));
+        }
+        return agendamentos;
     }
 }

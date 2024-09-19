@@ -8,12 +8,14 @@ import sc.senai.topcare.controller.dto.usuario.request.cliente.ClienteRequestPut
 import sc.senai.topcare.entity.Cliente;
 import sc.senai.topcare.exceptions.UsuarioExistenteExeption;
 import sc.senai.topcare.repository.ClienteRepository;
+import sc.senai.topcare.service.carrinho.CarrinhoServiceImpl;
 
 @Service
 @RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clientRepository;
+    private final CarrinhoServiceImpl carrinhoService;
 
     @Override
     public Cliente salvar(Cliente cliente){
@@ -42,6 +44,7 @@ public class ClienteServiceImpl implements ClienteService {
             }
             Cliente usuario = new Cliente(usuarioDTO);
             clientRepository.save(usuario);
+            carrinhoService.criarCarrinhoSimples(usuario.getId());
         }catch (UsuarioExistenteExeption e){
             System.out.println(e.getMessage());
         }
