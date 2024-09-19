@@ -23,7 +23,7 @@ public class VarianteProduto {
 
     private String tamanho;
 
-    private Integer peso;
+    private String peso;
 
     private Integer unidades;
 

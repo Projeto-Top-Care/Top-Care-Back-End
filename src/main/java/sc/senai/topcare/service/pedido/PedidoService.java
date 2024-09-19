@@ -12,14 +12,14 @@ import java.util.List;
 @Service
 public interface PedidoService {
 
-    Pedido criarPedido(PedidoRequestDTO dto) throws ListaVaziaException;
+    Pedido criarPedido(PedidoRequestDTO dto, Long id) throws ListaVaziaException;
 
     PedidoResponseDTO buscarPorId(Long id);
 
     List<PedidoResponseDTO> buscarTodos() throws ListaVaziaException;
 
 
-    Boolean editarStatus(StatusPedido status, Long id);
+    Boolean editarStatus(String status, Long id);
 
     Boolean deletar(Long id);
 }

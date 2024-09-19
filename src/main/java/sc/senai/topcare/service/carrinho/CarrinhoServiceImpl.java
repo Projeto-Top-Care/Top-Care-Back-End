@@ -14,7 +14,6 @@ import sc.senai.topcare.service.quantidadeProduto.QuantidadeProdutoServiceImpl;
 public class CarrinhoServiceImpl {
 
     private final CarrinhoRepository carrinhoRepository;
-    private final QuantidadeProdutoServiceImpl quantidadeProdutoService;
 
     public void criarCarrinhoSimples(Long id){
         Carrinho carrinho = new Carrinho();
@@ -36,14 +35,35 @@ public class CarrinhoServiceImpl {
 
     public void adicionarProduto(Long id, QuantidadeProdutoRequestDTO quantidadeProduto) {
         Carrinho carrinho = buscarPorUsuarioId(id);
-        QuantidadeProduto quantidadeProduto1 = quantidadeProdutoService.criarQuantProduto(quantidadeProduto);
+        QuantidadeProduto quantidadeProduto1 = new QuantidadeProduto(quantidadeProduto);
         carrinho.getProdutos().add(quantidadeProduto1);
         carrinhoRepository.save(carrinho);
+        calcularTotal(carrinho);
     }
 
     public void removerProduto(Long id, QuantidadeProduto quantidadeProduto) {
         Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow(RuntimeException::new);
         carrinho.getProdutos().remove(quantidadeProduto);
+        carrinhoRepository.save(carrinho);
+        calcularTotal(carrinho);
+    }
+
+    public void calcularTotal(Carrinho carrinho){
+        double total = 0.0;
+        for (QuantidadeProduto produto : carrinho.getProdutos()) {
+            total += produto.getQuantidade() * produto.getVarianteProduto().getPreco();
+        }
+        carrinho.setTotal(total);
+        carrinhoRepository.save(carrinho);
+    }
+
+    public void modificarCarrinho(Double valor, String tipo, Long id){
+        Carrinho carrinho = carrinhoRepository.findByQuantidadeProdutoId(id);
+        if(tipo.equals("somar")){
+            carrinho.setTotal(carrinho.getTotal() + valor);
+        }else{
+            carrinho.setTotal(carrinho.getTotal() - valor);
+        }
         carrinhoRepository.save(carrinho);
     }
 
@@ -62,6 +82,7 @@ public class CarrinhoServiceImpl {
     public void limparCarrinho(Long id) {
         Carrinho carrinho = buscarPorUsuarioId(id);
         carrinho.getProdutos().clear();
+        calcularTotal(carrinho);
         carrinhoRepository.save(carrinho);
     }
 }

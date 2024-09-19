@@ -10,6 +10,7 @@ import sc.senai.topcare.entity.QuantidadeProduto;
 import sc.senai.topcare.entity.VarianteProduto;
 import sc.senai.topcare.exceptions.ListaVaziaException;
 import sc.senai.topcare.repository.QuantidadeProdutoRepository;
+import sc.senai.topcare.service.carrinho.CarrinhoServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
 
     private final QuantidadeProdutoRepository repository;
+    private final CarrinhoServiceImpl carrinhoService;
 
     @Override
     public QuantidadeProduto criarQuantProduto(QuantidadeProdutoRequestDTO dto) {
@@ -61,13 +63,16 @@ public class QuantidadeProdutoServiceImpl implements QuantidadeProdutoService {
     public Integer adicionarQuantidade(Long id){
         QuantidadeProduto quantidadeProduto = buscarPorId(id);
         quantidadeProduto.setQuantidade(quantidadeProduto.getQuantidade() + 1);
+        carrinhoService.modificarCarrinho(quantidadeProduto.getVarianteProduto().getPreco(), "somar", quantidadeProduto.getId());
         repository.save(quantidadeProduto);
+
         return quantidadeProduto.getQuantidade();
     }
 
     public Integer removerQuantidade(Long id){
         QuantidadeProduto quantidadeProduto = buscarPorId(id);
         quantidadeProduto.setQuantidade(quantidadeProduto.getQuantidade() - 1);
+        carrinhoService.modificarCarrinho(quantidadeProduto.getVarianteProduto().getPreco(), "diminuir", quantidadeProduto.getId());
         repository.save(quantidadeProduto);
         return quantidadeProduto.getQuantidade();
     }
